@@ -1,0 +1,171 @@
+/**
+ * Bundled Spec Data Fallback for Offline / file:// and GitHub Pages usage.
+ */
+const SPEC_DATA_V2 = {
+  "buildBodyTr": {
+    "tagName": "tr",
+    "attributes": {
+      "class": "align-middle"
+    },
+    "children": []
+  },
+  "buildColGroup": {
+    "tagName": "col",
+    "attributes": {
+      "width": "${width}"
+    }
+  },
+  "buildHeader": {
+    "tagName": "th",
+    "textContent": "${columnName}",
+    "attributes": {
+      "class": "py-3 px-3 fw-semibold text-uppercase small"
+    }
+  },
+  "buildFooter": {
+    "tagName": "td",
+    "children": [
+      {
+        "tagName": "input",
+        "attributes": {
+          "type": "text",
+          "placeholder": "enter ${columnName}",
+          "name": "${columnName}",
+          "id": "${columnName}",
+          "list": "${columnName}",
+          "class": "form-control"
+        }
+      }
+    ]
+  },
+  "buildBodyCell": {
+    "tagName": "td",
+    "textContent": "${rowValue}",
+    "attributes": {
+      "class": "py-3 px-3 text-secondary"
+    }
+  },
+  "button": {
+    "tagName": "button",
+    "textContent": "${columnName}",
+    "attributes": {
+      "class": "btn btn-primary btn-sm"
+    }
+  },
+  "buttonCell": {
+    "tagName": "td",
+    "attributes": {
+      "class": "py-2 px-3 text-center"
+    },
+    "children": [
+      {
+        "tagName": "button",
+        "textContent": "${agg:count}",
+        "attributes": {
+          "class": "btn btn-primary btn-sm"
+        }
+      }
+    ]
+  },
+  "optionsButtonCell": {
+    "tagName": "td",
+    "attributes": {
+      "class": "py-2 px-3 text-center"
+    },
+    "children": [
+      {
+        "tagName": "button",
+        "textContent": "show",
+        "attributes": {
+          "class": "btn btn-primary btn-sm ks-btn-show"
+        }
+      }
+    ]
+  },
+  "buildOption": {
+    "tagName": "option",
+    "textContent": "${rowValue}",
+    "attributes": {
+      "value": "${rowValue}"
+    }
+  },
+  "buildSelect": {
+    "tagName": "select",
+    "attributes": {
+      "id": "LedgerName"
+    },
+    "children": []
+  },
+  "buildDataList": {
+    "tagName": "datalist",
+    "attributes": {
+      "data-name": "${columnName}"
+    },
+    "children": []
+  },
+  "emptyCell": {
+    "tagName": "td",
+    "children": []
+  },
+  "headerSerialCell": {
+    "tagName": "th",
+    "textContent": "#",
+    "attributes": {
+      "class": "py-3 px-3 fw-semibold text-uppercase small"
+    }
+  },
+  "colGroupForSerial": {
+    "tagName": "col",
+    "attributes": {
+      "width": "50px"
+    }
+  },
+  "colGroupForOption": {
+    "tagName": "col",
+    "attributes": {
+      "width": "100px"
+    }
+  },
+  "headerForOption": {
+    "tagName": "th",
+    "textContent": "options",
+    "attributes": {
+      "class": "py-3 px-3 fw-semibold text-uppercase small"
+    }
+  },
+  "tdWithButtonSaveWarning": {
+    "tagName": "td",
+    "attributes": {
+      "class": "py-2 px-3 text-center"
+    },
+    "children": [
+      {
+        "tagName": "button",
+        "textContent": "save",
+        "attributes": {
+          "class": "btn btn-warning btn-sm ks-btn-save"
+        }
+      }
+    ]
+  }
+};
+
+const SPEC_DATA_V1 = SPEC_DATA_V2;
+
+/**
+ * Returns the fallback spec for a given version.
+ * Adheres strictly to the in/local naming convention.
+ */
+function getSpecByVersion({ inVersion }) {
+  const localVersion = inVersion;
+  if (localVersion === "v1") {
+    return SPEC_DATA_V1;
+  }
+  return SPEC_DATA_V2;
+}
+
+window.SpecRepoData = {
+  v1: SPEC_DATA_V1,
+  v2: SPEC_DATA_V2,
+  getSpecByVersion
+};
