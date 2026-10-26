@@ -1,2 +1,3 @@
-export * from "./src/v4/index.js";
-export { default } from "./src/v4/index.js";
+export * from "./src/index.js";
+export { default } from "./src/index.js";
+
