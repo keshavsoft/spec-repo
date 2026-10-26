@@ -1,0 +1,49 @@
+{
+  "name": "spec-repo",
+  "version": "1.2.1",
+  "description": "Zero-dependency declarative JSON-to-DOM compiler. Transform JSON specifications into native browser DOM elements via a multi-stage assembly pipeline with built-in tag catalog validation.",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./src/index.js",
+  "module": "./src/index.js",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "require": "./src/index.js",
+      "default": "./src/index.js"
+    }
+  },
+  "bin": {
+    "spec-repo": "bin/cli.js"
+  },
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keshavsoft/spec-repo.git"
+  },
+  "keywords": [
+    "json-to-dom",
+    "declarative-ui",
+    "dom-builder",
+    "json-specification",
+    "zero-dependency",
+    "tag-catalog",
+    "spec-to-dom"
+  ],
+  "author": "KeshavSoft",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/keshavsoft/spec-repo/issues"
+  },
+  "homepage": "https://keshavsoft.github.io/spec-repo/",
+  "devDependencies": {},
+  "dependencies": {}
+}
