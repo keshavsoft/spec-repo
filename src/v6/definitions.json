@@ -116,6 +116,10 @@
                             "columns"
                         ]
                     },
+                    "templateKey": {
+                        "rowKey": "buildBodyTr",
+                        "columnKey": "buildBodyCell"
+                    },
                     "func": "twoDimensional"
                 }
             ]
