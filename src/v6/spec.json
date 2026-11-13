@@ -89,7 +89,10 @@
     "buildSelect": {
         "tagName": "select",
         "attributes": {
-            "id": "LedgerName"
+            "id": "${columnName}",
+            "name": "${columnName}",
+            "data-name": "${columnName}",
+            "class": "form-select shadow-sm mb-3"
         },
         "children": []
     },
