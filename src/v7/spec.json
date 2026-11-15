@@ -99,15 +99,11 @@
     "buildDataList": {
         "tagName": "datalist",
         "attributes": {
-<<<<<<< HEAD
             "id": "${columnName}",
-=======
->>>>>>> 1835d6053048926029dfda4ede67b47cf57316a0
             "data-name": "${columnName}"
         },
         "children": []
     },
-<<<<<<< HEAD
     "buildFormField": {
         "tagName": "div",
         "attributes": {
@@ -134,8 +130,6 @@
             }
         ]
     },
-=======
->>>>>>> 1835d6053048926029dfda4ede67b47cf57316a0
     "emptyCell": {
         "tagName": "td",
         "children": []

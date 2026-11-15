@@ -466,7 +466,6 @@
       "base": {
         "tagName": "div",
         "attributes": {
-<<<<<<< HEAD
           "data-role": "datalist-container"
         },
         "children": []
@@ -478,65 +477,20 @@
           "narration": "Build datalists with options",
           "destinationPath": {
             "fileName": "base",
-=======
-          "data-role": "datalist-parent"
-        },
-        "children": []
-      },
-      "single": [
-        {
-          "narration": "Build datalist control from columns",
-          "destinationPath": {
-            "fileName": "base",
-            "dataRole": "datalist-parent",
->>>>>>> 1835d6053048926029dfda4ede67b47cf57316a0
             "filePath": [
               "children"
             ]
           },
-<<<<<<< HEAD
           "templateKey": {
             "columnKey": "buildDataList",
             "rowKey": "buildOption"
           }
         }
       ]
-=======
-          "sourcePath": {
-            "fileName": "data",
-            "filePath": [
-              "columns"
-            ]
-          },
-          "templateKey": "buildDataList",
-          "func": "fromCollection"
-        },
-        {
-          "narration": "Build datalist options from data",
-          "destinationPath": {
-            "fileName": "base",
-            "dataRole": "datalist-control",
-            "filePath": [
-              "children"
-            ]
-          },
-          "sourcePath": {
-            "fileName": "data",
-            "filePath": [
-              "data"
-            ]
-          },
-          "templateKey": "buildOption",
-          "func": "fromCollection"
-        }
-      ],
-      "double": []
->>>>>>> 1835d6053048926029dfda4ede67b47cf57316a0
     },
     "base": {
       "tagName": "div",
       "attributes": {
-<<<<<<< HEAD
         "data-role": "datalist-container"
       },
       "children": []
@@ -548,60 +502,16 @@
         "narration": "Build datalists with options",
         "destinationPath": {
           "fileName": "base",
-=======
-        "data-role": "datalist-parent"
-      },
-      "children": []
-    },
-    "single": [
-      {
-        "narration": "Build datalist control from columns",
-        "destinationPath": {
-          "fileName": "base",
-          "dataRole": "datalist-parent",
->>>>>>> 1835d6053048926029dfda4ede67b47cf57316a0
           "filePath": [
             "children"
           ]
         },
-<<<<<<< HEAD
         "templateKey": {
           "columnKey": "buildDataList",
           "rowKey": "buildOption"
         }
       }
     ]
-=======
-        "sourcePath": {
-          "fileName": "data",
-          "filePath": [
-            "columns"
-          ]
-        },
-        "templateKey": "buildDataList",
-        "func": "fromCollection"
-      },
-      {
-        "narration": "Build datalist options from data",
-        "destinationPath": {
-          "fileName": "base",
-          "dataRole": "datalist-control",
-          "filePath": [
-            "children"
-          ]
-        },
-        "sourcePath": {
-          "fileName": "data",
-          "filePath": [
-            "data"
-          ]
-        },
-        "templateKey": "buildOption",
-        "func": "fromCollection"
-      }
-    ],
-    "double": []
->>>>>>> 1835d6053048926029dfda4ede67b47cf57316a0
   },
   "selectOptionsOnly": {
     "base": [],
@@ -654,7 +564,6 @@
     "double": []
   },
   "form": {
-<<<<<<< HEAD
     "simple": {
       "base": {
         "tagName": "div",
@@ -741,8 +650,6 @@
       ],
       "double": []
     },
-=======
->>>>>>> 1835d6053048926029dfda4ede67b47cf57316a0
     "base": {
       "tagName": "div",
       "attributes": {
@@ -757,11 +664,7 @@
           "children": [
             {
               "tagName": "h2",
-<<<<<<< HEAD
               "textContent": "Data Entry Form",
-=======
-              "textContent": "${title}",
->>>>>>> 1835d6053048926029dfda4ede67b47cf57316a0
               "attributes": {
                 "class": "h5 fw-bold mb-0 text-dark"
               }
@@ -777,17 +680,12 @@
             {
               "tagName": "form",
               "attributes": {
-<<<<<<< HEAD
                 "id": "form-body-id",
-=======
-                "id": "${formId}",
->>>>>>> 1835d6053048926029dfda4ede67b47cf57316a0
                 "data-role": "form-body"
               },
               "children": []
             }
           ]
-<<<<<<< HEAD
         },
         {
           "tagName": "div",
@@ -836,10 +734,5 @@
       }
     ],
     "double": []
-=======
-        }
-      ]
-    }
->>>>>>> 1835d6053048926029dfda4ede67b47cf57316a0
   }
 }
