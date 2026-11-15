@@ -99,9 +99,36 @@
     "buildDataList": {
         "tagName": "datalist",
         "attributes": {
+            "id": "${columnName}",
             "data-name": "${columnName}"
         },
         "children": []
+    },
+    "buildFormField": {
+        "tagName": "div",
+        "attributes": {
+            "class": "mb-3"
+        },
+        "children": [
+            {
+                "tagName": "label",
+                "textContent": "${columnName}",
+                "attributes": {
+                    "for": "${columnName}",
+                    "class": "form-label fw-semibold text-capitalize"
+                }
+            },
+            {
+                "tagName": "input",
+                "attributes": {
+                    "type": "text",
+                    "id": "${columnName}",
+                    "name": "${columnName}",
+                    "placeholder": "Enter ${columnName}...",
+                    "class": "form-control"
+                }
+            }
+        ]
     },
     "emptyCell": {
         "tagName": "td",

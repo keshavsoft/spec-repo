@@ -72,8 +72,32 @@ var e = {
 	},
 	buildDataList: {
 		tagName: "datalist",
-		attributes: { "data-name": "${columnName}" },
+		attributes: {
+			id: "${columnName}",
+			"data-name": "${columnName}"
+		},
 		children: []
+	},
+	buildFormField: {
+		tagName: "div",
+		attributes: { class: "mb-3" },
+		children: [{
+			tagName: "label",
+			textContent: "${columnName}",
+			attributes: {
+				for: "${columnName}",
+				class: "form-label fw-semibold text-capitalize"
+			}
+		}, {
+			tagName: "input",
+			attributes: {
+				type: "text",
+				id: "${columnName}",
+				name: "${columnName}",
+				placeholder: "Enter ${columnName}...",
+				class: "form-control"
+			}
+		}]
 	},
 	emptyCell: {
 		tagName: "td",
@@ -503,6 +527,18 @@ var e = {
 					columnKey: "buildBodyCell"
 				},
 				func: "twoDimensional"
+			}],
+			rowOnColumn: [{
+				narration: "Build table body",
+				destinationPath: {
+					fileName: "base",
+					dataRole: "table-body",
+					filePath: ["children"]
+				},
+				templateKey: {
+					rowKey: "buildBodyTr",
+					columnKey: "buildBodyCell"
+				}
 			}]
 		},
 		withFooter: {
@@ -709,11 +745,8 @@ var e = {
 	},
 	select: {
 		base: {
-			tagName: "select",
-			attributes: {
-				id: "${columnName}",
-				"data-name": "${columnName}"
-			},
+			tagName: "div",
+			attributes: { "data-role": "select-container" },
 			children: []
 		},
 		single: [{
@@ -729,77 +762,58 @@ var e = {
 			templateKey: "buildOption",
 			func: "fromCollection"
 		}],
-		double: []
+		double: [],
+		columnOnRow: [{
+			narration: "Build selects with options",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"]
+			},
+			templateKey: {
+				columnKey: "buildSelect",
+				rowKey: "buildOption"
+			}
+		}]
 	},
 	dataList: {
 		simple: {
 			base: {
 				tagName: "div",
-				attributes: { "data-role": "datalist-parent" },
+				attributes: { "data-role": "datalist-container" },
 				children: []
 			},
-			single: [{
-				narration: "Build datalist control from columns",
+			single: [],
+			double: [],
+			columnOnRow: [{
+				narration: "Build datalists with options",
 				destinationPath: {
 					fileName: "base",
-					dataRole: "datalist-parent",
 					filePath: ["children"]
 				},
-				sourcePath: {
-					fileName: "data",
-					filePath: ["columns"]
-				},
-				templateKey: "buildDataList",
-				func: "fromCollection"
-			}, {
-				narration: "Build datalist options from data",
-				destinationPath: {
-					fileName: "base",
-					dataRole: "datalist-control",
-					filePath: ["children"]
-				},
-				sourcePath: {
-					fileName: "data",
-					filePath: ["data"]
-				},
-				templateKey: "buildOption",
-				func: "fromCollection"
-			}],
-			double: []
+				templateKey: {
+					columnKey: "buildDataList",
+					rowKey: "buildOption"
+				}
+			}]
 		},
 		base: {
 			tagName: "div",
-			attributes: { "data-role": "datalist-parent" },
+			attributes: { "data-role": "datalist-container" },
 			children: []
 		},
-		single: [{
-			narration: "Build datalist control from columns",
+		single: [],
+		double: [],
+		columnOnRow: [{
+			narration: "Build datalists with options",
 			destinationPath: {
 				fileName: "base",
-				dataRole: "datalist-parent",
 				filePath: ["children"]
 			},
-			sourcePath: {
-				fileName: "data",
-				filePath: ["columns"]
-			},
-			templateKey: "buildDataList",
-			func: "fromCollection"
-		}, {
-			narration: "Build datalist options from data",
-			destinationPath: {
-				fileName: "base",
-				dataRole: "datalist-control",
-				filePath: ["children"]
-			},
-			sourcePath: {
-				fileName: "data",
-				filePath: ["data"]
-			},
-			templateKey: "buildOption",
-			func: "fromCollection"
-		}],
-		double: []
+			templateKey: {
+				columnKey: "buildDataList",
+				rowKey: "buildOption"
+			}
+		}]
 	},
 	selectOptionsOnly: {
 		base: [],
@@ -842,30 +856,132 @@ var e = {
 		single: [],
 		double: []
 	},
-	form: { base: {
-		tagName: "div",
-		attributes: { class: "card shadow-sm border-0" },
-		children: [{
-			tagName: "div",
-			attributes: { class: "card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center" },
-			children: [{
-				tagName: "h2",
-				textContent: "${title}",
-				attributes: { class: "h5 fw-bold mb-0 text-dark" }
-			}]
-		}, {
-			tagName: "div",
-			attributes: { class: "card-body p-4" },
-			children: [{
-				tagName: "form",
-				attributes: {
-					id: "${formId}",
-					"data-role": "form-body"
+	form: {
+		simple: {
+			base: {
+				tagName: "div",
+				attributes: { class: "card shadow-sm border-0" },
+				children: [
+					{
+						tagName: "div",
+						attributes: { class: "card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center" },
+						children: [{
+							tagName: "h2",
+							textContent: "Data Entry Form",
+							attributes: { class: "h5 fw-bold mb-0 text-dark" }
+						}]
+					},
+					{
+						tagName: "div",
+						attributes: { class: "card-body p-4" },
+						children: [{
+							tagName: "form",
+							attributes: {
+								id: "form-body-id",
+								"data-role": "form-body"
+							},
+							children: []
+						}]
+					},
+					{
+						tagName: "div",
+						attributes: { class: "card-footer bg-light px-4 py-3 d-flex justify-content-end gap-2" },
+						children: [{
+							tagName: "button",
+							textContent: "Reset",
+							attributes: {
+								type: "reset",
+								class: "btn btn-outline-secondary"
+							}
+						}, {
+							tagName: "button",
+							textContent: "Submit",
+							attributes: {
+								type: "submit",
+								class: "btn btn-primary"
+							}
+						}]
+					}
+				]
+			},
+			single: [{
+				narration: "Build form fields from columns",
+				destinationPath: {
+					fileName: "base",
+					dataRole: "form-body",
+					filePath: ["children"]
 				},
-				children: []
-			}]
-		}]
-	} }
+				sourcePath: {
+					fileName: "data",
+					filePath: ["columns"]
+				},
+				templateKey: "buildFormField",
+				func: "fromCollection"
+			}],
+			double: []
+		},
+		base: {
+			tagName: "div",
+			attributes: { class: "card shadow-sm border-0" },
+			children: [
+				{
+					tagName: "div",
+					attributes: { class: "card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center" },
+					children: [{
+						tagName: "h2",
+						textContent: "Data Entry Form",
+						attributes: { class: "h5 fw-bold mb-0 text-dark" }
+					}]
+				},
+				{
+					tagName: "div",
+					attributes: { class: "card-body p-4" },
+					children: [{
+						tagName: "form",
+						attributes: {
+							id: "form-body-id",
+							"data-role": "form-body"
+						},
+						children: []
+					}]
+				},
+				{
+					tagName: "div",
+					attributes: { class: "card-footer bg-light px-4 py-3 d-flex justify-content-end gap-2" },
+					children: [{
+						tagName: "button",
+						textContent: "Reset",
+						attributes: {
+							type: "reset",
+							class: "btn btn-outline-secondary"
+						}
+					}, {
+						tagName: "button",
+						textContent: "Submit",
+						attributes: {
+							type: "submit",
+							class: "btn btn-primary"
+						}
+					}]
+				}
+			]
+		},
+		single: [{
+			narration: "Build form fields from columns",
+			destinationPath: {
+				fileName: "base",
+				dataRole: "form-body",
+				filePath: ["children"]
+			},
+			sourcePath: {
+				fileName: "data",
+				filePath: ["columns"]
+			},
+			templateKey: "buildFormField",
+			func: "fromCollection"
+		}],
+		double: []
+	}
 }, i = {
 	name: "spec-repo",
 	version: "1.6.1"
