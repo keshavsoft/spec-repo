@@ -62,7 +62,12 @@ var e = {
 	},
 	buildSelect: {
 		tagName: "select",
-		attributes: { id: "LedgerName" },
+		attributes: {
+			id: "${columnName}",
+			name: "${columnName}",
+			"data-name": "${columnName}",
+			class: "form-select shadow-sm mb-3"
+		},
 		children: []
 	},
 	buildDataList: {
@@ -492,6 +497,10 @@ var e = {
 				sourcePath: {
 					fileName: "data",
 					filePath: ["columns"]
+				},
+				templateKey: {
+					rowKey: "buildBodyTr",
+					columnKey: "buildBodyCell"
 				},
 				func: "twoDimensional"
 			}]
