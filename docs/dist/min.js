@@ -593,6 +593,181 @@ var e = {
 				}
 			]
 		}]
+	},
+	selectBase: {
+		tagName: "div",
+		attributes: {
+			"data-role": "select-container",
+			id: "select-base-id"
+		},
+		children: []
+	},
+	dataListBase: {
+		tagName: "div",
+		attributes: {
+			"data-role": "datalist-container",
+			id: "data-list-base-id"
+		},
+		children: []
+	},
+	dataListSimple: {
+		tagName: "div",
+		attributes: {
+			"data-role": "datalist-container",
+			id: "data-list-simple-id"
+		},
+		children: []
+	},
+	selectOptionsOnlyBase: [],
+	searchInputBase: {
+		tagName: "div",
+		attributes: {
+			class: "d-flex align-items-center gap-2",
+			id: "search-input-base-id"
+		},
+		children: [{
+			tagName: "label",
+			textContent: "${label}",
+			attributes: {
+				class: "form-label mb-0 text-nowrap fw-semibold",
+				for: "${id}",
+				id: "search-input-label-id"
+			}
+		}, {
+			tagName: "input",
+			attributes: {
+				type: "search",
+				placeholder: "${placeholder}",
+				class: "form-control",
+				id: "search-input-field-id"
+			}
+		}]
+	},
+	formBase: {
+		tagName: "div",
+		attributes: {
+			class: "card shadow-sm border-0",
+			id: "form-base-id"
+		},
+		children: [
+			{
+				tagName: "div",
+				attributes: {
+					class: "card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center",
+					id: "form-base-header-id"
+				},
+				children: [{
+					tagName: "h2",
+					textContent: "Data Entry Form",
+					attributes: {
+						class: "h5 fw-bold mb-0 text-dark",
+						id: "form-base-title-id"
+					}
+				}]
+			},
+			{
+				tagName: "div",
+				attributes: {
+					class: "card-body p-4",
+					id: "form-base-body-id"
+				},
+				children: [{
+					tagName: "form",
+					attributes: {
+						id: "form-base-form-id",
+						"data-role": "form-body"
+					},
+					children: []
+				}]
+			},
+			{
+				tagName: "div",
+				attributes: {
+					class: "card-footer bg-light px-4 py-3 d-flex justify-content-end gap-2",
+					id: "form-base-footer-id"
+				},
+				children: [{
+					tagName: "button",
+					textContent: "Reset",
+					attributes: {
+						type: "reset",
+						class: "btn btn-outline-secondary",
+						id: "form-base-reset-button-id"
+					}
+				}, {
+					tagName: "button",
+					textContent: "Submit",
+					attributes: {
+						type: "submit",
+						class: "btn btn-primary",
+						id: "form-base-submit-button-id"
+					}
+				}]
+			}
+		]
+	},
+	formSimple: {
+		tagName: "div",
+		attributes: {
+			class: "card shadow-sm border-0",
+			id: "form-simple-id"
+		},
+		children: [
+			{
+				tagName: "div",
+				attributes: {
+					class: "card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center",
+					id: "form-simple-header-id"
+				},
+				children: [{
+					tagName: "h2",
+					textContent: "Data Entry Form",
+					attributes: {
+						class: "h5 fw-bold mb-0 text-dark",
+						id: "form-simple-title-id"
+					}
+				}]
+			},
+			{
+				tagName: "div",
+				attributes: {
+					class: "card-body p-4",
+					id: "form-simple-body-id"
+				},
+				children: [{
+					tagName: "form",
+					attributes: {
+						id: "form-simple-form-id",
+						"data-role": "form-body"
+					},
+					children: []
+				}]
+			},
+			{
+				tagName: "div",
+				attributes: {
+					class: "card-footer bg-light px-4 py-3 d-flex justify-content-end gap-2",
+					id: "form-simple-footer-id"
+				},
+				children: [{
+					tagName: "button",
+					textContent: "Reset",
+					attributes: {
+						type: "reset",
+						class: "btn btn-outline-secondary",
+						id: "form-simple-reset-button-id"
+					}
+				}, {
+					tagName: "button",
+					textContent: "Submit",
+					attributes: {
+						type: "submit",
+						class: "btn btn-primary",
+						id: "form-simple-submit-button-id"
+					}
+				}]
+			}
+		]
 	}
 }, t = {
 	$schema: "./tags.schema.json",
@@ -876,309 +1051,409 @@ var e = {
 		additionalProperties: !1
 	} }
 }, r = {
-	table: /* @__PURE__ */ JSON.parse("{\"simple\":{\"single\":[{\"narration\":\"Build column widths\",\"destinationPath\":{\"fileName\":\"base\",\"filePath\":[\"children\"],\"jsonPath\":\"$..*[?@.attributes['data-role'] == 'table-colgroup']\"},\"sourcePath\":{\"fileName\":\"data\",\"jsonPath\":\"$.columns\"},\"templateKey\":\"buildColGroup\",\"func\":\"fromCollection\"},{\"narration\":\"Build table header\",\"destinationPath\":{\"fileName\":\"base\",\"filePath\":[\"children\"],\"jsonPath\":\"$..*[?@.attributes['data-role'] == 'table-header-row']\"},\"sourcePath\":{\"fileName\":\"data\",\"jsonPath\":\"$.columns\"},\"templateKey\":\"buildHeader\",\"func\":\"fromCollection\"}],\"rowOnColumn\":[{\"narration\":\"Build table body\",\"destinationPath\":{\"fileName\":\"base\",\"jsonPath\":\"$.children[0].children[?(@.attributes['data-role'] == 'table-body')]\",\"filePath\":[\"children\"]},\"templateKey\":{\"rowKey\":\"buildBodyTr\",\"columnKey\":\"buildBodyCell\"}}],\"options\":{\"serial\":[{\"narration\":\"Prepend the serial column width to the table colgroup.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"colGroupForSerial\",\"func\":null},{\"narration\":\"Prepend the serial header cell to the table header row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"headerSerialCell\",\"func\":null},{\"narration\":\"Prepend the serial number cell into each table body row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"],\"action\":\"unshiftSerialToRows\"},\"sourcePath\":null,\"templateKey\":\"buildBodyCell\",\"func\":null},{\"narration\":\"Prepend the serial footer cell to the table footer row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"headerSerialCell\",\"func\":null}],\"options\":[{\"narration\":\"Append the options column width to the table colgroup.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"colGroupForOption\",\"func\":null},{\"narration\":\"Append the options header cell to the table header row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"headerForOption\",\"func\":null},{\"narration\":\"Append the options button cell into each table body row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"],\"action\":\"pushToRows\"},\"sourcePath\":null,\"templateKey\":\"optionsButtonCell\",\"func\":null},{\"narration\":\"Append the options footer cell to the table footer row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"tdWithButtonSaveWarning\",\"func\":null}],\"search\":[{\"narration\":\"Prepend the search row to top of the table.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-parent\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"tableSearch\",\"func\":null}]},\"baseFromSpec\":\"tableSimple\"},\"withFooter\":{\"single\":[{\"narration\":\"Build column widths\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"]},\"sourcePath\":{\"fileName\":\"data\",\"filePath\":[\"columns\"]},\"templateKey\":\"buildColGroup\",\"func\":\"fromCollection\"},{\"narration\":\"Build table header\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"]},\"sourcePath\":{\"fileName\":\"data\",\"filePath\":[\"columns\"]},\"templateKey\":\"buildHeader\",\"func\":\"fromCollection\"},{\"narration\":\"Build footer input cells\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"]},\"sourcePath\":{\"fileName\":\"data\",\"filePath\":[\"columns\"]},\"templateKey\":\"buildFooter\",\"func\":\"fromCollection\"}],\"double\":[{\"narration\":\"Build table body\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"]},\"sourcePath\":{\"fileName\":\"data\",\"filePath\":[\"columns\"]},\"func\":\"twoDimensional\"}],\"baseFromSpec\":\"tableWithFooter\"},\"bodyOnly\":{\"rowOnColumn\":[{\"narration\":\"Build table body\",\"destinationPath\":{\"fileName\":\"base\",\"jsonPath\":\"$\",\"filePath\":[\"children\"]},\"destinationPath1\":{\"fileName\":\"base\",\"jsonPath\":\"$.children[0].children[?(@.attributes['data-role'] == 'table-body')]\",\"filePath\":[\"children\"]},\"templateKey\":{\"rowKey\":\"buildBodyTr\",\"columnKey\":\"buildBodyCell\"}}],\"options\":{\"serial\":[{\"narration\":\"Prepend the serial column width to the table colgroup.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"colGroupForSerial\",\"func\":null},{\"narration\":\"Prepend the serial header cell to the table header row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"headerSerialCell\",\"func\":null},{\"narration\":\"Prepend the serial number cell into each table body row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"],\"action\":\"unshiftSerialToRows\"},\"sourcePath\":null,\"templateKey\":\"buildBodyCell\",\"func\":null},{\"narration\":\"Prepend the serial footer cell to the table footer row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"headerSerialCell\",\"func\":null}],\"options\":[{\"narration\":\"Append the options column width to the table colgroup.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"colGroupForOption\",\"func\":null},{\"narration\":\"Append the options header cell to the table header row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"headerForOption\",\"func\":null},{\"narration\":\"Append the options button cell into each table body row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"],\"action\":\"pushToRows\"},\"sourcePath\":null,\"templateKey\":\"optionsButtonCell\",\"func\":null},{\"narration\":\"Append the options footer cell to the table footer row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"tdWithButtonSaveWarning\",\"func\":null}],\"search\":[{\"narration\":\"Prepend the search row to top of the table.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-parent\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"tableSearch\",\"func\":null}]},\"baseFromSpec\":\"tableBodyOnly\"},\"bodyOnly1\":{\"single\":[],\"double\":[{\"narration\":\"Build table body\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"]},\"sourcePath\":{\"fileName\":\"data\",\"filePath\":[\"columns\"]},\"func\":\"twoDimensional\"}],\"baseFromSpec\":\"tableBodyOnly1\"},\"footerOnly\":{\"single\":[{\"narration\":\"Build footer input cells\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"]},\"sourcePath\":{\"fileName\":\"data\",\"filePath\":[\"columns\"]},\"templateKey\":\"buildFooter\",\"func\":\"fromCollection\"}],\"double\":[],\"baseFromSpec\":\"tableFooterOnly\"},\"headerOnly\":{\"single\":[{\"narration\":\"Build column widths\",\"destinationPath\":{\"fileName\":\"base\",\"filePath\":[\"children\"],\"jsonPath\":\"$..*[?@.attributes['data-role'] == 'table-colgroup']\"},\"sourcePath\":{\"fileName\":\"data\",\"jsonPath\":\"$.columns\"},\"templateKey\":\"buildColGroup\",\"func\":\"fromCollection\"},{\"narration\":\"Build table header\",\"destinationPath\":{\"fileName\":\"base\",\"filePath\":[\"children\"],\"jsonPath\":\"$..*[?@.attributes['data-role'] == 'table-header-row']\"},\"sourcePath\":{\"fileName\":\"data\",\"jsonPath\":\"$.columns\"},\"templateKey\":\"buildHeader\",\"func\":\"fromCollection\"}],\"options\":{\"serial\":[{\"narration\":\"Prepend the serial column width to the table colgroup.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"colGroupForSerial\",\"func\":null},{\"narration\":\"Prepend the serial header cell to the table header row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"headerSerialCell\",\"func\":null},{\"narration\":\"Prepend the serial number cell into each table body row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"],\"action\":\"unshiftSerialToRows\"},\"sourcePath\":null,\"templateKey\":\"buildBodyCell\",\"func\":null},{\"narration\":\"Prepend the serial footer cell to the table footer row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"headerSerialCell\",\"func\":null}],\"options\":[{\"narration\":\"Append the options column width to the table colgroup.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"colGroupForOption\",\"func\":null},{\"narration\":\"Append the options header cell to the table header row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"headerForOption\",\"func\":null},{\"narration\":\"Append the options button cell into each table body row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"],\"action\":\"pushToRows\"},\"sourcePath\":null,\"templateKey\":\"optionsButtonCell\",\"func\":null},{\"narration\":\"Append the options footer cell to the table footer row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"tdWithButtonSaveWarning\",\"func\":null}],\"search\":[{\"narration\":\"Prepend the search row to top of the table.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-parent\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"tableSearch\",\"func\":null}]},\"baseFromSpec\":\"tableHeaderOnly\"},\"headerOnly1\":{\"single\":[{\"narration\":\"Build column widths\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"]},\"sourcePath\":{\"fileName\":\"data\",\"filePath\":[\"columns\"]},\"templateKey\":\"buildColGroup\",\"func\":\"fromCollection\"},{\"narration\":\"Build table header\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"]},\"sourcePath\":{\"fileName\":\"data\",\"filePath\":[\"columns\"]},\"templateKey\":\"buildHeader\",\"func\":\"fromCollection\"}],\"double\":[],\"baseFromSpec\":\"tableHeaderOnly1\"},\"options\":{\"serial\":[{\"narration\":\"Prepend the serial column width to the table colgroup.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"colGroupForSerial\",\"func\":null},{\"narration\":\"Prepend the serial header cell to the table header row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"headerSerialCell\",\"func\":null},{\"narration\":\"Prepend the serial number cell into each table body row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"],\"action\":\"unshiftSerialToRows\"},\"sourcePath\":null,\"templateKey\":\"buildBodyCell\",\"func\":null},{\"narration\":\"Prepend the serial footer cell to the table footer row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"headerSerialCell\",\"func\":null}],\"options\":[{\"narration\":\"Append the options column width to the table colgroup.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"colGroupForOption\",\"func\":null},{\"narration\":\"Append the options header cell to the table header row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"headerForOption\",\"func\":null},{\"narration\":\"Append the options button cell into each table body row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"],\"action\":\"pushToRows\"},\"sourcePath\":null,\"templateKey\":\"optionsButtonCell\",\"func\":null},{\"narration\":\"Append the options footer cell to the table footer row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"tdWithButtonSaveWarning\",\"func\":null}],\"search\":[{\"narration\":\"Prepend the search row to top of the table.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-parent\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"tableSearch\",\"func\":null}]},\"headerAndFooter\":{\"single\":[{\"narration\":\"Build column widths\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"]},\"sourcePath\":{\"fileName\":\"data\",\"filePath\":[\"columns\"]},\"templateKey\":\"buildColGroup\",\"func\":\"fromCollection\"},{\"narration\":\"Build table header\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"]},\"sourcePath\":{\"fileName\":\"data\",\"filePath\":[\"columns\"]},\"templateKey\":\"buildHeader\",\"func\":\"fromCollection\"}],\"double\":[{\"narration\":\"Build table body\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"]},\"sourcePath\":{\"fileName\":\"data\",\"filePath\":[\"columns\"]},\"templateKey\":{\"rowKey\":\"buildBodyTr\",\"columnKey\":\"buildBodyCell\"},\"func\":\"twoDimensional\"}],\"rowOnColumn\":[{\"narration\":\"Build table body\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"]},\"templateKey\":{\"rowKey\":\"buildBodyTr\",\"columnKey\":\"buildBodyCell\"}}],\"options\":{\"serial\":[{\"narration\":\"Prepend the serial column width to the table colgroup.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"colGroupForSerial\",\"func\":null},{\"narration\":\"Prepend the serial header cell to the table header row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"headerSerialCell\",\"func\":null},{\"narration\":\"Prepend the serial number cell into each table body row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"],\"action\":\"unshiftSerialToRows\"},\"sourcePath\":null,\"templateKey\":\"buildBodyCell\",\"func\":null},{\"narration\":\"Prepend the serial footer cell to the table footer row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"headerSerialCell\",\"func\":null}],\"options\":[{\"narration\":\"Append the options column width to the table colgroup.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"colGroupForOption\",\"func\":null},{\"narration\":\"Append the options header cell to the table header row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"headerForOption\",\"func\":null},{\"narration\":\"Append the options button cell into each table body row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"],\"action\":\"pushToRows\"},\"sourcePath\":null,\"templateKey\":\"optionsButtonCell\",\"func\":null},{\"narration\":\"Append the options footer cell to the table footer row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"tdWithButtonSaveWarning\",\"func\":null}],\"search\":[{\"narration\":\"Prepend the search row to top of the table.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-parent\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"tableSearch\",\"func\":null}]},\"baseFromSpec\":\"tableHeaderAndFooter\"},\"withSearch\":{\"baseFromSpec\":\"tableWithSearch\",\"single\":[{\"narration\":\"Build column widths\",\"destinationPath\":{\"fileName\":\"base\",\"filePath\":[\"children\"],\"jsonPath\":\"$..*[?@.attributes['data-role'] == 'table-colgroup']\"},\"sourcePath\":{\"fileName\":\"data\",\"jsonPath\":\"$.columns\"},\"templateKey\":\"buildColGroup\",\"func\":\"fromCollection\"},{\"narration\":\"Build table header\",\"destinationPath\":{\"fileName\":\"base\",\"filePath\":[\"children\"],\"jsonPath\":\"$..*[?@.attributes['data-role'] == 'table-header-row']\"},\"sourcePath\":{\"fileName\":\"data\",\"jsonPath\":\"$.columns\"},\"templateKey\":\"buildHeader\",\"func\":\"fromCollection\"}],\"rowOnColumn\":[{\"narration\":\"Build table body\",\"destinationPath\":{\"fileName\":\"base\",\"filePath\":[\"children\"],\"jsonPath\":\"$..*[?@.attributes['data-role'] == 'table-body']\"},\"templateKey\":{\"rowKey\":\"buildBodyTr\",\"columnKey\":\"buildBodyCell\"}}],\"options\":{\"serial\":[{\"narration\":\"Prepend the serial column width to the table colgroup.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"colGroupForSerial\",\"func\":null},{\"narration\":\"Prepend the serial header cell to the table header row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"headerSerialCell\",\"func\":null},{\"narration\":\"Prepend the serial number cell into each table body row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"],\"action\":\"unshiftSerialToRows\"},\"sourcePath\":null,\"templateKey\":\"buildBodyCell\",\"func\":null},{\"narration\":\"Prepend the serial footer cell to the table footer row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"headerSerialCell\",\"func\":null}],\"options\":[{\"narration\":\"Append the options column width to the table colgroup.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-colgroup\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"colGroupForOption\",\"func\":null},{\"narration\":\"Append the options header cell to the table header row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-header-row\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"headerForOption\",\"func\":null},{\"narration\":\"Append the options button cell into each table body row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-body\",\"filePath\":[\"children\"],\"action\":\"pushToRows\"},\"sourcePath\":null,\"templateKey\":\"optionsButtonCell\",\"func\":null},{\"narration\":\"Append the options footer cell to the table footer row.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-footer-row\",\"filePath\":[\"children\"],\"action\":\"push\"},\"sourcePath\":null,\"templateKey\":\"tdWithButtonSaveWarning\",\"func\":null}],\"search\":[{\"narration\":\"Prepend the search row to top of the table.\",\"destinationPath\":{\"fileName\":\"base\",\"dataRole\":\"table-parent\",\"filePath\":[\"children\"],\"action\":\"unshift\"},\"sourcePath\":null,\"templateKey\":\"tableSearch\",\"func\":null}]}}}"),
-	select: {
-		base: {
-			tagName: "div",
-			attributes: {
-				"data-role": "select-container",
-				id: "select-base-id"
-			},
-			children: []
-		},
-		single: [{
-			narration: "Build select options",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"]
-			},
-			sourcePath: {
-				fileName: "data",
-				filePath: ["data"]
-			},
-			templateKey: "buildOption",
-			func: "fromCollection"
-		}],
-		double: [],
-		columnOnRow: [{
-			narration: "Build selects with options",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"]
-			},
-			templateKey: {
-				columnKey: "buildSelect",
-				rowKey: "buildOption"
+	table: {
+		simple: {
+			baseFromSpec: "tableSimple",
+			instructions: [
+				"buildColgroup",
+				"buildHeader",
+				"buildBody"
+			],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
 			}
-		}]
+		},
+		withFooter: {
+			baseFromSpec: "tableWithFooter",
+			instructions: [
+				"buildColgroup",
+				"buildHeader",
+				"buildFooter",
+				"buildBody"
+			],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		},
+		bodyOnly: {
+			baseFromSpec: "tableBodyOnly",
+			instructions: ["buildBody"],
+			options: {
+				serial: "serial",
+				options: "options"
+			}
+		},
+		bodyOnly1: {
+			baseFromSpec: "tableBodyOnly1",
+			instructions: []
+		},
+		footerOnly: {
+			baseFromSpec: "tableFooterOnly",
+			instructions: ["buildFooter"]
+		},
+		headerOnly: {
+			baseFromSpec: "tableHeaderOnly",
+			instructions: ["buildColgroup", "buildHeader"],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		},
+		headerOnly1: {
+			baseFromSpec: "tableHeaderOnly1",
+			instructions: ["buildColgroup", "buildHeader"]
+		},
+		options: {
+			instructions: [],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		},
+		headerAndFooter: {
+			baseFromSpec: "tableHeaderAndFooter",
+			instructions: [
+				"buildColgroup",
+				"buildHeader",
+				"buildFooter",
+				"buildBody"
+			],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		},
+		withSearch: {
+			baseFromSpec: "tableWithSearch",
+			instructions: [
+				"buildColgroup",
+				"buildHeader",
+				"buildBody"
+			],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		},
+		withSearchAndFooter: {
+			baseFromSpec: "tableWithSearch",
+			instructions: [
+				"buildColgroup",
+				"buildHeader",
+				"buildFooter",
+				"buildBody"
+			],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		}
+	},
+	select: {
+		simple: {
+			baseFromSpec: "selectBase",
+			instructions: ["buildSelectWithOptions"]
+		},
+		baseFromSpec: "selectBase",
+		instructions: ["buildSelectWithOptions"]
 	},
 	dataList: {
 		simple: {
-			base: {
-				tagName: "div",
-				attributes: {
-					"data-role": "datalist-container",
-					id: "data-list-simple-id"
-				},
-				children: []
-			},
-			single: [],
-			double: [],
-			columnOnRow: [{
-				narration: "Build datalists with options",
-				destinationPath: {
-					fileName: "base",
-					filePath: ["children"]
-				},
-				templateKey: {
-					columnKey: "buildDataList",
-					rowKey: "buildOption"
-				}
-			}]
+			baseFromSpec: "dataListSimple",
+			instructions: ["buildDataListWithOptions"]
 		},
-		base: {
-			tagName: "div",
-			attributes: {
-				"data-role": "datalist-container",
-				id: "data-list-base-id"
-			},
-			children: []
-		},
-		single: [],
-		double: [],
-		columnOnRow: [{
-			narration: "Build datalists with options",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"]
-			},
-			templateKey: {
-				columnKey: "buildDataList",
-				rowKey: "buildOption"
-			}
-		}]
+		baseFromSpec: "dataListBase",
+		instructions: ["buildDataListWithOptions"]
 	},
 	selectOptionsOnly: {
-		base: [],
-		single: [{
-			narration: "Build options array",
-			destinationPath: {
-				fileName: "base",
-				filePath: []
-			},
-			sourcePath: {
-				fileName: "data",
-				filePath: ["data"]
-			},
-			templateKey: "buildOption",
-			func: "fromCollection"
-		}],
-		double: []
+		baseFromSpec: "selectOptionsOnlyBase",
+		instructions: ["buildOptionsArray"]
 	},
 	searchInput: {
-		base: {
-			tagName: "div",
-			attributes: {
-				class: "d-flex align-items-center gap-2",
-				id: "search-input-base-id"
-			},
-			children: [{
-				tagName: "label",
-				textContent: "${label}",
-				attributes: {
-					class: "form-label mb-0 text-nowrap fw-semibold",
-					for: "${id}",
-					id: "search-input-label-id"
-				}
-			}, {
-				tagName: "input",
-				attributes: {
-					type: "search",
-					placeholder: "${placeholder}",
-					class: "form-control",
-					id: "search-input-field-id"
-				}
-			}]
-		},
-		single: [],
-		double: []
+		baseFromSpec: "searchInputBase",
+		instructions: []
 	},
 	form: {
 		simple: {
-			base: {
-				tagName: "div",
-				attributes: {
-					class: "card shadow-sm border-0",
-					id: "form-simple-id"
-				},
-				children: [
-					{
-						tagName: "div",
-						attributes: {
-							class: "card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center",
-							id: "form-simple-header-id"
-						},
-						children: [{
-							tagName: "h2",
-							textContent: "Data Entry Form",
-							attributes: {
-								class: "h5 fw-bold mb-0 text-dark",
-								id: "form-simple-title-id"
-							}
-						}]
-					},
-					{
-						tagName: "div",
-						attributes: {
-							class: "card-body p-4",
-							id: "form-simple-body-id"
-						},
-						children: [{
-							tagName: "form",
-							attributes: {
-								id: "form-simple-form-id",
-								"data-role": "form-body"
-							},
-							children: []
-						}]
-					},
-					{
-						tagName: "div",
-						attributes: {
-							class: "card-footer bg-light px-4 py-3 d-flex justify-content-end gap-2",
-							id: "form-simple-footer-id"
-						},
-						children: [{
-							tagName: "button",
-							textContent: "Reset",
-							attributes: {
-								type: "reset",
-								class: "btn btn-outline-secondary",
-								id: "form-simple-reset-button-id"
-							}
-						}, {
-							tagName: "button",
-							textContent: "Submit",
-							attributes: {
-								type: "submit",
-								class: "btn btn-primary",
-								id: "form-simple-submit-button-id"
-							}
-						}]
-					}
-				]
-			},
-			single: [{
-				narration: "Build form fields from columns",
-				destinationPath: {
-					fileName: "base",
-					dataRole: "form-body",
-					filePath: ["children"]
-				},
-				sourcePath: {
-					fileName: "data",
-					filePath: ["columns"]
-				},
-				templateKey: "buildFormField",
-				func: "fromCollection"
-			}],
-			double: []
+			baseFromSpec: "formSimple",
+			instructions: ["buildFormField"]
 		},
-		base: {
-			tagName: "div",
-			attributes: {
-				class: "card shadow-sm border-0",
-				id: "form-base-id"
-			},
-			children: [
-				{
-					tagName: "div",
-					attributes: {
-						class: "card-header bg-white py-3 border-bottom d-flex justify-content-between align-items-center",
-						id: "form-base-header-id"
-					},
-					children: [{
-						tagName: "h2",
-						textContent: "Data Entry Form",
-						attributes: {
-							class: "h5 fw-bold mb-0 text-dark",
-							id: "form-base-title-id"
-						}
-					}]
-				},
-				{
-					tagName: "div",
-					attributes: {
-						class: "card-body p-4",
-						id: "form-base-body-id"
-					},
-					children: [{
-						tagName: "form",
-						attributes: {
-							id: "form-base-form-id",
-							"data-role": "form-body"
-						},
-						children: []
-					}]
-				},
-				{
-					tagName: "div",
-					attributes: {
-						class: "card-footer bg-light px-4 py-3 d-flex justify-content-end gap-2",
-						id: "form-base-footer-id"
-					},
-					children: [{
-						tagName: "button",
-						textContent: "Reset",
-						attributes: {
-							type: "reset",
-							class: "btn btn-outline-secondary",
-							id: "form-base-reset-button-id"
-						}
-					}, {
-						tagName: "button",
-						textContent: "Submit",
-						attributes: {
-							type: "submit",
-							class: "btn btn-primary",
-							id: "form-base-submit-button-id"
-						}
-					}]
-				}
-			]
-		},
-		single: [{
-			narration: "Build form fields from columns",
-			destinationPath: {
-				fileName: "base",
-				dataRole: "form-body",
-				filePath: ["children"]
-			},
-			sourcePath: {
-				fileName: "data",
-				filePath: ["columns"]
-			},
-			templateKey: "buildFormField",
-			func: "fromCollection"
-		}],
-		double: []
+		baseFromSpec: "formBase",
+		instructions: ["buildFormField"]
 	}
 }, i = {
+	buildColgroup: {
+		type: "single",
+		narration: "Build column widths",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"],
+			jsonPath: "$..*[?@.attributes['data-role'] == 'table-colgroup']"
+		},
+		sourcePath: {
+			fileName: "data",
+			jsonPath: "$.columns"
+		},
+		templateKey: "buildColGroup",
+		func: "fromCollection"
+	},
+	buildHeader: {
+		type: "single",
+		narration: "Build table header",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"],
+			jsonPath: "$..*[?@.attributes['data-role'] == 'table-header-row']"
+		},
+		sourcePath: {
+			fileName: "data",
+			jsonPath: "$.columns"
+		},
+		templateKey: "buildHeader",
+		func: "fromCollection"
+	},
+	buildFooter: {
+		type: "single",
+		narration: "Build table footer",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"],
+			jsonPath: "$..*[?@.attributes['data-role'] == 'table-footer-row']"
+		},
+		sourcePath: {
+			fileName: "data",
+			jsonPath: "$.columns"
+		},
+		templateKey: "buildFooter",
+		func: "fromCollection"
+	},
+	buildBody: {
+		type: "rowOnColumn",
+		narration: "Build table body",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"],
+			jsonPath: "$..*[?@.attributes['data-role'] == 'table-body']"
+		},
+		templateKey: {
+			rowKey: "buildBodyTr",
+			columnKey: "buildBodyCell"
+		}
+	},
+	serial: [
+		{
+			narration: "Prepend the serial column width to the table colgroup.",
+			destinationPath: {
+				fileName: "base",
+				dataRole: "table-colgroup",
+				filePath: ["children"],
+				action: "unshift"
+			},
+			sourcePath: null,
+			templateKey: "colGroupForSerial",
+			func: null
+		},
+		{
+			narration: "Prepend the serial header cell to the table header row.",
+			destinationPath: {
+				fileName: "base",
+				dataRole: "table-header-row",
+				filePath: ["children"],
+				action: "unshift"
+			},
+			sourcePath: null,
+			templateKey: "headerSerialCell",
+			func: null
+		},
+		{
+			narration: "Prepend the serial number cell into each table body row.",
+			destinationPath: {
+				fileName: "base",
+				dataRole: "table-body",
+				filePath: ["children"],
+				action: "unshiftSerialToRows"
+			},
+			sourcePath: null,
+			templateKey: "buildBodyCell",
+			func: null
+		},
+		{
+			narration: "Prepend the serial footer cell to the table footer row.",
+			destinationPath: {
+				fileName: "base",
+				dataRole: "table-footer-row",
+				filePath: ["children"],
+				action: "unshift"
+			},
+			sourcePath: null,
+			templateKey: "headerSerialCell",
+			func: null
+		}
+	],
+	options: [
+		{
+			narration: "Append the options column width to the table colgroup.",
+			destinationPath: {
+				fileName: "base",
+				dataRole: "table-colgroup",
+				filePath: ["children"],
+				action: "push"
+			},
+			sourcePath: null,
+			templateKey: "colGroupForOption",
+			func: null
+		},
+		{
+			narration: "Append the options header cell to the table header row.",
+			destinationPath: {
+				fileName: "base",
+				dataRole: "table-header-row",
+				filePath: ["children"],
+				action: "push"
+			},
+			sourcePath: null,
+			templateKey: "headerForOption",
+			func: null
+		},
+		{
+			narration: "Append the options button cell into each table body row.",
+			destinationPath: {
+				fileName: "base",
+				dataRole: "table-body",
+				filePath: ["children"],
+				action: "pushToRows"
+			},
+			sourcePath: null,
+			templateKey: "optionsButtonCell",
+			func: null
+		},
+		{
+			narration: "Append the options footer cell to the table footer row.",
+			destinationPath: {
+				fileName: "base",
+				dataRole: "table-footer-row",
+				filePath: ["children"],
+				action: "push"
+			},
+			sourcePath: null,
+			templateKey: "tdWithButtonSaveWarning",
+			func: null
+		}
+	],
+	search: [{
+		narration: "Prepend the search row to top of the table.",
+		destinationPath: {
+			fileName: "base",
+			dataRole: "table-parent",
+			filePath: ["children"],
+			action: "unshift"
+		},
+		sourcePath: null,
+		templateKey: "tableSearch",
+		func: null
+	}]
+}, a = { buildFormField: {
+	type: "single",
+	narration: "Build form fields from columns",
+	destinationPath: {
+		fileName: "base",
+		dataRole: "form-body",
+		filePath: ["children"]
+	},
+	sourcePath: {
+		fileName: "data",
+		filePath: ["columns"]
+	},
+	templateKey: "buildFormField",
+	func: "fromCollection"
+} }, o = {
+	buildSelectWithOptions: {
+		type: "columnOnRow",
+		narration: "Build selects with options",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"]
+		},
+		templateKey: {
+			columnKey: "buildSelect",
+			rowKey: "buildOption"
+		}
+	},
+	buildSelectOptions: {
+		type: "single",
+		narration: "Build select options",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"]
+		},
+		sourcePath: {
+			fileName: "data",
+			filePath: ["data"]
+		},
+		templateKey: "buildOption",
+		func: "fromCollection"
+	},
+	buildOptionsArray: {
+		type: "single",
+		narration: "Build options array",
+		destinationPath: {
+			fileName: "base",
+			filePath: []
+		},
+		sourcePath: {
+			fileName: "data",
+			filePath: ["data"]
+		},
+		templateKey: "buildOption",
+		func: "fromCollection"
+	}
+}, s = { buildDataListWithOptions: {
+	type: "columnOnRow",
+	narration: "Build datalists with options",
+	destinationPath: {
+		fileName: "base",
+		filePath: ["children"]
+	},
+	templateKey: {
+		columnKey: "buildDataList",
+		rowKey: "buildOption"
+	}
+} }, c = {
 	name: "spec-repo",
-	version: "1.12.1"
-}, a = ({ spec: e, tags: t, tagsSchema: n, definitions: r }) => {
+	version: "1.14.0"
+}, l = ({ spec: e, tags: t, tagsSchema: n, definitions: r, table: i }) => {
 	typeof globalThis < "u" && e && t && n && r && (globalThis.ks ??= {}, globalThis.ks.specs ??= {}, globalThis.ks.specs.jsonFiles = {
-		meta: i,
+		meta: c,
 		spec: e,
 		tags: t,
 		tagsSchema: n,
-		definitions: r
+		definitions: r,
+		table: i
 	});
-}, o = e;
-a({
+}, u = {
+	...i,
+	...a,
+	...o,
+	...s
+}, d = e;
+l({
 	spec: e,
 	tags: t,
 	tagsSchema: n,
-	definitions: r
+	definitions: r,
+	table: i,
+	form: a,
+	select: o,
+	dataList: s,
+	instructions: u
 });
-export { o as default, r as definitions, e as spec, t as tags, n as tagsSchema };
+export { s as dataList, d as default, r as definitions, a as form, u as instructions, o as select, e as spec, i as table, t as tags, n as tagsSchema };
