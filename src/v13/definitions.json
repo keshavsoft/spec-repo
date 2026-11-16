@@ -1,0 +1,1376 @@
+{
+    "table": {
+        "simple": {
+            "single": [
+                {
+                    "narration": "Build column widths",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "filePath": [
+                            "children"
+                        ],
+                        "jsonPath": "$..*[?@.attributes['data-role'] == 'table-colgroup']"
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "jsonPath": "$.columns"
+                    },
+                    "templateKey": "buildColGroup",
+                    "func": "fromCollection"
+                },
+                {
+                    "narration": "Build table header",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "filePath": [
+                            "children"
+                        ],
+                        "jsonPath": "$..*[?@.attributes['data-role'] == 'table-header-row']"
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "jsonPath": "$.columns"
+                    },
+                    "templateKey": "buildHeader",
+                    "func": "fromCollection"
+                }
+            ],
+            "rowOnColumn": [
+                {
+                    "narration": "Build table body",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "jsonPath": "$.children[0].children[?(@.attributes['data-role'] == 'table-body')]",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "templateKey": {
+                        "rowKey": "buildBodyTr",
+                        "columnKey": "buildBodyCell"
+                    }
+                }
+            ],
+            "options": {
+                "serial": [
+                    {
+                        "narration": "Prepend the serial column width to the table colgroup.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-colgroup",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "colGroupForSerial",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial header cell to the table header row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-header-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerSerialCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial number cell into each table body row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-body",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshiftSerialToRows"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "buildBodyCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial footer cell to the table footer row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-footer-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerSerialCell",
+                        "func": null
+                    }
+                ],
+                "options": [
+                    {
+                        "narration": "Append the options column width to the table colgroup.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-colgroup",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "colGroupForOption",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options header cell to the table header row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-header-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerForOption",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options button cell into each table body row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-body",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "pushToRows"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "optionsButtonCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options footer cell to the table footer row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-footer-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "tdWithButtonSaveWarning",
+                        "func": null
+                    }
+                ],
+                "search": [
+                    {
+                        "narration": "Prepend the search row to top of the table.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-parent",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "tableSearch",
+                        "func": null
+                    }
+                ]
+            },
+            "baseFromSpec": "tableSimple"
+        },
+        "withFooter": {
+            "single": [
+                {
+                    "narration": "Build column widths",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-colgroup",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "filePath": [
+                            "columns"
+                        ]
+                    },
+                    "templateKey": "buildColGroup",
+                    "func": "fromCollection"
+                },
+                {
+                    "narration": "Build table header",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-header-row",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "filePath": [
+                            "columns"
+                        ]
+                    },
+                    "templateKey": "buildHeader",
+                    "func": "fromCollection"
+                },
+                {
+                    "narration": "Build footer input cells",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-footer-row",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "filePath": [
+                            "columns"
+                        ]
+                    },
+                    "templateKey": "buildFooter",
+                    "func": "fromCollection"
+                }
+            ],
+            "double": [
+                {
+                    "narration": "Build table body",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-body",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "filePath": [
+                            "columns"
+                        ]
+                    },
+                    "func": "twoDimensional"
+                }
+            ],
+            "baseFromSpec": "tableWithFooter"
+        },
+        "bodyOnly": {
+            "rowOnColumn": [
+                {
+                    "narration": "Build table body",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "jsonPath": "$",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "destinationPath1": {
+                        "fileName": "base",
+                        "jsonPath": "$.children[0].children[?(@.attributes['data-role'] == 'table-body')]",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "templateKey": {
+                        "rowKey": "buildBodyTr",
+                        "columnKey": "buildBodyCell"
+                    }
+                }
+            ],
+            "options": {
+                "serial": [
+                    {
+                        "narration": "Prepend the serial column width to the table colgroup.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-colgroup",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "colGroupForSerial",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial header cell to the table header row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-header-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerSerialCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial number cell into each table body row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-body",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshiftSerialToRows"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "buildBodyCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial footer cell to the table footer row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-footer-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerSerialCell",
+                        "func": null
+                    }
+                ],
+                "options": [
+                    {
+                        "narration": "Append the options column width to the table colgroup.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-colgroup",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "colGroupForOption",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options header cell to the table header row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-header-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerForOption",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options button cell into each table body row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-body",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "pushToRows"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "optionsButtonCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options footer cell to the table footer row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-footer-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "tdWithButtonSaveWarning",
+                        "func": null
+                    }
+                ],
+                "search": [
+                    {
+                        "narration": "Prepend the search row to top of the table.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-parent",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "tableSearch",
+                        "func": null
+                    }
+                ]
+            },
+            "baseFromSpec": "tableBodyOnly"
+        },
+        "bodyOnly1": {
+            "single": [],
+            "double": [
+                {
+                    "narration": "Build table body",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-body",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "filePath": [
+                            "columns"
+                        ]
+                    },
+                    "func": "twoDimensional"
+                }
+            ],
+            "baseFromSpec": "tableBodyOnly1"
+        },
+        "footerOnly": {
+            "single": [
+                {
+                    "narration": "Build footer input cells",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-footer-row",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "filePath": [
+                            "columns"
+                        ]
+                    },
+                    "templateKey": "buildFooter",
+                    "func": "fromCollection"
+                }
+            ],
+            "double": [],
+            "baseFromSpec": "tableFooterOnly"
+        },
+        "headerOnly": {
+            "single": [
+                {
+                    "narration": "Build column widths",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "filePath": [
+                            "children"
+                        ],
+                        "jsonPath": "$..*[?@.attributes['data-role'] == 'table-colgroup']"
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "jsonPath": "$.columns"
+                    },
+                    "templateKey": "buildColGroup",
+                    "func": "fromCollection"
+                },
+                {
+                    "narration": "Build table header",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "filePath": [
+                            "children"
+                        ],
+                        "jsonPath": "$..*[?@.attributes['data-role'] == 'table-header-row']"
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "jsonPath": "$.columns"
+                    },
+                    "templateKey": "buildHeader",
+                    "func": "fromCollection"
+                }
+            ],
+            "options": {
+                "serial": [
+                    {
+                        "narration": "Prepend the serial column width to the table colgroup.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-colgroup",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "colGroupForSerial",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial header cell to the table header row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-header-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerSerialCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial number cell into each table body row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-body",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshiftSerialToRows"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "buildBodyCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial footer cell to the table footer row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-footer-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerSerialCell",
+                        "func": null
+                    }
+                ],
+                "options": [
+                    {
+                        "narration": "Append the options column width to the table colgroup.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-colgroup",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "colGroupForOption",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options header cell to the table header row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-header-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerForOption",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options button cell into each table body row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-body",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "pushToRows"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "optionsButtonCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options footer cell to the table footer row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-footer-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "tdWithButtonSaveWarning",
+                        "func": null
+                    }
+                ],
+                "search": [
+                    {
+                        "narration": "Prepend the search row to top of the table.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-parent",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "tableSearch",
+                        "func": null
+                    }
+                ]
+            },
+            "baseFromSpec": "tableHeaderOnly"
+        },
+        "headerOnly1": {
+            "single": [
+                {
+                    "narration": "Build column widths",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-colgroup",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "filePath": [
+                            "columns"
+                        ]
+                    },
+                    "templateKey": "buildColGroup",
+                    "func": "fromCollection"
+                },
+                {
+                    "narration": "Build table header",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-header-row",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "filePath": [
+                            "columns"
+                        ]
+                    },
+                    "templateKey": "buildHeader",
+                    "func": "fromCollection"
+                }
+            ],
+            "double": [],
+            "baseFromSpec": "tableHeaderOnly1"
+        },
+        "options": {
+            "serial": [
+                {
+                    "narration": "Prepend the serial column width to the table colgroup.",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-colgroup",
+                        "filePath": [
+                            "children"
+                        ],
+                        "action": "unshift"
+                    },
+                    "sourcePath": null,
+                    "templateKey": "colGroupForSerial",
+                    "func": null
+                },
+                {
+                    "narration": "Prepend the serial header cell to the table header row.",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-header-row",
+                        "filePath": [
+                            "children"
+                        ],
+                        "action": "unshift"
+                    },
+                    "sourcePath": null,
+                    "templateKey": "headerSerialCell",
+                    "func": null
+                },
+                {
+                    "narration": "Prepend the serial number cell into each table body row.",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-body",
+                        "filePath": [
+                            "children"
+                        ],
+                        "action": "unshiftSerialToRows"
+                    },
+                    "sourcePath": null,
+                    "templateKey": "buildBodyCell",
+                    "func": null
+                },
+                {
+                    "narration": "Prepend the serial footer cell to the table footer row.",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-footer-row",
+                        "filePath": [
+                            "children"
+                        ],
+                        "action": "unshift"
+                    },
+                    "sourcePath": null,
+                    "templateKey": "headerSerialCell",
+                    "func": null
+                }
+            ],
+            "options": [
+                {
+                    "narration": "Append the options column width to the table colgroup.",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-colgroup",
+                        "filePath": [
+                            "children"
+                        ],
+                        "action": "push"
+                    },
+                    "sourcePath": null,
+                    "templateKey": "colGroupForOption",
+                    "func": null
+                },
+                {
+                    "narration": "Append the options header cell to the table header row.",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-header-row",
+                        "filePath": [
+                            "children"
+                        ],
+                        "action": "push"
+                    },
+                    "sourcePath": null,
+                    "templateKey": "headerForOption",
+                    "func": null
+                },
+                {
+                    "narration": "Append the options button cell into each table body row.",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-body",
+                        "filePath": [
+                            "children"
+                        ],
+                        "action": "pushToRows"
+                    },
+                    "sourcePath": null,
+                    "templateKey": "optionsButtonCell",
+                    "func": null
+                },
+                {
+                    "narration": "Append the options footer cell to the table footer row.",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-footer-row",
+                        "filePath": [
+                            "children"
+                        ],
+                        "action": "push"
+                    },
+                    "sourcePath": null,
+                    "templateKey": "tdWithButtonSaveWarning",
+                    "func": null
+                }
+            ],
+            "search": [
+                {
+                    "narration": "Prepend the search row to top of the table.",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-parent",
+                        "filePath": [
+                            "children"
+                        ],
+                        "action": "unshift"
+                    },
+                    "sourcePath": null,
+                    "templateKey": "tableSearch",
+                    "func": null
+                }
+            ]
+        },
+        "headerAndFooter": {
+            "single": [
+                {
+                    "narration": "Build column widths",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-colgroup",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "filePath": [
+                            "columns"
+                        ]
+                    },
+                    "templateKey": "buildColGroup",
+                    "func": "fromCollection"
+                },
+                {
+                    "narration": "Build table header",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-header-row",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "filePath": [
+                            "columns"
+                        ]
+                    },
+                    "templateKey": "buildHeader",
+                    "func": "fromCollection"
+                }
+            ],
+            "double": [
+                {
+                    "narration": "Build table body",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-body",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "filePath": [
+                            "columns"
+                        ]
+                    },
+                    "templateKey": {
+                        "rowKey": "buildBodyTr",
+                        "columnKey": "buildBodyCell"
+                    },
+                    "func": "twoDimensional"
+                }
+            ],
+            "rowOnColumn": [
+                {
+                    "narration": "Build table body",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "table-body",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "templateKey": {
+                        "rowKey": "buildBodyTr",
+                        "columnKey": "buildBodyCell"
+                    }
+                }
+            ],
+            "options": {
+                "serial": [
+                    {
+                        "narration": "Prepend the serial column width to the table colgroup.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-colgroup",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "colGroupForSerial",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial header cell to the table header row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-header-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerSerialCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial number cell into each table body row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-body",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshiftSerialToRows"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "buildBodyCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial footer cell to the table footer row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-footer-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerSerialCell",
+                        "func": null
+                    }
+                ],
+                "options": [
+                    {
+                        "narration": "Append the options column width to the table colgroup.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-colgroup",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "colGroupForOption",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options header cell to the table header row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-header-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerForOption",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options button cell into each table body row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-body",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "pushToRows"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "optionsButtonCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options footer cell to the table footer row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-footer-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "tdWithButtonSaveWarning",
+                        "func": null
+                    }
+                ],
+                "search": [
+                    {
+                        "narration": "Prepend the search row to top of the table.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-parent",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "tableSearch",
+                        "func": null
+                    }
+                ]
+            },
+            "baseFromSpec": "tableHeaderAndFooter"
+        },
+        "withSearch": {
+            "baseFromSpec": "tableWithSearch",
+            "single": [
+                {
+                    "narration": "Build column widths",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "filePath": [
+                            "children"
+                        ],
+                        "jsonPath": "$..*[?@.attributes['data-role'] == 'table-colgroup']"
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "jsonPath": "$.columns"
+                    },
+                    "templateKey": "buildColGroup",
+                    "func": "fromCollection"
+                },
+                {
+                    "narration": "Build table header",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "filePath": [
+                            "children"
+                        ],
+                        "jsonPath": "$..*[?@.attributes['data-role'] == 'table-header-row']"
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "jsonPath": "$.columns"
+                    },
+                    "templateKey": "buildHeader",
+                    "func": "fromCollection"
+                }
+            ],
+            "rowOnColumn": [
+                {
+                    "narration": "Build table body",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "filePath": [
+                            "children"
+                        ],
+                        "jsonPath": "$..*[?@.attributes['data-role'] == 'table-body']"
+                    },
+                    "templateKey": {
+                        "rowKey": "buildBodyTr",
+                        "columnKey": "buildBodyCell"
+                    }
+                }
+            ],
+            "options": {
+                "serial": [
+                    {
+                        "narration": "Prepend the serial column width to the table colgroup.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-colgroup",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "colGroupForSerial",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial header cell to the table header row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-header-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerSerialCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial number cell into each table body row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-body",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshiftSerialToRows"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "buildBodyCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Prepend the serial footer cell to the table footer row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-footer-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerSerialCell",
+                        "func": null
+                    }
+                ],
+                "options": [
+                    {
+                        "narration": "Append the options column width to the table colgroup.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-colgroup",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "colGroupForOption",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options header cell to the table header row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-header-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "headerForOption",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options button cell into each table body row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-body",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "pushToRows"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "optionsButtonCell",
+                        "func": null
+                    },
+                    {
+                        "narration": "Append the options footer cell to the table footer row.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-footer-row",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "push"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "tdWithButtonSaveWarning",
+                        "func": null
+                    }
+                ],
+                "search": [
+                    {
+                        "narration": "Prepend the search row to top of the table.",
+                        "destinationPath": {
+                            "fileName": "base",
+                            "dataRole": "table-parent",
+                            "filePath": [
+                                "children"
+                            ],
+                            "action": "unshift"
+                        },
+                        "sourcePath": null,
+                        "templateKey": "tableSearch",
+                        "func": null
+                    }
+                ]
+            }
+        }
+    },
+    "select": {
+        "single": [
+            {
+                "narration": "Build select options",
+                "destinationPath": {
+                    "fileName": "base",
+                    "filePath": [
+                        "children"
+                    ]
+                },
+                "sourcePath": {
+                    "fileName": "data",
+                    "filePath": [
+                        "data"
+                    ]
+                },
+                "templateKey": "buildOption",
+                "func": "fromCollection"
+            }
+        ],
+        "double": [],
+        "columnOnRow": [
+            {
+                "narration": "Build selects with options",
+                "destinationPath": {
+                    "fileName": "base",
+                    "filePath": [
+                        "children"
+                    ]
+                },
+                "templateKey": {
+                    "columnKey": "buildSelect",
+                    "rowKey": "buildOption"
+                }
+            }
+        ],
+        "baseFromSpec": "selectBase"
+    },
+    "dataList": {
+        "simple": {
+            "single": [],
+            "double": [],
+            "columnOnRow": [
+                {
+                    "narration": "Build datalists with options",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "templateKey": {
+                        "columnKey": "buildDataList",
+                        "rowKey": "buildOption"
+                    }
+                }
+            ],
+            "baseFromSpec": "dataListSimple"
+        },
+        "single": [],
+        "double": [],
+        "columnOnRow": [
+            {
+                "narration": "Build datalists with options",
+                "destinationPath": {
+                    "fileName": "base",
+                    "filePath": [
+                        "children"
+                    ]
+                },
+                "templateKey": {
+                    "columnKey": "buildDataList",
+                    "rowKey": "buildOption"
+                }
+            }
+        ],
+        "baseFromSpec": "dataListBase"
+    },
+    "selectOptionsOnly": {
+        "single": [
+            {
+                "narration": "Build options array",
+                "destinationPath": {
+                    "fileName": "base",
+                    "filePath": []
+                },
+                "sourcePath": {
+                    "fileName": "data",
+                    "filePath": [
+                        "data"
+                    ]
+                },
+                "templateKey": "buildOption",
+                "func": "fromCollection"
+            }
+        ],
+        "double": [],
+        "baseFromSpec": "selectOptionsOnlyBase"
+    },
+    "searchInput": {
+        "single": [],
+        "double": [],
+        "baseFromSpec": "searchInputBase"
+    },
+    "form": {
+        "simple": {
+            "single": [
+                {
+                    "narration": "Build form fields from columns",
+                    "destinationPath": {
+                        "fileName": "base",
+                        "dataRole": "form-body",
+                        "filePath": [
+                            "children"
+                        ]
+                    },
+                    "sourcePath": {
+                        "fileName": "data",
+                        "filePath": [
+                            "columns"
+                        ]
+                    },
+                    "templateKey": "buildFormField",
+                    "func": "fromCollection"
+                }
+            ],
+            "double": [],
+            "baseFromSpec": "formSimple"
+        },
+        "single": [
+            {
+                "narration": "Build form fields from columns",
+                "destinationPath": {
+                    "fileName": "base",
+                    "dataRole": "form-body",
+                    "filePath": [
+                        "children"
+                    ]
+                },
+                "sourcePath": {
+                    "fileName": "data",
+                    "filePath": [
+                        "columns"
+                    ]
+                },
+                "templateKey": "buildFormField",
+                "func": "fromCollection"
+            }
+        ],
+        "double": [],
+        "baseFromSpec": "formBase"
+    }
+}
