@@ -1254,9 +1254,9 @@ var e = {
 			narration: "Prepend the serial column width to the table colgroup.",
 			destinationPath: {
 				fileName: "base",
-				dataRole: "table-colgroup",
 				filePath: ["children"],
-				action: "unshift"
+				action: "unshift",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-colgroup']"
 			},
 			sourcePath: null,
 			templateKey: "colGroupForSerial",
@@ -1266,9 +1266,9 @@ var e = {
 			narration: "Prepend the serial header cell to the table header row.",
 			destinationPath: {
 				fileName: "base",
-				dataRole: "table-header-row",
 				filePath: ["children"],
-				action: "unshift"
+				action: "unshift",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-header-row']"
 			},
 			sourcePath: null,
 			templateKey: "headerSerialCell",
@@ -1278,9 +1278,9 @@ var e = {
 			narration: "Prepend the serial number cell into each table body row.",
 			destinationPath: {
 				fileName: "base",
-				dataRole: "table-body",
 				filePath: ["children"],
-				action: "unshiftSerialToRows"
+				action: "unshiftSerialToRows",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-body']"
 			},
 			sourcePath: null,
 			templateKey: "buildBodyCell",
@@ -1290,9 +1290,9 @@ var e = {
 			narration: "Prepend the serial footer cell to the table footer row.",
 			destinationPath: {
 				fileName: "base",
-				dataRole: "table-footer-row",
 				filePath: ["children"],
-				action: "unshift"
+				action: "unshift",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-footer-row']"
 			},
 			sourcePath: null,
 			templateKey: "headerSerialCell",
@@ -1304,9 +1304,9 @@ var e = {
 			narration: "Append the options column width to the table colgroup.",
 			destinationPath: {
 				fileName: "base",
-				dataRole: "table-colgroup",
 				filePath: ["children"],
-				action: "push"
+				action: "push",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-colgroup']"
 			},
 			sourcePath: null,
 			templateKey: "colGroupForOption",
@@ -1316,9 +1316,9 @@ var e = {
 			narration: "Append the options header cell to the table header row.",
 			destinationPath: {
 				fileName: "base",
-				dataRole: "table-header-row",
 				filePath: ["children"],
-				action: "push"
+				action: "push",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-header-row']"
 			},
 			sourcePath: null,
 			templateKey: "headerForOption",
@@ -1328,9 +1328,9 @@ var e = {
 			narration: "Append the options button cell into each table body row.",
 			destinationPath: {
 				fileName: "base",
-				dataRole: "table-body",
 				filePath: ["children"],
-				action: "pushToRows"
+				action: "pushToRows",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-body']"
 			},
 			sourcePath: null,
 			templateKey: "optionsButtonCell",
@@ -1340,9 +1340,9 @@ var e = {
 			narration: "Append the options footer cell to the table footer row.",
 			destinationPath: {
 				fileName: "base",
-				dataRole: "table-footer-row",
 				filePath: ["children"],
-				action: "push"
+				action: "push",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-footer-row']"
 			},
 			sourcePath: null,
 			templateKey: "tdWithButtonSaveWarning",
@@ -1353,9 +1353,9 @@ var e = {
 		narration: "Prepend the search row to top of the table.",
 		destinationPath: {
 			fileName: "base",
-			dataRole: "table-parent",
 			filePath: ["children"],
-			action: "unshift"
+			action: "unshift",
+			jsonPath: "$..*[?@.attributes['data-role'] == 'table-parent']"
 		},
 		sourcePath: null,
 		templateKey: "tableSearch",

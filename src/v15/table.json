@@ -1,0 +1,200 @@
+{
+    "buildColgroup": {
+        "type": "single",
+        "narration": "Build column widths",
+        "destinationPath": {
+            "fileName": "base",
+            "filePath": [
+                "children"
+            ],
+            "jsonPath": "$..*[?@.attributes['data-role'] == 'table-colgroup']"
+        },
+        "sourcePath": {
+            "fileName": "data",
+            "jsonPath": "$.columns"
+        },
+        "templateKey": "buildColGroup",
+        "func": "fromCollection"
+    },
+    "buildHeader": {
+        "type": "single",
+        "narration": "Build table header",
+        "destinationPath": {
+            "fileName": "base",
+            "filePath": [
+                "children"
+            ],
+            "jsonPath": "$..*[?@.attributes['data-role'] == 'table-header-row']"
+        },
+        "sourcePath": {
+            "fileName": "data",
+            "jsonPath": "$.columns"
+        },
+        "templateKey": "buildHeader",
+        "func": "fromCollection"
+    },
+    "buildFooter": {
+        "type": "single",
+        "narration": "Build table footer",
+        "destinationPath": {
+            "fileName": "base",
+            "filePath": [
+                "children"
+            ],
+            "jsonPath": "$..*[?@.attributes['data-role'] == 'table-footer-row']"
+        },
+        "sourcePath": {
+            "fileName": "data",
+            "jsonPath": "$.columns"
+        },
+        "templateKey": "buildFooter",
+        "func": "fromCollection"
+    },
+    "buildBody": {
+        "type": "rowOnColumn",
+        "narration": "Build table body",
+        "destinationPath": {
+            "fileName": "base",
+            "filePath": [
+                "children"
+            ],
+            "jsonPath": "$..*[?@.attributes['data-role'] == 'table-body']"
+        },
+        "templateKey": {
+            "rowKey": "buildBodyTr",
+            "columnKey": "buildBodyCell"
+        }
+    },
+    "serial": [
+        {
+            "narration": "Prepend the serial column width to the table colgroup.",
+            "destinationPath": {
+                "fileName": "base",
+                "filePath": [
+                    "children"
+                ],
+                "action": "unshift",
+                "jsonPath": "$..*[?@.attributes['data-role'] == 'table-colgroup']"
+            },
+            "sourcePath": null,
+            "templateKey": "colGroupForSerial",
+            "func": null
+        },
+        {
+            "narration": "Prepend the serial header cell to the table header row.",
+            "destinationPath": {
+                "fileName": "base",
+                "filePath": [
+                    "children"
+                ],
+                "action": "unshift",
+                "jsonPath": "$..*[?@.attributes['data-role'] == 'table-header-row']"
+            },
+            "sourcePath": null,
+            "templateKey": "headerSerialCell",
+            "func": null
+        },
+        {
+            "narration": "Prepend the serial number cell into each table body row.",
+            "destinationPath": {
+                "fileName": "base",
+                "filePath": [
+                    "children"
+                ],
+                "action": "unshiftSerialToRows",
+                "jsonPath": "$..*[?@.attributes['data-role'] == 'table-body']"
+            },
+            "sourcePath": null,
+            "templateKey": "buildBodyCell",
+            "func": null
+        },
+        {
+            "narration": "Prepend the serial footer cell to the table footer row.",
+            "destinationPath": {
+                "fileName": "base",
+                "filePath": [
+                    "children"
+                ],
+                "action": "unshift",
+                "jsonPath": "$..*[?@.attributes['data-role'] == 'table-footer-row']"
+            },
+            "sourcePath": null,
+            "templateKey": "headerSerialCell",
+            "func": null
+        }
+    ],
+    "options": [
+        {
+            "narration": "Append the options column width to the table colgroup.",
+            "destinationPath": {
+                "fileName": "base",
+                "filePath": [
+                    "children"
+                ],
+                "action": "push",
+                "jsonPath": "$..*[?@.attributes['data-role'] == 'table-colgroup']"
+            },
+            "sourcePath": null,
+            "templateKey": "colGroupForOption",
+            "func": null
+        },
+        {
+            "narration": "Append the options header cell to the table header row.",
+            "destinationPath": {
+                "fileName": "base",
+                "filePath": [
+                    "children"
+                ],
+                "action": "push",
+                "jsonPath": "$..*[?@.attributes['data-role'] == 'table-header-row']"
+            },
+            "sourcePath": null,
+            "templateKey": "headerForOption",
+            "func": null
+        },
+        {
+            "narration": "Append the options button cell into each table body row.",
+            "destinationPath": {
+                "fileName": "base",
+                "filePath": [
+                    "children"
+                ],
+                "action": "pushToRows",
+                "jsonPath": "$..*[?@.attributes['data-role'] == 'table-body']"
+            },
+            "sourcePath": null,
+            "templateKey": "optionsButtonCell",
+            "func": null
+        },
+        {
+            "narration": "Append the options footer cell to the table footer row.",
+            "destinationPath": {
+                "fileName": "base",
+                "filePath": [
+                    "children"
+                ],
+                "action": "push",
+                "jsonPath": "$..*[?@.attributes['data-role'] == 'table-footer-row']"
+            },
+            "sourcePath": null,
+            "templateKey": "tdWithButtonSaveWarning",
+            "func": null
+        }
+    ],
+    "search": [
+        {
+            "narration": "Prepend the search row to top of the table.",
+            "destinationPath": {
+                "fileName": "base",
+                "filePath": [
+                    "children"
+                ],
+                "action": "unshift",
+                "jsonPath": "$..*[?@.attributes['data-role'] == 'table-parent']"
+            },
+            "sourcePath": null,
+            "templateKey": "tableSearch",
+            "func": null
+        }
+    ]
+}

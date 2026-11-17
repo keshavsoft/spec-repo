@@ -1,0 +1,16 @@
+{
+    "buildDataListWithOptions": {
+        "type": "columnOnRow",
+        "narration": "Build datalists with options",
+        "destinationPath": {
+            "fileName": "base",
+            "filePath": [
+                "children"
+            ]
+        },
+        "templateKey": {
+            "columnKey": "buildDataList",
+            "rowKey": "buildOption"
+        }
+    }
+}

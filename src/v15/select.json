@@ -1,0 +1,50 @@
+{
+    "buildSelectWithOptions": {
+        "type": "columnOnRow",
+        "narration": "Build selects with options",
+        "destinationPath": {
+            "fileName": "base",
+            "filePath": [
+                "children"
+            ]
+        },
+        "templateKey": {
+            "columnKey": "buildSelect",
+            "rowKey": "buildOption"
+        }
+    },
+    "buildSelectOptions": {
+        "type": "single",
+        "narration": "Build select options",
+        "destinationPath": {
+            "fileName": "base",
+            "filePath": [
+                "children"
+            ]
+        },
+        "sourcePath": {
+            "fileName": "data",
+            "filePath": [
+                "data"
+            ]
+        },
+        "templateKey": "buildOption",
+        "func": "fromCollection"
+    },
+    "buildOptionsArray": {
+        "type": "single",
+        "narration": "Build options array",
+        "destinationPath": {
+            "fileName": "base",
+            "filePath": []
+        },
+        "sourcePath": {
+            "fileName": "data",
+            "filePath": [
+                "data"
+            ]
+        },
+        "templateKey": "buildOption",
+        "func": "fromCollection"
+    }
+}

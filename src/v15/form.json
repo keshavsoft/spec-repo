@@ -1,0 +1,21 @@
+{
+    "buildFormField": {
+        "type": "single",
+        "narration": "Build form fields from columns",
+        "destinationPath": {
+            "fileName": "base",
+            "dataRole": "form-body",
+            "filePath": [
+                "children"
+            ]
+        },
+        "sourcePath": {
+            "fileName": "data",
+            "filePath": [
+                "columns"
+            ]
+        },
+        "templateKey": "buildFormField",
+        "func": "fromCollection"
+    }
+}
