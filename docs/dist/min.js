@@ -324,21 +324,6 @@ var e = {
 						id: "table-simple-body-id"
 					},
 					children: []
-				},
-				{
-					tagName: "tfoot",
-					attributes: {
-						"data-role": "table-footer",
-						id: "table-simple-footer-id"
-					},
-					children: [{
-						tagName: "tr",
-						attributes: {
-							"data-role": "table-footer-row",
-							id: "table-simple-footer-row-id"
-						},
-						children: []
-					}]
 				}
 			]
 		}]
@@ -1429,7 +1414,7 @@ var e = {
 	}
 } }, c = {
 	name: "spec-repo",
-	version: "1.14.0"
+	version: "1.16.1"
 }, l = ({ spec: e, tags: t, tagsSchema: n, definitions: r, table: i }) => {
 	typeof globalThis < "u" && e && t && n && r && (globalThis.ks ??= {}, globalThis.ks.specs ??= {}, globalThis.ks.specs.jsonFiles = {
 		meta: c,

@@ -1,0 +1,165 @@
+{
+    "table": {
+        "simple": {
+            "baseFromSpec": "tableSimple",
+            "instructions": [
+                "buildColgroup",
+                "buildHeader",
+                "buildBody"
+            ],
+            "options": {
+                "serial": "serial",
+                "options": "options",
+                "search": "search"
+            }
+        },
+        "withFooter": {
+            "baseFromSpec": "tableWithFooter",
+            "instructions": [
+                "buildColgroup",
+                "buildHeader",
+                "buildFooter",
+                "buildBody"
+            ],
+            "options": {
+                "serial": "serial",
+                "options": "options",
+                "search": "search"
+            }
+        },
+        "bodyOnly": {
+            "baseFromSpec": "tableBodyOnly",
+            "instructions": [
+                "buildBody"
+            ],
+            "options": {
+                "serial": "serial",
+                "options": "options"
+            }
+        },
+        "bodyOnly1": {
+            "baseFromSpec": "tableBodyOnly1",
+            "instructions": []
+        },
+        "footerOnly": {
+            "baseFromSpec": "tableFooterOnly",
+            "instructions": [
+                "buildFooter"
+            ]
+        },
+        "headerOnly": {
+            "baseFromSpec": "tableHeaderOnly",
+            "instructions": [
+                "buildColgroup",
+                "buildHeader"
+            ],
+            "options": {
+                "serial": "serial",
+                "options": "options",
+                "search": "search"
+            }
+        },
+        "headerOnly1": {
+            "baseFromSpec": "tableHeaderOnly1",
+            "instructions": [
+                "buildColgroup",
+                "buildHeader"
+            ]
+        },
+        "options": {
+            "instructions": [],
+            "options": {
+                "serial": "serial",
+                "options": "options",
+                "search": "search"
+            }
+        },
+        "headerAndFooter": {
+            "baseFromSpec": "tableHeaderAndFooter",
+            "instructions": [
+                "buildColgroup",
+                "buildHeader",
+                "buildFooter",
+                "buildBody"
+            ],
+            "options": {
+                "serial": "serial",
+                "options": "options",
+                "search": "search"
+            }
+        },
+        "withSearch": {
+            "baseFromSpec": "tableWithSearch",
+            "instructions": [
+                "buildColgroup",
+                "buildHeader",
+                "buildBody"
+            ],
+            "options": {
+                "serial": "serial",
+                "options": "options",
+                "search": "search"
+            }
+        },
+        "withSearchAndFooter": {
+            "baseFromSpec": "tableWithSearch",
+            "instructions": [
+                "buildColgroup",
+                "buildHeader",
+                "buildFooter",
+                "buildBody"
+            ],
+            "options": {
+                "serial": "serial",
+                "options": "options",
+                "search": "search"
+            }
+        }
+    },
+    "select": {
+        "simple": {
+            "baseFromSpec": "selectBase",
+            "instructions": [
+                "buildSelectWithOptions"
+            ]
+        },
+        "baseFromSpec": "selectBase",
+        "instructions": [
+            "buildSelectWithOptions"
+        ]
+    },
+    "dataList": {
+        "simple": {
+            "baseFromSpec": "dataListSimple",
+            "instructions": [
+                "buildDataListWithOptions"
+            ]
+        },
+        "baseFromSpec": "dataListBase",
+        "instructions": [
+            "buildDataListWithOptions"
+        ]
+    },
+    "selectOptionsOnly": {
+        "baseFromSpec": "selectOptionsOnlyBase",
+        "instructions": [
+            "buildOptionsArray"
+        ]
+    },
+    "searchInput": {
+        "baseFromSpec": "searchInputBase",
+        "instructions": []
+    },
+    "form": {
+        "simple": {
+            "baseFromSpec": "formSimple",
+            "instructions": [
+                "buildFormField"
+            ]
+        },
+        "baseFromSpec": "formBase",
+        "instructions": [
+            "buildFormField"
+        ]
+    }
+}
