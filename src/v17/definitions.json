@@ -37,10 +37,6 @@
                 "options": "options"
             }
         },
-        "bodyOnly1": {
-            "baseFromSpec": "tableBodyOnly1",
-            "instructions": []
-        },
         "footerOnly": {
             "baseFromSpec": "tableFooterOnly",
             "instructions": [
@@ -58,13 +54,6 @@
                 "options": "options",
                 "search": "search"
             }
-        },
-        "headerOnly1": {
-            "baseFromSpec": "tableHeaderOnly1",
-            "instructions": [
-                "buildColgroup",
-                "buildHeader"
-            ]
         },
         "options": {
             "instructions": [],

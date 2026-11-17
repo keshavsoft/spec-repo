@@ -356,23 +356,6 @@
                                     "id": "table-simple-body-id"
                                 },
                                 "children": []
-                            },
-                            {
-                                "tagName": "tfoot",
-                                "attributes": {
-                                    "data-role": "table-footer",
-                                    "id": "table-simple-footer-id"
-                                },
-                                "children": [
-                                    {
-                                        "tagName": "tr",
-                                        "attributes": {
-                                            "data-role": "table-footer-row",
-                                            "id": "table-simple-footer-row-id"
-                                        },
-                                        "children": []
-                                    }
-                                ]
                             }
                         ]
                     }
