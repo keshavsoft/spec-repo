@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Build Select Dropdowns — spec-repo Documentation</title>
+  <meta name="description" content="Declarative guide on building native HTML select dropdowns, single options, and nested options using spec-repo.">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="docs-header">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon">{ }</div>
+      <span class="brand-name">spec-repo</span>
+      <span class="brand-tag">Docs</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="../story/index.html" class="nav-link">The Story</a>
+      <a href="../usage/index.html" class="nav-link">How It Works</a>
+      <a href="../table/index.html" class="nav-link">Table</a>
+      <a href="index.html" class="nav-link active">Select</a>
+      <a href="../datalist/index.html" class="nav-link">Datalist</a>
+      <a href="../monaco.html" class="nav-link btn-playground">Monaco Explorer</a>
+    </nav>
+  </header>
+
+  <div class="docs-container">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-heading">Navigation</div>
+      <ul class="sidebar-menu">
+        <li><a href="../index.html">Overview & Hub</a></li>
+        <li><a href="../story/index.html">The Story of spec-repo</a></li>
+        <li><a href="../usage/index.html">Usage & Architecture</a></li>
+      </ul>
+
+      <div class="sidebar-heading">Component Guides</div>
+      <ul class="sidebar-menu">
+        <li><a href="../table/index.html">Building Tables</a></li>
+        <li><a href="index.html" class="active">Building Selects</a></li>
+        <li><a href="../datalist/index.html">Building Datalists</a></li>
+      </ul>
+
+      <div class="sidebar-heading">Interactive</div>
+      <ul class="sidebar-menu">
+        <li><a href="../monaco.html">Monaco Playground</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-content">
+      <h1>How to Build Select Dropdowns</h1>
+      <p class="lead">Generate clean, accessible HTML <code>&lt;select&gt;</code> elements and option collections using declarative blueprints.</p>
+
+      <h2>1. The Select Specifications</h2>
+      <p>
+        Building dropdowns in <code>spec-repo</code> relies on two foundational tag specifications:
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">1. The Select Container (<code>buildSelect</code>)</div>
+          <div class="card-desc">Defines the root <code>&lt;select&gt;</code> element with Bootstrap form-control classes and aria attributes.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">2. The Option Item (<code>buildOption</code>)</div>
+          <div class="card-desc">Defines <code>&lt;option value="${rowValue}"&gt;${rowValue}&lt;/option&gt;</code> with value binding.</div>
+        </div>
+      </div>
+
+      <h3>Raw Blueprints</h3>
+<pre><code>// 1. spec.buildSelect
+{
+  "tagName": "select",
+  "attributes": {
+    "class": "form-select",
+    "aria-label": "Select Option"
+  },
+  "children": []
+}
+
+// 2. spec.buildOption
+{
+  "tagName": "option",
+  "textContent": "${rowValue}",
+  "attributes": {
+    "value": "${rowValue}"
+  }
+}</code></pre>
+
+      <h2>2. Assembly Instructions for Select</h2>
+      <p>
+        From <code>src/v17/instructions.json</code> and <code>definitions.json</code>, there are three modes to build selects:
+      </p>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Instruction</th>
+              <th>Type</th>
+              <th>Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>buildSelectWithOptions</code></td>
+              <td><code>columnOnRow</code></td>
+              <td>Constructs the outer <code>&lt;select&gt;</code> container and populates all <code>&lt;option&gt;</code> children from the data source in one pass.</td>
+            </tr>
+            <tr>
+              <td><code>buildSelectOptions</code></td>
+              <td><code>single</code></td>
+              <td>Populates options into an existing pre-rendered <code>&lt;select&gt;</code> base AST.</td>
+            </tr>
+            <tr>
+              <td><code>buildOptionsArray</code></td>
+              <td><code>single</code></td>
+              <td>Generates a standalone array of option tags without an enclosing <code>&lt;select&gt;</code> (useful for dynamic option refreshes).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>3. Code Example: Compiling a Select Dropdown</h2>
+
+<pre><code>import { spec, definitions } from "spec-repo";
+
+function createSelectDropdown({ inItems, inSelectedValue }) {
+  // 1. Clone the select template
+  const selectAst = JSON.parse(JSON.stringify(spec.buildSelect));
+
+  // 2. Iterate through items and hydrate buildOption tags
+  inItems.forEach(item => {
+    const value = typeof item === "string" ? item : item.value;
+    const label = typeof item === "string" ? item : item.label;
+
+    const optionAst = {
+      tagName: "option",
+      textContent: label,
+      attributes: {
+        value: value
+      }
+    };
+
+    if (value === inSelectedValue) {
+      optionAst.attributes.selected = "selected";
+    }
+
+    selectAst.children.push(optionAst);
+  });
+
+  return selectAst;
+}
+
+// Sample Usage:
+const dropdown = createSelectDropdown({
+  inItems: ["Pending", "In Review", "Approved", "Rejected"],
+  inSelectedValue: "Approved"
+});
+
+console.log(dropdown);</code></pre>
+
+      <h2>4. Produced Virtual AST & Resulting HTML</h2>
+      <p>The compiler generates this standard AST:</p>
+
+<pre><code>{
+  "tagName": "select",
+  "attributes": {
+    "class": "form-select",
+    "aria-label": "Select Option"
+  },
+  "children": [
+    { "tagName": "option", "textContent": "Pending", "attributes": { "value": "Pending" } },
+    { "tagName": "option", "textContent": "In Review", "attributes": { "value": "In Review" } },
+    { "tagName": "option", "textContent": "Approved", "attributes": { "value": "Approved", "selected": "selected" } },
+    { "tagName": "option", "textContent": "Rejected", "attributes": { "value": "Rejected" } }
+  ]
+}</code></pre>
+
+      <p>Which renders into native browser DOM:</p>
+
+<pre><code>&lt;select class="form-select" aria-label="Select Option"&gt;
+  &lt;option value="Pending"&gt;Pending&lt;/option&gt;
+  &lt;option value="In Review"&gt;In Review&lt;/option&gt;
+  &lt;option value="Approved" selected="selected"&gt;Approved&lt;/option&gt;
+  &lt;option value="Rejected"&gt;Rejected&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+
+      <div class="callout callout-success">
+        <div class="callout-title">Next: High-Speed Native Autocompletion</div>
+        <p>Explore how datalists enable native search and autocomplete without bulky JavaScript widget libraries:</p>
+        <p>&rarr; <a href="../datalist/index.html"><strong>Building Datalists</strong></a></p>
+      </div>
+    </main>
+  </div>
+
+  <footer class="docs-footer">
+    <p>spec-repo &bull; Zero-dependency declarative JSON tag specification catalog &bull; <a href="https://github.com/keshavsoft/spec-repo">GitHub Repository</a></p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Story of spec-repo — Declarative Tag Architecture</title>
+  <meta name="description" content="A small story on how and why spec-repo was built, decoupling UI tag specifications from imperative compiler engines.">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="docs-header">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon">{ }</div>
+      <span class="brand-name">spec-repo</span>
+      <span class="brand-tag">Docs</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="index.html" class="nav-link active">The Story</a>
+      <a href="../usage/index.html" class="nav-link">How It Works</a>
+      <a href="../table/index.html" class="nav-link">Table</a>
+      <a href="../select/index.html" class="nav-link">Select</a>
+      <a href="../datalist/index.html" class="nav-link">Datalist</a>
+      <a href="../monaco.html" class="nav-link btn-playground">Monaco Explorer</a>
+    </nav>
+  </header>
+
+  <div class="docs-container">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-heading">Navigation</div>
+      <ul class="sidebar-menu">
+        <li><a href="../index.html">Overview & Hub</a></li>
+        <li><a href="index.html" class="active">The Story of spec-repo</a></li>
+        <li><a href="../usage/index.html">Usage & Architecture</a></li>
+      </ul>
+
+      <div class="sidebar-heading">Component Guides</div>
+      <ul class="sidebar-menu">
+        <li><a href="../table/index.html">Building Tables</a></li>
+        <li><a href="../select/index.html">Building Selects</a></li>
+        <li><a href="../datalist/index.html">Building Datalists</a></li>
+      </ul>
+
+      <div class="sidebar-heading">Interactive</div>
+      <ul class="sidebar-menu">
+        <li><a href="../monaco.html">Monaco Playground</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-content">
+      <h1>The Story of spec-repo</h1>
+      <p class="lead">How a quest for zero-overhead, declarative UI generation sparked the separation of HTML blueprints from compiler engines.</p>
+
+      <div class="callout">
+        <div class="callout-title">The Core Philosophy</div>
+        <p><strong>Decouple tag design from the compiler engine.</strong> Your DOM specifications should be pure, serializable JSON—free of imperative JavaScript logic, runtime dependencies, or template string chaos.</p>
+      </div>
+
+      <h2>Chapter 1: The Imperative Trap</h2>
+      <p>
+        In modern web development, generating dynamic tables, forms, and select inputs typically forces a painful compromise:
+      </p>
+      <ul>
+        <li><strong>Heavy Virtual DOM Frameworks</strong>: Shipping megabytes of runtime libraries just to render structured tabular data.</li>
+        <li><strong>Messy Template Literals</strong>: String-concatenating HTML strings (<code>`&lt;tr&gt;&lt;td&gt;${val}&lt;/td&gt;&lt;/tr&gt;`</code>), creating brittle escaping bugs, missing closing tags, and zero static validation.</li>
+        <li><strong>Imperative JavaScript Builders</strong>: Nesting dozens of <code>document.createElement()</code> and <code>element.setAttribute()</code> calls that marry UI appearance directly into business logic.</li>
+      </ul>
+      <p>
+        Whenever designers wanted to adjust a table's padding class or change an input type, they had to open complex JavaScript compiler files. There was no single source of truth.
+      </p>
+
+      <h2>Chapter 2: The Declarative Revelation</h2>
+      <p>
+        The breakthrough came with a fundamental question: <em>What if an HTML structure was simply a pure JSON data structure?</em>
+      </p>
+      <p>
+        Instead of writing code that creates a tag, what if we define the tag as pure data:
+      </p>
+
+<pre><code>{
+  "tagName": "th",
+  "textContent": "${columnName}",
+  "attributes": {
+    "class": "py-3 px-3 fw-semibold text-uppercase small"
+  }
+}</code></pre>
+
+      <p>
+        Notice what happened:
+      </p>
+      <ol>
+        <li><strong>Zero Runtime Dependencies</strong>: It is just JSON. It can be stored in a file, fetched over an API, cached, versioned, or generated dynamically.</li>
+        <li><strong>Dynamic Interpolation Tokens</strong>: <code>${columnName}</code> and <code>${rowValue}</code> act as declarative placeholders waiting for live data hydration.</li>
+        <li><strong>Complete Engine Agnosticism</strong>: Any compiler engine—such as <code>spec-to-dom</code>, <code>json-to-dom</code>, or <code>json-to-tag</code>—can ingest this blueprint and assemble native DOM elements.</li>
+      </ol>
+
+      <h2>Chapter 3: The Triad Architecture (Tags + Instructions + Definitions)</h2>
+      <p>
+        As the system scaled to enterprise dashboards, a tag blueprint alone was not enough. Real-world applications need to know <strong>where</strong> to place rows, <strong>how</strong> to iterate through collections, and <strong>how</strong> to compose complex widgets.
+      </p>
+      <p>
+        This led to the canonical 3-tier architecture found in <code>spec-repo</code> today:
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">🏷️</div>
+          <div class="card-title">1. Tags & Spec</div>
+          <div class="card-desc">The atomic HTML building blocks (<code>spec.json</code> / <code>tags.json</code>). Defines tags, attributes, and text tokens.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <div class="card-title">2. Instructions</div>
+          <div class="card-desc">The assembly directives (<code>instructions.json</code>). Maps source data paths to target DOM paths via JSONPath queries.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📦</div>
+          <div class="card-title">3. Definitions</div>
+          <div class="card-desc">High-level component recipes (<code>definitions.json</code>). Bundles base templates with instruction lists and feature toggles.</div>
+        </div>
+      </div>
+
+      <h2>Chapter 4: The Evolution Across 17 Iterations</h2>
+      <p>
+        <code>spec-repo</code> did not happen overnight. Its version history (from <code>v1</code> through <code>v17</code>) reflects deep real-world battle-testing:
+      </p>
+      <ul>
+        <li><strong>v1 – v5</strong>: Focused on basic table rows and column sizing specifications.</li>
+        <li><strong>v6 – v12</strong>: Introduced data-role query selectors, footer aggregations, and datalist autocompletion.</li>
+        <li><strong>v13 – v16</strong>: Modularized specifications into discrete units (<code>table.json</code>, <code>select.json</code>, <code>dataList.json</code>, <code>form.json</code>).</li>
+        <li><strong>v17 (Current)</strong>: Unified instruction engine with JSONPath selectors (<code>jsonpathly</code>), pluggable feature options (serial numbering, actions column, search bar), and global registration support.</li>
+      </ul>
+
+      <h2>Chapter 5: What Lies Ahead</h2>
+      <p>
+        Today, <code>spec-repo</code> serves as the foundation for high-performance data grids, form generators, and micro-frontend architectures. By keeping specifications clean, declarative, and decoupled, developers can build reactive, beautiful web interfaces at maximum speed and minimal bundle size.
+      </p>
+
+      <div class="callout callout-success">
+        <div class="callout-title">Ready to dive into the implementation?</div>
+        <p>Explore <a href="../usage/index.html"><strong>How It Works & Repo Usage</strong></a> or jump straight to the <a href="../table/index.html"><strong>Table Builder Guide</strong></a>.</p>
+      </div>
+    </main>
+  </div>
+
+  <footer class="docs-footer">
+    <p>spec-repo &bull; Zero-dependency declarative JSON tag specification catalog &bull; <a href="https://github.com/keshavsoft/spec-repo">GitHub Repository</a></p>
+  </footer>
+
+</body>
+</html>
