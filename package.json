@@ -1,6 +1,6 @@
 {
   "name": "spec-repo",
-  "version": "1.17.2",
+  "version": "1.17.3",
   "description": "Zero-dependency declarative JSON-to-DOM compiler. Transform JSON specifications into native browser DOM elements via a multi-stage assembly pipeline with built-in tag catalog validation.",
   "publishConfig": {
     "access": "public"
@@ -43,6 +43,7 @@
     "url": "https://github.com/keshavsoft/spec-repo/issues"
   },
   "homepage": "https://keshavsoft.github.io/spec-repo/",
-  "devDependencies": {},
-  "dependencies": {}
+  "devDependencies": {
+    "jsonpathly": "^4.0.0"
+  }
 }

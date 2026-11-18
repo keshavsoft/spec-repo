@@ -1,4 +1,191 @@
 var e = {
+	table: {
+		simple: {
+			baseFromSpec: "tableSimple",
+			instructions: [
+				"buildColgroup",
+				"buildHeader",
+				"buildBody"
+			],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		},
+		withFooter: {
+			baseFromSpec: "tableWithFooter",
+			instructions: [
+				"buildColgroup",
+				"buildHeader",
+				"buildFooter",
+				"buildBody"
+			],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		},
+		bodyOnly: {
+			baseFromSpec: "tableBodyOnly",
+			instructions: ["buildBody"],
+			options: {
+				serial: "serial",
+				options: "options"
+			}
+		},
+		footerOnly: {
+			baseFromSpec: "tableFooterOnly",
+			instructions: ["buildFooter"]
+		},
+		headerOnly: {
+			baseFromSpec: "tableHeaderOnly",
+			instructions: ["buildColgroup", "buildHeader"],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		},
+		options: {
+			instructions: [],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		},
+		headerAndFooter: {
+			baseFromSpec: "tableHeaderAndFooter",
+			instructions: [
+				"buildColgroup",
+				"buildHeader",
+				"buildFooter",
+				"buildBody"
+			],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		},
+		withSearch: {
+			baseFromSpec: "tableWithSearch",
+			instructions: [
+				"buildColgroup",
+				"buildHeader",
+				"buildBody"
+			],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		},
+		withSearchAndFooter: {
+			baseFromSpec: "tableWithSearch",
+			instructions: [
+				"buildColgroup",
+				"buildHeader",
+				"buildFooter",
+				"buildBody"
+			],
+			options: {
+				serial: "serial",
+				options: "options",
+				search: "search"
+			}
+		}
+	},
+	select: {
+		simple: {
+			baseFromSpec: "selectBase",
+			instructions: ["buildSelectWithOptions"]
+		},
+		baseFromSpec: "selectBase",
+		instructions: ["buildSelectWithOptions"]
+	},
+	dataList: {
+		simple: {
+			baseFromSpec: "dataListSimple",
+			instructions: ["buildDataListWithOptions"]
+		},
+		baseFromSpec: "dataListBase",
+		instructions: ["buildDataListWithOptions"]
+	},
+	selectOptionsOnly: {
+		baseFromSpec: "selectOptionsOnlyBase",
+		instructions: ["buildOptionsArray"]
+	},
+	searchInput: {
+		baseFromSpec: "searchInputBase",
+		instructions: []
+	},
+	form: {
+		simple: {
+			baseFromSpec: "formSimple",
+			instructions: ["buildFormField"]
+		},
+		baseFromSpec: "formBase",
+		instructions: ["buildFormField"]
+	}
+}, t = {
+	tableSearchBar: {
+		tagName: "div",
+		attributes: { class: "row mb-3 align-items-center" },
+		children: [
+			{
+				tagName: "div",
+				attributes: { class: "col-md-4 d-flex align-items-center" },
+				children: [{
+					tagName: "h6",
+					attributes: {
+						class: "mb-0 fw-semibold text-secondary",
+						id: "table-title"
+					},
+					textContent: "Items"
+				}]
+			},
+			{
+				tagName: "div",
+				attributes: { class: "col-md-4 text-center d-flex align-items-center justify-content-center" },
+				children: [{
+					tagName: "span",
+					attributes: {
+						id: "search-feedback",
+						class: "badge bg-white text-secondary border px-3 py-2 small fw-normal shadow-sm"
+					},
+					textContent: "Showing all records"
+				}]
+			},
+			{
+				tagName: "div",
+				attributes: { class: "col-md-4" },
+				children: [{
+					tagName: "div",
+					attributes: { class: "input-group" },
+					children: [{
+						tagName: "span",
+						attributes: { class: "input-group-text bg-white" },
+						children: [{
+							tagName: "i",
+							attributes: { class: "bi bi-search" },
+							textContent: "🔍"
+						}]
+					}, {
+						tagName: "input",
+						attributes: {
+							type: "text",
+							id: "tableSearch",
+							class: "form-control",
+							placeholder: "Search table..."
+						}
+					}]
+				}]
+			}
+		]
+	},
 	buildBodyTr: {
 		tagName: "tr",
 		attributes: { class: "align-middle" },
@@ -163,7 +350,7 @@ var e = {
 		tagName: "div",
 		attributes: {
 			"data-role": "table-parent",
-			id: "table-simple-id"
+			id: "table-withSearch-id"
 		},
 		children: [{
 			tagName: "div",
@@ -226,7 +413,7 @@ var e = {
 				tagName: "table",
 				attributes: {
 					class: "table table-hover table-striped align-middle border mb-0",
-					id: "table-simple-table-id"
+					id: "table-withSearch-table-id"
 				},
 				children: [
 					{
@@ -260,21 +447,6 @@ var e = {
 							id: "table-simple-body-id"
 						},
 						children: []
-					},
-					{
-						tagName: "tfoot",
-						attributes: {
-							"data-role": "table-footer",
-							id: "table-simple-footer-id"
-						},
-						children: [{
-							tagName: "tr",
-							attributes: {
-								"data-role": "table-footer-row",
-								id: "table-simple-footer-row-id"
-							},
-							children: []
-						}]
 					}
 				]
 			}]
@@ -754,7 +926,7 @@ var e = {
 			}
 		]
 	}
-}, t = {
+}, n = {
 	$schema: "./tags.schema.json",
 	div: {
 		allowsTextContent: !1,
@@ -1001,7 +1173,7 @@ var e = {
 		allowsChildren: !1,
 		allowedAttributes: []
 	}
-}, n = {
+}, r = {
 	$schema: "https://json-schema.org/draft/2020-12/schema",
 	title: "TagsCatalogSchema",
 	description: "JSON Schema for @keshavsoft/spec-repo tags.json catalog",
@@ -1035,410 +1207,23 @@ var e = {
 		},
 		additionalProperties: !1
 	} }
-}, r = {
-	table: {
-		simple: {
-			baseFromSpec: "tableSimple",
-			instructions: [
-				"buildColgroup",
-				"buildHeader",
-				"buildBody"
-			],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
-		},
-		withFooter: {
-			baseFromSpec: "tableWithFooter",
-			instructions: [
-				"buildColgroup",
-				"buildHeader",
-				"buildFooter",
-				"buildBody"
-			],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
-		},
-		bodyOnly: {
-			baseFromSpec: "tableBodyOnly",
-			instructions: ["buildBody"],
-			options: {
-				serial: "serial",
-				options: "options"
-			}
-		},
-		bodyOnly1: {
-			baseFromSpec: "tableBodyOnly1",
-			instructions: []
-		},
-		footerOnly: {
-			baseFromSpec: "tableFooterOnly",
-			instructions: ["buildFooter"]
-		},
-		headerOnly: {
-			baseFromSpec: "tableHeaderOnly",
-			instructions: ["buildColgroup", "buildHeader"],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
-		},
-		headerOnly1: {
-			baseFromSpec: "tableHeaderOnly1",
-			instructions: ["buildColgroup", "buildHeader"]
-		},
-		options: {
-			instructions: [],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
-		},
-		headerAndFooter: {
-			baseFromSpec: "tableHeaderAndFooter",
-			instructions: [
-				"buildColgroup",
-				"buildHeader",
-				"buildFooter",
-				"buildBody"
-			],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
-		},
-		withSearch: {
-			baseFromSpec: "tableWithSearch",
-			instructions: [
-				"buildColgroup",
-				"buildHeader",
-				"buildBody"
-			],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
-		},
-		withSearchAndFooter: {
-			baseFromSpec: "tableWithSearch",
-			instructions: [
-				"buildColgroup",
-				"buildHeader",
-				"buildFooter",
-				"buildBody"
-			],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
-		}
-	},
-	select: {
-		simple: {
-			baseFromSpec: "selectBase",
-			instructions: ["buildSelectWithOptions"]
-		},
-		baseFromSpec: "selectBase",
-		instructions: ["buildSelectWithOptions"]
-	},
-	dataList: {
-		simple: {
-			baseFromSpec: "dataListSimple",
-			instructions: ["buildDataListWithOptions"]
-		},
-		baseFromSpec: "dataListBase",
-		instructions: ["buildDataListWithOptions"]
-	},
-	selectOptionsOnly: {
-		baseFromSpec: "selectOptionsOnlyBase",
-		instructions: ["buildOptionsArray"]
-	},
-	searchInput: {
-		baseFromSpec: "searchInputBase",
-		instructions: []
-	},
-	form: {
-		simple: {
-			baseFromSpec: "formSimple",
-			instructions: ["buildFormField"]
-		},
-		baseFromSpec: "formBase",
-		instructions: ["buildFormField"]
-	}
 }, i = {
-	buildColgroup: {
-		type: "single",
-		narration: "Build column widths",
-		destinationPath: {
-			fileName: "base",
-			filePath: ["children"],
-			jsonPath: "$..*[?@.attributes['data-role'] == 'table-colgroup']"
-		},
-		sourcePath: {
-			fileName: "data",
-			jsonPath: "$.columns"
-		},
-		templateKey: "buildColGroup",
-		func: "fromCollection"
-	},
-	buildHeader: {
-		type: "single",
-		narration: "Build table header",
-		destinationPath: {
-			fileName: "base",
-			filePath: ["children"],
-			jsonPath: "$..*[?@.attributes['data-role'] == 'table-header-row']"
-		},
-		sourcePath: {
-			fileName: "data",
-			jsonPath: "$.columns"
-		},
-		templateKey: "buildHeader",
-		func: "fromCollection"
-	},
-	buildFooter: {
-		type: "single",
-		narration: "Build table footer",
-		destinationPath: {
-			fileName: "base",
-			filePath: ["children"],
-			jsonPath: "$..*[?@.attributes['data-role'] == 'table-footer-row']"
-		},
-		sourcePath: {
-			fileName: "data",
-			jsonPath: "$.columns"
-		},
-		templateKey: "buildFooter",
-		func: "fromCollection"
-	},
-	buildBody: {
-		type: "rowOnColumn",
-		narration: "Build table body",
-		destinationPath: {
-			fileName: "base",
-			filePath: ["children"],
-			jsonPath: "$..*[?@.attributes['data-role'] == 'table-body']"
-		},
-		templateKey: {
-			rowKey: "buildBodyTr",
-			columnKey: "buildBodyCell"
-		}
-	},
-	serial: [
-		{
-			narration: "Prepend the serial column width to the table colgroup.",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"],
-				action: "unshift",
-				jsonPath: "$..*[?@.attributes['data-role'] == 'table-colgroup']"
-			},
-			sourcePath: null,
-			templateKey: "colGroupForSerial",
-			func: null
-		},
-		{
-			narration: "Prepend the serial header cell to the table header row.",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"],
-				action: "unshift",
-				jsonPath: "$..*[?@.attributes['data-role'] == 'table-header-row']"
-			},
-			sourcePath: null,
-			templateKey: "headerSerialCell",
-			func: null
-		},
-		{
-			narration: "Prepend the serial number cell into each table body row.",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"],
-				action: "unshiftSerialToRows",
-				jsonPath: "$..*[?@.attributes['data-role'] == 'table-body']"
-			},
-			sourcePath: null,
-			templateKey: "buildBodyCell",
-			func: null
-		},
-		{
-			narration: "Prepend the serial footer cell to the table footer row.",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"],
-				action: "unshift",
-				jsonPath: "$..*[?@.attributes['data-role'] == 'table-footer-row']"
-			},
-			sourcePath: null,
-			templateKey: "headerSerialCell",
-			func: null
-		}
-	],
-	options: [
-		{
-			narration: "Append the options column width to the table colgroup.",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"],
-				action: "push",
-				jsonPath: "$..*[?@.attributes['data-role'] == 'table-colgroup']"
-			},
-			sourcePath: null,
-			templateKey: "colGroupForOption",
-			func: null
-		},
-		{
-			narration: "Append the options header cell to the table header row.",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"],
-				action: "push",
-				jsonPath: "$..*[?@.attributes['data-role'] == 'table-header-row']"
-			},
-			sourcePath: null,
-			templateKey: "headerForOption",
-			func: null
-		},
-		{
-			narration: "Append the options button cell into each table body row.",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"],
-				action: "pushToRows",
-				jsonPath: "$..*[?@.attributes['data-role'] == 'table-body']"
-			},
-			sourcePath: null,
-			templateKey: "optionsButtonCell",
-			func: null
-		},
-		{
-			narration: "Append the options footer cell to the table footer row.",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"],
-				action: "push",
-				jsonPath: "$..*[?@.attributes['data-role'] == 'table-footer-row']"
-			},
-			sourcePath: null,
-			templateKey: "tdWithButtonSaveWarning",
-			func: null
-		}
-	],
-	search: [{
-		narration: "Prepend the search row to top of the table.",
-		destinationPath: {
-			fileName: "base",
-			filePath: ["children"],
-			action: "unshift",
-			jsonPath: "$..*[?@.attributes['data-role'] == 'table-parent']"
-		},
-		sourcePath: null,
-		templateKey: "tableSearch",
-		func: null
-	}]
-}, a = { buildFormField: {
-	type: "single",
-	narration: "Build form fields from columns",
-	destinationPath: {
-		fileName: "base",
-		dataRole: "form-body",
-		filePath: ["children"]
-	},
-	sourcePath: {
-		fileName: "data",
-		filePath: ["columns"]
-	},
-	templateKey: "buildFormField",
-	func: "fromCollection"
-} }, o = {
-	buildSelectWithOptions: {
-		type: "columnOnRow",
-		narration: "Build selects with options",
-		destinationPath: {
-			fileName: "base",
-			filePath: ["children"]
-		},
-		templateKey: {
-			columnKey: "buildSelect",
-			rowKey: "buildOption"
-		}
-	},
-	buildSelectOptions: {
-		type: "single",
-		narration: "Build select options",
-		destinationPath: {
-			fileName: "base",
-			filePath: ["children"]
-		},
-		sourcePath: {
-			fileName: "data",
-			filePath: ["data"]
-		},
-		templateKey: "buildOption",
-		func: "fromCollection"
-	},
-	buildOptionsArray: {
-		type: "single",
-		narration: "Build options array",
-		destinationPath: {
-			fileName: "base",
-			filePath: []
-		},
-		sourcePath: {
-			fileName: "data",
-			filePath: ["data"]
-		},
-		templateKey: "buildOption",
-		func: "fromCollection"
-	}
-}, s = { buildDataListWithOptions: {
-	type: "columnOnRow",
-	narration: "Build datalists with options",
-	destinationPath: {
-		fileName: "base",
-		filePath: ["children"]
-	},
-	templateKey: {
-		columnKey: "buildDataList",
-		rowKey: "buildOption"
-	}
-} }, c = {
 	name: "spec-repo",
-	version: "1.16.1"
-}, l = ({ spec: e, tags: t, tagsSchema: n, definitions: r, table: i }) => {
+	version: "1.17.1"
+}, a = ({ spec: e, tags: t, tagsSchema: n, definitions: r, table: a }) => {
 	typeof globalThis < "u" && e && t && n && r && (globalThis.ks ??= {}, globalThis.ks.specs ??= {}, globalThis.ks.specs.jsonFiles = {
-		meta: c,
+		meta: i,
 		spec: e,
 		tags: t,
 		tagsSchema: n,
 		definitions: r,
-		table: i
+		table: a
 	});
-}, u = {
-	...i,
-	...a,
-	...o,
-	...s
-}, d = e;
-l({
-	spec: e,
-	tags: t,
-	tagsSchema: n,
-	definitions: r,
-	table: i,
-	form: a,
-	select: o,
-	dataList: s,
-	instructions: u
+}, o = t;
+a({
+	spec: t,
+	tags: n,
+	tagsSchema: r,
+	definitions: e
 });
-export { s as dataList, d as default, r as definitions, a as form, u as instructions, o as select, e as spec, i as table, t as tags, n as tagsSchema };
+export { o as default, e as definitions, t as spec, n as tags, r as tagsSchema };

@@ -1,4 +1,84 @@
 {
+    "tableSearchBar": {
+        "tagName": "div",
+        "attributes": {
+            "class": "row mb-3 align-items-center"
+        },
+        "children": [
+            {
+                "tagName": "div",
+                "attributes": {
+                    "class": "col-md-4 d-flex align-items-center"
+                },
+                "children": [
+                    {
+                        "tagName": "h6",
+                        "attributes": {
+                            "class": "mb-0 fw-semibold text-secondary",
+                            "id": "table-title"
+                        },
+                        "textContent": "Items"
+                    }
+                ]
+            },
+            {
+                "tagName": "div",
+                "attributes": {
+                    "class": "col-md-4 text-center d-flex align-items-center justify-content-center"
+                },
+                "children": [
+                    {
+                        "tagName": "span",
+                        "attributes": {
+                            "id": "search-feedback",
+                            "class": "badge bg-white text-secondary border px-3 py-2 small fw-normal shadow-sm"
+                        },
+                        "textContent": "Showing all records"
+                    }
+                ]
+            },
+            {
+                "tagName": "div",
+                "attributes": {
+                    "class": "col-md-4"
+                },
+                "children": [
+                    {
+                        "tagName": "div",
+                        "attributes": {
+                            "class": "input-group"
+                        },
+                        "children": [
+                            {
+                                "tagName": "span",
+                                "attributes": {
+                                    "class": "input-group-text bg-white"
+                                },
+                                "children": [
+                                    {
+                                        "tagName": "i",
+                                        "attributes": {
+                                            "class": "bi bi-search"
+                                        },
+                                        "textContent": "🔍"
+                                    }
+                                ]
+                            },
+                            {
+                                "tagName": "input",
+                                "attributes": {
+                                    "type": "text",
+                                    "id": "tableSearch",
+                                    "class": "form-control",
+                                    "placeholder": "Search table..."
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    },
     "buildBodyTr": {
         "tagName": "tr",
         "attributes": {
@@ -227,7 +307,7 @@
         "tagName": "div",
         "attributes": {
             "data-role": "table-parent",
-            "id": "table-simple-id"
+            "id": "table-withSearch-id"
         },
         "children": [
             {
@@ -320,7 +400,7 @@
                         "tagName": "table",
                         "attributes": {
                             "class": "table table-hover table-striped align-middle border mb-0",
-                            "id": "table-simple-table-id"
+                            "id": "table-withSearch-table-id"
                         },
                         "children": [
                             {
