@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Ensure directory URLs always have trailing slash so relative paths resolve correctly -->
+  <script>
+    if (!location.pathname.endsWith('/') && !location.pathname.split('/').pop().includes('.')) {
+      location.replace(location.pathname + '/' + location.search + location.hash);
+    }
+  </script>
+  <title>Spec — spec-repo DOM Tag Specification Hub</title>
+  <!-- Compiled Tailwind CSS & Bootstrap Icons -->
+  <link rel="stylesheet" href="./v1/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    .card-hover {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(99, 102, 241, 0.4);
+    }
+    .gradient-border-indigo {
+      position: relative;
+      background: linear-gradient(#18181b, #18181b) padding-box,
+                  linear-gradient(135deg, #6366f1, #818cf8, #a855f7) border-box;
+      border: 2px solid transparent;
+    }
+  </style>
+</head>
+
+<body class="bg-zinc-950 text-zinc-100 antialiased min-h-screen flex flex-col font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
+
+  <!-- Navbar -->
+  <nav class="border-b border-zinc-800 bg-zinc-900/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <!-- Brand & Breadcrumbs -->
+      <div class="flex items-center gap-2 shrink-0">
+        <a href="../../index.html" class="flex items-center gap-2 text-zinc-400 hover:text-zinc-200 transition">
+          <i class="bi bi-code-slash text-sky-400 text-xl"></i>
+          <span class="font-bold text-sm tracking-wider uppercase text-zinc-200">spec-repo</span>
+        </a>
+        <span class="text-zinc-600">/</span>
+        <a href="../index.html" class="text-zinc-400 hover:text-zinc-200 transition text-sm">
+          monaco
+        </a>
+        <span class="text-zinc-600">/</span>
+        <span class="font-bold text-sm text-indigo-400 flex items-center gap-1.5">
+          <i class="bi bi-file-earmark-code"></i>
+          <span>spec</span>
+        </span>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="flex items-center gap-2 text-xs font-mono">
+        <a href="./v1/index.html" class="text-indigo-300 bg-indigo-950/80 border border-indigo-700/80 px-2.5 py-1 rounded font-bold hover:bg-indigo-900/80 transition flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
+          <span>v1 Studio</span>
+        </a>
+        <a href="../index.html" class="text-zinc-400 hover:text-zinc-200 border border-zinc-700/80 px-2.5 py-1 rounded hover:bg-zinc-800 transition flex items-center gap-1">
+          <i class="bi bi-arrow-left"></i>
+          <span>Monaco Hub</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 py-12 flex flex-col items-center text-center">
+
+    <!-- Status Pill -->
+    <div class="inline-flex items-center gap-2 bg-zinc-900 border border-indigo-800/60 text-indigo-400 px-3.5 py-1 rounded-full text-xs font-medium mb-6 shadow-sm">
+      <span class="inline-block w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+      <span>spec-repo Core • DOM Tag Specification Hub</span>
+    </div>
+
+    <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight mb-4">
+      The Story of <span class="bg-gradient-to-r from-indigo-400 to-purple-300 bg-clip-text text-transparent">spec.json</span>
+    </h1>
+
+    <p class="text-base sm:text-lg text-zinc-400 max-w-2xl mb-8 leading-relaxed">
+      Pure, zero-dependency representations of HTML elements—decoupling tag names, CSS styling, and data interpolation tokens from JavaScript runtime frameworks.
+    </p>
+
+    <!-- Launch CTA -->
+    <div class="mb-12">
+      <a href="./v1/index.html"
+        class="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-semibold text-sm px-6 py-3 rounded-lg shadow-lg shadow-indigo-950/60 transition transform hover:-translate-y-0.5 active:translate-y-0">
+        <i class="bi bi-play-fill text-lg"></i>
+        <span>Launch V1 Spec Studio →</span>
+      </a>
+    </div>
+
+    <!-- The Story Article -->
+    <article class="w-full text-left bg-zinc-900/60 border border-zinc-800 rounded-xl p-6 sm:p-8 space-y-6 text-sm text-zinc-300 leading-relaxed shadow-md">
+      
+      <div>
+        <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+          <i class="bi bi-code-square text-indigo-400"></i>
+          <span>What is a Tag Specification?</span>
+        </h2>
+        <p>
+          Before compiling an HTML element, every compiler needs to know three basic facts: What is the tag name? What attributes or CSS classes should it possess? And where does the text or child content go?
+        </p>
+        <p class="pt-2">
+          In typical component frameworks, this is written inside JSX or HTML template strings. In <strong>spec-repo</strong>, every tag is stored as a pure, serializable JSON node in <code class="text-indigo-300 font-mono">spec.json</code>.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+          <i class="bi bi-braces text-sky-400"></i>
+          <span>The Tag Spec Structure</span>
+        </h2>
+        <p>
+          Each node in <code class="text-indigo-300 font-mono">spec.json</code> contains an immutable declarative shape:
+        </p>
+        <ul class="list-disc list-inside space-y-2 pt-2 text-zinc-400 font-mono text-xs">
+          <li><span class="text-zinc-200 font-bold">tagName:</span> Standard HTML tag (<code class="text-zinc-300">"th"</code>, <code class="text-zinc-300">"td"</code>, <code class="text-zinc-300">"tr"</code>, <code class="text-zinc-300">"button"</code>).</li>
+          <li><span class="text-zinc-200 font-bold">attributes:</span> Object map of all HTML attributes, including classes, accessibility roles, and data attributes (<code class="text-zinc-300">"data-role"</code>).</li>
+          <li><span class="text-zinc-200 font-bold">textContent:</span> Static text or string interpolation tokens (e.g. <code class="text-zinc-300">"${columnName}"</code>, <code class="text-zinc-300">"${serialNumber}"</code>).</li>
+          <li><span class="text-zinc-200 font-bold">children:</span> Optional nested sub-tree of child tag specs.</li>
+        </ul>
+      </div>
+
+      <div class="bg-zinc-950/80 border border-zinc-800 rounded-lg p-4 font-mono text-xs">
+        <div class="text-zinc-500 mb-2">// Example: buildHeader tag spec in spec.json:</div>
+        <pre class="text-indigo-300 overflow-x-auto"><code>"buildHeader": {
+  "tagName": "th",
+  "textContent": "${columnName}",
+  "attributes": {
+    "class": "py-3 px-3 fw-semibold text-uppercase small text-body-secondary border-bottom",
+    "scope": "col",
+    "data-column": "${columnName}"
+  }
+}</code></pre>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+          <i class="bi bi-palette text-amber-400"></i>
+          <span>Theme &amp; Framework Agnostic</span>
+        </h2>
+        <p>
+          Because tag specs are pure JSON, switching from Bootstrap to Tailwind CSS or adding custom dark-mode styling doesn't require modifying compiler code—simply tweak the attribute classes inside <code class="text-indigo-300 font-mono">spec.json</code>!
+        </p>
+      </div>
+
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-zinc-800/80 py-8 text-center text-xs text-zinc-500 bg-zinc-950">
+    <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2 text-zinc-400">
+        <i class="bi bi-code-slash text-sky-400"></i>
+        <span>spec-repo spec Hub</span>
+        <span>&bull;</span>
+        <a href="../index.html" class="hover:text-zinc-200 transition">Monaco Hub</a>
+        <span>&bull;</span>
+        <a href="../../index.html" class="hover:text-zinc-200 transition">Docs</a>
+      </div>
+      <p>&copy; 2026 KeshavSoft. MIT License.</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Ensure directory URLs always have trailing slash so relative paths resolve correctly -->
+  <script>
+    if (!location.pathname.endsWith('/') && !location.pathname.split('/').pop().includes('.')) {
+      location.replace(location.pathname + '/' + location.search + location.hash);
+    }
+  </script>
+  <title>Tags — spec-repo Tag Dictionary & Schema Hub</title>
+  <!-- Compiled Tailwind CSS & Bootstrap Icons -->
+  <link rel="stylesheet" href="./v1/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    .card-hover {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(245, 158, 11, 0.4);
+    }
+    .gradient-border-amber {
+      position: relative;
+      background: linear-gradient(#18181b, #18181b) padding-box,
+                  linear-gradient(135deg, #f59e0b, #fbbf24, #f97316) border-box;
+      border: 2px solid transparent;
+    }
+  </style>
+</head>
+
+<body class="bg-zinc-950 text-zinc-100 antialiased min-h-screen flex flex-col font-sans selection:bg-amber-500/30 selection:text-amber-200">
+
+  <!-- Navbar -->
+  <nav class="border-b border-zinc-800 bg-zinc-900/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <!-- Brand & Breadcrumbs -->
+      <div class="flex items-center gap-2 shrink-0">
+        <a href="../../index.html" class="flex items-center gap-2 text-zinc-400 hover:text-zinc-200 transition">
+          <i class="bi bi-code-slash text-sky-400 text-xl"></i>
+          <span class="font-bold text-sm tracking-wider uppercase text-zinc-200">spec-repo</span>
+        </a>
+        <span class="text-zinc-600">/</span>
+        <a href="../index.html" class="text-zinc-400 hover:text-zinc-200 transition text-sm">
+          monaco
+        </a>
+        <span class="text-zinc-600">/</span>
+        <span class="font-bold text-sm text-amber-400 flex items-center gap-1.5">
+          <i class="bi bi-tags-fill"></i>
+          <span>tags</span>
+        </span>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="flex items-center gap-2 text-xs font-mono">
+        <a href="./v1/index.html" class="text-amber-300 bg-amber-950/80 border border-amber-700/80 px-2.5 py-1 rounded font-bold hover:bg-amber-900/80 transition flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+          <span>v1 Studio</span>
+        </a>
+        <a href="../index.html" class="text-zinc-400 hover:text-zinc-200 border border-zinc-700/80 px-2.5 py-1 rounded hover:bg-zinc-800 transition flex items-center gap-1">
+          <i class="bi bi-arrow-left"></i>
+          <span>Monaco Hub</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <main class="flex-1 max-w-4xl mx-auto px-4 sm:px-6 py-12 flex flex-col items-center text-center">
+
+    <!-- Status Pill -->
+    <div class="inline-flex items-center gap-2 bg-zinc-900 border border-amber-800/60 text-amber-400 px-3.5 py-1 rounded-full text-xs font-medium mb-6 shadow-sm">
+      <span class="inline-block w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+      <span>spec-repo Core • Tag Dictionary &amp; Schema Hub</span>
+    </div>
+
+    <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white leading-tight mb-4">
+      The Story of <span class="bg-gradient-to-r from-amber-400 to-orange-300 bg-clip-text text-transparent">tags.json</span>
+    </h1>
+
+    <p class="text-base sm:text-lg text-zinc-400 max-w-2xl mb-8 leading-relaxed">
+      The foundational tag dictionary, schema taxonomy, and token validation blueprints that enforce type safety across all declarative compilers.
+    </p>
+
+    <!-- Launch CTA -->
+    <div class="mb-12">
+      <a href="./v1/index.html"
+        class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-semibold text-sm px-6 py-3 rounded-lg shadow-lg shadow-amber-950/60 transition transform hover:-translate-y-0.5 active:translate-y-0">
+        <i class="bi bi-play-fill text-lg"></i>
+        <span>Launch V1 Tags Studio →</span>
+      </a>
+    </div>
+
+    <!-- The Story Article -->
+    <article class="w-full text-left bg-zinc-900/60 border border-zinc-800 rounded-xl p-6 sm:p-8 space-y-6 text-sm text-zinc-300 leading-relaxed shadow-md">
+      
+      <div>
+        <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+          <i class="bi bi-shield-check text-amber-400"></i>
+          <span>The Ground Truth Dictionary</span>
+        </h2>
+        <p>
+          As a declarative system scales to dozens of components and assembly instructions, inconsistencies can arise: a developer might write <code class="text-zinc-200 font-mono">class</code> instead of <code class="text-zinc-200 font-mono">attributes.class</code>, or reference undefined string tokens.
+        </p>
+        <p class="pt-2">
+          <strong>tags.json</strong> is the authoritative dictionary that lists every allowed tag primitive, its mandatory attributes, and its semantic schema definition.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+          <i class="bi bi-braces-asterisk text-sky-400"></i>
+          <span>Schema Validation &amp; Token Taxonomy</span>
+        </h2>
+        <p>
+          Compilers validate input tags against <code class="text-amber-300 font-mono">tags.json</code> during build time:
+        </p>
+        <ul class="list-disc list-inside space-y-2 pt-2 text-zinc-400 font-mono text-xs">
+          <li><span class="text-zinc-200 font-bold">Token Safety:</span> Ensures all interpolation tokens (e.g. <code class="text-zinc-300">${columnName}</code>) are recognized and bound to data columns.</li>
+          <li><span class="text-zinc-200 font-bold">Attribute Normalization:</span> Validates attributes, boolean flags, and accessibility roles (ARIA).</li>
+          <li><span class="text-zinc-200 font-bold">Engine Independence:</span> Ensures that regardless of compiler version (v10 through v19), the tag taxonomy remains strictly backwards-compatible.</li>
+        </ul>
+      </div>
+
+      <div class="bg-zinc-950/80 border border-zinc-800 rounded-lg p-4 font-mono text-xs">
+        <div class="text-zinc-500 mb-2">// Anatomy of tags taxonomy in tags.json:</div>
+        <pre class="text-amber-300 overflow-x-auto"><code>{
+  "tagTypes": {
+    "table": { "category": "container", "children": ["thead", "tbody", "tfoot"] },
+    "th": { "category": "leaf", "tokens": ["${columnName}"] },
+    "td": { "category": "leaf", "tokens": ["${value}", "${serialNumber}"] }
+  }
+}</code></pre>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-bold text-white mb-2 flex items-center gap-2">
+          <i class="bi bi-check-all text-emerald-400"></i>
+          <span>Guaranteed Schema Consistency</span>
+        </h2>
+        <p>
+          By maintaining <code class="text-amber-300 font-mono">tags.json</code> as a separate, inspectable studio, developers can audit tag standards and verify schema integrity before publishing new releases of <code class="text-zinc-200 font-mono">spec-repo</code>.
+        </p>
+      </div>
+
+    </article>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-zinc-800/80 py-8 text-center text-xs text-zinc-500 bg-zinc-950">
+    <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2 text-zinc-400">
+        <i class="bi bi-code-slash text-sky-400"></i>
+        <span>spec-repo tags Hub</span>
+        <span>&bull;</span>
+        <a href="../index.html" class="hover:text-zinc-200 transition">Monaco Hub</a>
+        <span>&bull;</span>
+        <a href="../../index.html" class="hover:text-zinc-200 transition">Docs</a>
+      </div>
+      <p>&copy; 2026 KeshavSoft. MIT License.</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>

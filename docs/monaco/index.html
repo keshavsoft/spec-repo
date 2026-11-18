@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Ensure directory URLs always have trailing slash so relative paths resolve correctly -->
+  <script>
+    if (!location.pathname.endsWith('/') && !location.pathname.split('/').pop().includes('.')) {
+      location.replace(location.pathname + '/' + location.search + location.hash);
+    }
+  </script>
+  <title>spec-repo Monaco Studios — Declarative Schema Workspaces</title>
+  <!-- Compiled Tailwind CSS & Bootstrap Icons -->
+  <link rel="stylesheet" href="./single/v1/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    .card-hover {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(56, 189, 248, 0.4);
+    }
+    .gradient-border-emerald {
+      position: relative;
+      background: linear-gradient(#18181b, #18181b) padding-box,
+                  linear-gradient(135deg, #10b981, #06b6d4, #6366f1) border-box;
+      border: 2px solid transparent;
+    }
+    .gradient-border-sky {
+      position: relative;
+      background: linear-gradient(#18181b, #18181b) padding-box,
+                  linear-gradient(135deg, #0284c7, #38bdf8, #818cf8) border-box;
+      border: 2px solid transparent;
+    }
+  </style>
+</head>
+
+<body class="bg-zinc-950 text-zinc-100 antialiased min-h-screen flex flex-col font-sans selection:bg-sky-500/30 selection:text-sky-200">
+
+  <!-- Navbar -->
+  <nav class="border-b border-zinc-800 bg-zinc-900/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <!-- Brand & Breadcrumbs -->
+      <div class="flex items-center gap-2 shrink-0">
+        <a href="../index.html" class="flex items-center gap-2 text-zinc-400 hover:text-zinc-200 transition">
+          <i class="bi bi-code-slash text-sky-400 text-xl"></i>
+          <span class="font-bold text-sm tracking-wider uppercase text-zinc-200">spec-repo</span>
+        </a>
+        <span class="text-zinc-600">/</span>
+        <span class="font-bold text-sm text-sky-400 flex items-center gap-1.5">
+          <i class="bi bi-cpu"></i>
+          <span>Monaco Studios</span>
+        </span>
+        <span class="text-[10px] font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-800/80 px-2 py-0.5 rounded-full ml-1">
+          v19 Live Hub
+        </span>
+      </div>
+
+      <!-- Quick Version Jump -->
+      <div class="flex items-center gap-1.5 sm:gap-2 text-xs font-mono">
+        <a href="./definitions/v1/index.html" class="text-emerald-400 hover:text-emerald-300 px-2 py-1 rounded hover:bg-zinc-800 transition" title="Definitions Schema Studio">definitions</a>
+        <a href="./instructions/v1/index.html" class="text-sky-400 hover:text-sky-300 px-2 py-1 rounded hover:bg-zinc-800 transition" title="Instructions Assembly Studio">instructions</a>
+        <a href="./spec/v1/index.html" class="text-indigo-400 hover:text-indigo-300 px-2 py-1 rounded hover:bg-zinc-800 transition" title="Base Tag Spec Studio">spec</a>
+        <a href="./tags/v1/index.html" class="text-amber-400 hover:text-amber-300 px-2 py-1 rounded hover:bg-zinc-800 transition" title="Tag Schemas Studio">tags</a>
+        <a href="./single/v1/index.html" class="text-zinc-400 hover:text-zinc-200 px-2 py-1 rounded hover:bg-zinc-800 transition" title="Single File Scratchpad">single</a>
+        <a href="../index.html" class="text-zinc-400 hover:text-zinc-200 border border-zinc-700/80 px-2.5 py-1 rounded hover:bg-zinc-800 transition flex items-center gap-1 ml-1" title="Back to Docs Hub">
+          <i class="bi bi-arrow-left"></i>
+          <span class="hidden sm:inline">Docs Hub</span>
+        </a>
+        <a href="https://github.com/keshavsoft/spec-repo" target="_blank" rel="noopener noreferrer" class="text-zinc-400 hover:text-zinc-100 p-1.5 transition ml-1" title="GitHub Repository">
+          <i class="bi bi-github text-base"></i>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <main class="flex-1 max-w-5xl mx-auto px-4 sm:px-6 py-12 flex flex-col items-center text-center">
+
+    <!-- Status Pill -->
+    <div class="inline-flex items-center gap-2 bg-zinc-900 border border-emerald-800/60 text-emerald-400 px-3.5 py-1 rounded-full text-xs font-medium mb-6 shadow-sm">
+      <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span>spec-repo • Distraction-Free Single File Schema Studios</span>
+    </div>
+
+    <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white max-w-3xl leading-tight mb-5">
+      Declarative Schema Studios.<br />
+      <span class="bg-gradient-to-r from-emerald-400 via-sky-400 to-indigo-400 bg-clip-text text-transparent">Zero Friction. Live Sync.</span>
+    </h1>
+
+    <p class="text-base sm:text-lg text-zinc-400 max-w-3xl mb-8 leading-relaxed">
+      Explore, inspect, and tweak KeshavSoft v19 declarative UI schemas directly in Monaco. Each studio pulls its canonical schema live from the published <code class="text-sky-300 font-mono">spec-repo</code> package and syncs in real-time across browser tabs via <code class="text-emerald-300 font-mono">BroadcastChannel</code>.
+    </p>
+
+    <!-- Hero CTA Buttons -->
+    <div class="flex flex-wrap items-center justify-center gap-3 mb-14">
+      <a href="./definitions/v1/index.html"
+        class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 via-teal-500 to-sky-600 hover:from-emerald-400 hover:to-sky-500 text-white font-semibold text-sm px-5 py-2.5 rounded-lg shadow-lg shadow-emerald-950/60 transition transform hover:-translate-y-0.5 active:translate-y-0">
+        <i class="bi bi-book-fill"></i>
+        <span>Definitions Studio</span>
+      </a>
+      <a href="./instructions/v1/index.html"
+        class="inline-flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-sky-300 border border-sky-800/70 font-semibold text-sm px-5 py-2.5 rounded-lg transition">
+        <i class="bi bi-gear-fill"></i>
+        <span>Instructions Studio</span>
+      </a>
+      <a href="./spec/v1/index.html"
+        class="inline-flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-indigo-300 border border-indigo-800/70 font-semibold text-sm px-4 py-2.5 rounded-lg transition">
+        <i class="bi bi-file-earmark-code"></i>
+        <span>Spec Studio</span>
+      </a>
+      <a href="./tags/v1/index.html"
+        class="inline-flex items-center gap-2 bg-zinc-900 hover:bg-zinc-800 text-amber-300 border border-amber-800/70 font-semibold text-sm px-4 py-2.5 rounded-lg transition">
+        <i class="bi bi-tags-fill"></i>
+        <span>Tags Studio</span>
+      </a>
+      <a href="../index.html"
+        class="inline-flex items-center gap-2 bg-zinc-900/50 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 border border-zinc-800 font-semibold text-sm px-4 py-2.5 rounded-lg transition">
+        <i class="bi bi-arrow-left-circle"></i>
+        <span>Back to Docs Hub</span>
+      </a>
+    </div>
+
+    <!-- The Story Section -->
+    <section class="w-full text-left bg-zinc-900/60 border border-zinc-800 rounded-xl p-6 sm:p-8 mb-12 shadow-md">
+      <div class="flex items-center gap-2 text-sky-400 font-semibold text-xs tracking-wider uppercase mb-2">
+        <i class="bi bi-book-half"></i>
+        <span>The Evolution Story</span>
+      </div>
+      <h2 class="text-2xl font-bold text-white mb-4">Why We Built Dedicated Monaco Schema Studios</h2>
+      
+      <div class="space-y-4 text-zinc-300 text-sm leading-relaxed">
+        <p>
+          Throughout our journey building declarative JSON-to-DOM compilers, developers constantly faced friction inspecting massive schema files in general-purpose desktop editors with heavy sidebars, Git trees, and tab overload.
+        </p>
+        <p>
+          We realized each architectural tier of <strong>spec-repo</strong> deserves its own <em>distraction-free single-canvas studio</em>. Rather than keeping local duplicate JSON files in disk folders, every studio fetches its live slice dynamically from the published package over ES module imports:
+        </p>
+
+        <!-- 4 Schema Pillars Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-3">
+          <a href="./definitions/index.html" class="group block bg-zinc-950/70 border border-emerald-900/60 hover:border-emerald-500/80 rounded-lg p-4 transition card-hover">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2 text-emerald-400 font-mono text-xs font-bold">
+                <span class="w-5 h-5 rounded-full bg-emerald-950 border border-emerald-800 flex items-center justify-center text-[10px]">1</span>
+                <span>definitions.json</span>
+              </div>
+              <i class="bi bi-arrow-right text-emerald-400/40 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition text-xs"></i>
+            </div>
+            <p class="text-xs text-zinc-400 group-hover:text-zinc-300 leading-normal transition">
+              High-level component schemas (<code class="text-zinc-300">table</code>, <code class="text-zinc-300">form</code>, <code class="text-zinc-300">select</code>, <code class="text-zinc-300">card</code>) defining base specs, assembly instructions, and options.
+            </p>
+          </a>
+
+          <a href="./instructions/index.html" class="group block bg-zinc-950/70 border border-sky-900/60 hover:border-sky-500/80 rounded-lg p-4 transition card-hover">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2 text-sky-400 font-mono text-xs font-bold">
+                <span class="w-5 h-5 rounded-full bg-sky-950 border border-sky-800 flex items-center justify-center text-[10px]">2</span>
+                <span>instructions.json</span>
+              </div>
+              <i class="bi bi-arrow-right text-sky-400/40 group-hover:text-sky-400 group-hover:translate-x-0.5 transition text-xs"></i>
+            </div>
+            <p class="text-xs text-zinc-400 group-hover:text-zinc-300 leading-normal transition">
+              Declarative transformation rules (<code class="text-zinc-300">buildColgroup</code>, <code class="text-zinc-300">buildHeader</code>, <code class="text-zinc-300">buildBody</code>) guiding compilers how to assemble DOM elements.
+            </p>
+          </a>
+
+          <a href="./spec/index.html" class="group block bg-zinc-950/70 border border-indigo-900/60 hover:border-indigo-500/80 rounded-lg p-4 transition card-hover">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2 text-indigo-400 font-mono text-xs font-bold">
+                <span class="w-5 h-5 rounded-full bg-indigo-950 border border-indigo-800 flex items-center justify-center text-[10px]">3</span>
+                <span>spec.json</span>
+              </div>
+              <i class="bi bi-arrow-right text-indigo-400/40 group-hover:text-indigo-400 group-hover:translate-x-0.5 transition text-xs"></i>
+            </div>
+            <p class="text-xs text-zinc-400 group-hover:text-zinc-300 leading-normal transition">
+              Canonical HTML tag blueprints with serializable attributes, CSS class bindings, and interpolation tokens (<code class="text-zinc-300">${columnName}</code>).
+            </p>
+          </a>
+
+          <a href="./tags/index.html" class="group block bg-zinc-950/70 border border-amber-900/60 hover:border-amber-500/80 rounded-lg p-4 transition card-hover">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2 text-amber-400 font-mono text-xs font-bold">
+                <span class="w-5 h-5 rounded-full bg-amber-950 border border-amber-800 flex items-center justify-center text-[10px]">4</span>
+                <span>tags.json</span>
+              </div>
+              <i class="bi bi-arrow-right text-amber-400/40 group-hover:text-amber-400 group-hover:translate-x-0.5 transition text-xs"></i>
+            </div>
+            <p class="text-xs text-zinc-400 group-hover:text-zinc-300 leading-normal transition">
+              Tag dictionary and schema validation definitions ensuring type safety and structured DOM mapping across all engines.
+            </p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Studio Showcase Cards -->
+    <section class="w-full text-left mb-14">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <div class="flex items-center gap-2 text-emerald-400 font-semibold text-xs tracking-wider uppercase mb-1">
+            <i class="bi bi-collection-play"></i>
+            <span>Interactive Workspaces</span>
+          </div>
+          <h2 class="text-2xl font-bold text-white">Choose Your Schema Studio</h2>
+        </div>
+        <span class="text-xs text-zinc-500 font-mono">4 Specialized + 2 General Studios</span>
+      </div>
+
+      <div class="space-y-4">
+
+        <!-- Card: Definitions Studio -->
+        <div class="gradient-border-emerald rounded-xl p-6 sm:p-7 card-hover">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-bold font-mono text-emerald-400 bg-emerald-950 border border-emerald-800 px-3 py-1 rounded-md">
+                definitions
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-lg font-bold text-white">Component Definitions Studio</h3>
+                  <span class="text-[10px] font-bold text-emerald-300 bg-emerald-950/90 border border-emerald-600/90 px-2 py-0.5 rounded-full uppercase tracking-wide">
+                    Flagship • v19
+                  </span>
+                </div>
+                <p class="text-xs text-zinc-400 mt-0.5">Loads <code class="text-emerald-300 font-mono">mod.definitions</code> live • 10 UI component specs • Active file pill</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 shrink-0">
+              <a href="./definitions/index.html"
+                class="inline-flex items-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs px-3 py-2 rounded-lg border border-zinc-700 transition"
+                title="Read the Story of definitions.json">
+                <i class="bi bi-book"></i>
+                <span>Story</span>
+              </a>
+              <a href="./definitions/v1/index.html"
+                class="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-semibold text-xs px-4 py-2 rounded-lg shadow-lg shadow-emerald-950/80 transition">
+                <i class="bi bi-play-fill text-base"></i>
+                <span>Launch Studio</span>
+              </a>
+            </div>
+          </div>
+          <p class="text-sm text-zinc-300 leading-relaxed">
+            Displays all high-level declarative blueprints for Table, Form, Select, Datalist, Accordion, Card, Menu, and List. Includes search options, serial configurations, and template bindings.
+          </p>
+        </div>
+
+        <!-- Card: Instructions Studio -->
+        <div class="gradient-border-sky rounded-xl p-6 sm:p-7 card-hover">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-bold font-mono text-sky-400 bg-sky-950 border border-sky-800 px-3 py-1 rounded-md">
+                instructions
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-lg font-bold text-white">Compiler Instructions Studio</h3>
+                  <span class="text-[10px] font-bold text-sky-300 bg-sky-950/90 border border-sky-600/90 px-2 py-0.5 rounded-full uppercase tracking-wide">
+                    Assembly Pipeline
+                  </span>
+                </div>
+                <p class="text-xs text-zinc-400 mt-0.5">Loads <code class="text-sky-300 font-mono">mod.instructions</code> live • JSONPath mapping rules • Template keys</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 shrink-0">
+              <a href="./instructions/index.html"
+                class="inline-flex items-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs px-3 py-2 rounded-lg border border-zinc-700 transition"
+                title="Read the Story of instructions.json">
+                <i class="bi bi-book"></i>
+                <span>Story</span>
+              </a>
+              <a href="./instructions/v1/index.html"
+                class="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-500 text-white font-semibold text-xs px-4 py-2 rounded-lg shadow transition">
+                <i class="bi bi-play-fill text-base"></i>
+                <span>Launch Studio</span>
+              </a>
+            </div>
+          </div>
+          <p class="text-sm text-zinc-300 leading-relaxed">
+            Explore the exact JSONPath extraction rules (<code class="text-zinc-200 font-mono">$..*[?@.attributes['data-role'] == '...']</code>) and collection mapping functions used by DOM compilers.
+          </p>
+        </div>
+
+        <!-- Card: Spec Studio -->
+        <div class="bg-zinc-900/60 border border-zinc-800 rounded-xl p-6 sm:p-7 card-hover">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-bold font-mono text-indigo-400 bg-indigo-950 border border-indigo-800 px-3 py-1 rounded-md">
+                spec
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-lg font-bold text-white">DOM Tag Spec Studio</h3>
+                  <span class="text-[10px] font-semibold text-indigo-300 bg-indigo-950/80 border border-indigo-800/80 px-2 py-0.5 rounded-full">
+                    Tag Blueprints
+                  </span>
+                </div>
+                <p class="text-xs text-zinc-400 mt-0.5">Loads <code class="text-indigo-300 font-mono">mod.spec</code> live • Raw HTML elements, classes, and tokens</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 shrink-0">
+              <a href="./spec/index.html"
+                class="inline-flex items-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs px-3 py-2 rounded-lg border border-zinc-700 transition"
+                title="Read the Story of spec.json">
+                <i class="bi bi-book"></i>
+                <span>Story</span>
+              </a>
+              <a href="./spec/v1/index.html"
+                class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs px-4 py-2 rounded-lg shadow transition">
+                <i class="bi bi-play-fill text-base"></i>
+                <span>Launch Studio</span>
+              </a>
+            </div>
+          </div>
+          <p class="text-sm text-zinc-300 leading-relaxed">
+            Canonical JSON representation of HTML elements (<code class="text-zinc-200 font-mono">&lt;table&gt;</code>, <code class="text-zinc-200 font-mono">&lt;th&gt;</code>, <code class="text-zinc-200 font-mono">&lt;td&gt;</code>, <code class="text-zinc-200 font-mono">&lt;select&gt;</code>) decoupled from any JavaScript compiler logic.
+          </p>
+        </div>
+
+        <!-- Card: Tags Studio -->
+        <div class="bg-zinc-900/60 border border-zinc-800 rounded-xl p-6 sm:p-7 card-hover">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="text-sm font-bold font-mono text-amber-400 bg-amber-950 border border-amber-800 px-3 py-1 rounded-md">
+                tags
+              </span>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-lg font-bold text-white">Tag Schemas Studio</h3>
+                  <span class="text-[10px] font-semibold text-amber-300 bg-amber-950/80 border border-amber-800/80 px-2 py-0.5 rounded-full">
+                    Dictionary
+                  </span>
+                </div>
+                <p class="text-xs text-zinc-400 mt-0.5">Loads <code class="text-amber-300 font-mono">mod.tags</code> live • Token taxonomy &amp; validation rules</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2 shrink-0">
+              <a href="./tags/index.html"
+                class="inline-flex items-center gap-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-semibold text-xs px-3 py-2 rounded-lg border border-zinc-700 transition"
+                title="Read the Story of tags.json">
+                <i class="bi bi-book"></i>
+                <span>Story</span>
+              </a>
+              <a href="./tags/v1/index.html"
+                class="inline-flex items-center gap-2 bg-amber-600 hover:bg-amber-500 text-white font-semibold text-xs px-4 py-2 rounded-lg shadow transition">
+                <i class="bi bi-play-fill text-base"></i>
+                <span>Launch Studio</span>
+              </a>
+            </div>
+          </div>
+          <p class="text-sm text-zinc-300 leading-relaxed">
+            The fundamental tag dictionary and schema validation constraints that enforce consistency across all spec-repo builds.
+          </p>
+        </div>
+
+        <!-- Card: Single Scratchpad & Legacy Studio -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+          <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-5 card-hover flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs font-bold font-mono text-zinc-400 bg-zinc-800 border border-zinc-700 px-2 py-0.5 rounded">single</span>
+                <span class="text-sm font-bold text-white">Single File Scratchpad</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed">
+                A clean single-buffer canvas with native file open (<code class="text-zinc-300">Ctrl+O</code>) and live Tab 2 broadcast sync (<code class="text-zinc-300">Ctrl+Enter</code>) for testing custom schemas from disk.
+              </p>
+            </div>
+            <div class="pt-4 mt-3 border-t border-zinc-800/80">
+              <a href="./single/v1/index.html" class="inline-flex items-center gap-1.5 text-xs text-zinc-200 font-semibold hover:text-white transition">
+                <span>Launch Single Scratchpad</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+
+          <div class="bg-zinc-900/40 border border-zinc-800/80 rounded-xl p-5 card-hover flex flex-col justify-between">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-xs font-bold font-mono text-zinc-500 bg-zinc-800/60 border border-zinc-700/60 px-2 py-0.5 rounded">v1</span>
+                <span class="text-sm font-bold text-white">Legacy Monaco Playground</span>
+              </div>
+              <p class="text-xs text-zinc-400 leading-relaxed">
+                The original multi-pane template and column binding explorer for testing schema transforms with manual version select.
+              </p>
+            </div>
+            <div class="pt-4 mt-3 border-t border-zinc-800/80">
+              <a href="./v1/index.html" class="inline-flex items-center gap-1.5 text-xs text-zinc-400 font-semibold hover:text-zinc-200 transition">
+                <span>Open Legacy V1 Studio</span>
+                <i class="bi bi-arrow-right"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="w-full text-left bg-zinc-900/30 border border-zinc-800/80 rounded-xl p-6 sm:p-8 mb-12">
+      <div class="flex items-center gap-2 text-indigo-400 font-semibold text-xs tracking-wider uppercase mb-2">
+        <i class="bi bi-gear-wide-connected"></i>
+        <span>Architecture &amp; Features</span>
+      </div>
+      <h2 class="text-xl font-bold text-white mb-3">Modern Distraction-Free Design Discipline</h2>
+      <p class="text-xs text-zinc-400 mb-4 leading-relaxed">
+        Every studio inside <code class="text-sky-300">docs/monaco/</code> follows a strict minimalist standard:
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
+        <div class="p-3 bg-zinc-950/80 rounded border border-zinc-800">
+          <div class="text-emerald-400 font-bold mb-1">1. Live Module Import</div>
+          <div class="text-zinc-400 text-[11px]">Direct <code class="text-zinc-300">import('.../min.js')</code> without storing redundant duplicate JSON files in disk folders.</div>
+        </div>
+        <div class="p-3 bg-zinc-950/80 rounded border border-zinc-800">
+          <div class="text-sky-400 font-bold mb-1">2. 42px Lean Header</div>
+          <div class="text-zinc-400 text-[11px]">Maximum vertical height dedicated to Monaco syntax folding, line numbers, and search without tab bloat.</div>
+        </div>
+        <div class="p-3 bg-zinc-950/80 rounded border border-zinc-800">
+          <div class="text-amber-400 font-bold mb-1">3. Fail-Safe Canvas</div>
+          <div class="text-zinc-400 text-[11px]">If any URL is missed or offline, Monaco immediately renders a clear diagnostic notice directly on the editor.</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-zinc-800/80 py-8 text-center text-xs text-zinc-500 bg-zinc-950">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2 text-zinc-400">
+        <i class="bi bi-code-slash text-sky-400"></i>
+        <span class="font-semibold text-zinc-300">spec-repo Monaco Studios</span>
+        <span>&bull;</span>
+        <a href="../index.html" class="hover:text-zinc-200 transition">Docs Hub</a>
+        <span>&bull;</span>
+        <span>KeshavSoft Declarative Standards</span>
+      </div>
+      <p>&copy; 2026 KeshavSoft. Released under the MIT License.</p>
+      <div class="flex items-center gap-4">
+        <a href="https://github.com/keshavsoft/spec-repo" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-300 transition">
+          <i class="bi bi-github mr-1"></i>GitHub
+        </a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+
+</html>
