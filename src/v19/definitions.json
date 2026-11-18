@@ -1,5 +1,23 @@
 {
   "table": {
+    "headerOnly": {
+      "baseFromSpec": "tableHeaderOnly",
+      "instructions": [
+        "buildColgroup",
+        "buildHeader"
+      ],
+      "options": {
+        "search": {
+          "initialize": "searchFrame",
+          "showLabel": "searchLabel",
+          "showHelper": "searchHelper",
+          "showInput": "searchInput"
+        },
+        "serial": {
+          "initialize": "serialRoot"
+        }
+      }
+    },
     "simple": {
       "baseFromSpec": "tableSimple",
       "instructions": [
@@ -15,8 +33,8 @@
           "showInput": "searchInput"
         },
         "serial": {
-          "showRootSerial": "serialRoot",
-          "showSubSerial": "serialChild"
+          "initialize": "serialRoot",
+          "showSerial": "serialChild"
         },
         "options": {
           "showButton": "optionsShowButton",
@@ -26,58 +44,41 @@
       }
     },
     "withFooter": {
-      "baseFromSpec": "tableWithFooterParent",
+      "baseFromSpec": "tableWithFooter",
       "instructions": [
         "buildColgroup",
         "buildHeader",
         "buildFooter",
         "buildBody"
-      ]
+      ],
+      "options": {
+        "search": {
+          "initialize": "searchFrame",
+          "showLabel": "searchLabel",
+          "showHelper": "searchHelper",
+          "showInput": "searchInput"
+        },
+        "serial": {
+          "initialize": "serialRoot",
+          "showSerial": "serialChild"
+        },
+        "options": {
+          "showButton": "optionsShowButton",
+          "showEditButton": "optionsEditButton",
+          "showDeleteButton": "optionsDeleteButton"
+        }
+      }
     },
     "bodyOnly": {
       "baseFromSpec": "tableBodyOnly",
       "instructions": [
         "buildBody"
-      ]
-    },
-    "footerOnly": {
-      "baseFromSpec": "tableFooterOnly",
-      "instructions": [
-        "buildFooter"
-      ]
-    },
-    "headerOnly": {
-      "baseFromSpec": "tableHeaderOnly",
-      "instructions": [
-        "buildColgroup",
-        "buildHeader"
-      ]
-    },
-    "headerAndFooter": {
-      "baseFromSpec": "tableHeaderAndFooter",
-      "instructions": [
-        "buildColgroup",
-        "buildHeader",
-        "buildFooter",
-        "buildBody"
-      ]
-    },
-    "withSearch": {
-      "baseFromSpec": "tableWithSearch",
-      "instructions": [
-        "buildColgroup",
-        "buildHeader",
-        "buildBody"
-      ]
-    },
-    "withSearchAndFooter": {
-      "baseFromSpec": "tableWithSearchAndFooter",
-      "instructions": [
-        "buildColgroup",
-        "buildHeader",
-        "buildFooter",
-        "buildBody"
-      ]
+      ],
+      "options": {
+        "serial": {
+          "showSerial": "serialChild"
+        }
+      }
     }
   },
   "select": {

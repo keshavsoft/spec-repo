@@ -1,5 +1,18 @@
 var e = {
 	table: {
+		headerOnly: {
+			baseFromSpec: "tableHeaderOnly",
+			instructions: ["buildColgroup", "buildHeader"],
+			options: {
+				search: {
+					initialize: "searchFrame",
+					showLabel: "searchLabel",
+					showHelper: "searchHelper",
+					showInput: "searchInput"
+				},
+				serial: { initialize: "serialRoot" }
+			}
+		},
 		simple: {
 			baseFromSpec: "tableSimple",
 			instructions: [
@@ -15,8 +28,8 @@ var e = {
 					showInput: "searchInput"
 				},
 				serial: {
-					showRootSerial: "serialRoot",
-					showSubSerial: "serialChild"
+					initialize: "serialRoot",
+					showSerial: "serialChild"
 				},
 				options: {
 					showButton: "optionsShowButton",
@@ -26,51 +39,35 @@ var e = {
 			}
 		},
 		withFooter: {
-			baseFromSpec: "tableWithFooterParent",
+			baseFromSpec: "tableWithFooter",
 			instructions: [
 				"buildColgroup",
 				"buildHeader",
 				"buildFooter",
 				"buildBody"
-			]
+			],
+			options: {
+				search: {
+					initialize: "searchFrame",
+					showLabel: "searchLabel",
+					showHelper: "searchHelper",
+					showInput: "searchInput"
+				},
+				serial: {
+					initialize: "serialRoot",
+					showSerial: "serialChild"
+				},
+				options: {
+					showButton: "optionsShowButton",
+					showEditButton: "optionsEditButton",
+					showDeleteButton: "optionsDeleteButton"
+				}
+			}
 		},
 		bodyOnly: {
 			baseFromSpec: "tableBodyOnly",
-			instructions: ["buildBody"]
-		},
-		footerOnly: {
-			baseFromSpec: "tableFooterOnly",
-			instructions: ["buildFooter"]
-		},
-		headerOnly: {
-			baseFromSpec: "tableHeaderOnly",
-			instructions: ["buildColgroup", "buildHeader"]
-		},
-		headerAndFooter: {
-			baseFromSpec: "tableHeaderAndFooter",
-			instructions: [
-				"buildColgroup",
-				"buildHeader",
-				"buildFooter",
-				"buildBody"
-			]
-		},
-		withSearch: {
-			baseFromSpec: "tableWithSearch",
-			instructions: [
-				"buildColgroup",
-				"buildHeader",
-				"buildBody"
-			]
-		},
-		withSearchAndFooter: {
-			baseFromSpec: "tableWithSearchAndFooter",
-			instructions: [
-				"buildColgroup",
-				"buildHeader",
-				"buildFooter",
-				"buildBody"
-			]
+			instructions: ["buildBody"],
+			options: { serial: { showSerial: "serialChild" } }
 		}
 	},
 	select: {
@@ -409,20 +406,20 @@ var e = {
 		tagName: "div",
 		attributes: {
 			"data-role": "table-parent",
-			id: "table-simple-id"
+			id: "table-parent-id"
 		},
 		children: [{
 			tagName: "table",
 			attributes: {
 				class: "table table-hover table-striped align-middle border mb-0",
-				id: "table-simple-table-id"
+				id: "table-tag-id"
 			},
 			children: [
 				{
 					tagName: "colgroup",
 					attributes: {
 						"data-role": "table-colgroup",
-						id: "table-simple-colgroup-id"
+						id: "table-colgroup-id"
 					},
 					children: []
 				},
@@ -431,13 +428,13 @@ var e = {
 					attributes: {
 						class: "table-dark",
 						"data-role": "table-header",
-						id: "table-simple-header-id"
+						id: "table-header-id"
 					},
 					children: [{
 						tagName: "tr",
 						attributes: {
 							"data-role": "table-header-row",
-							id: "table-simple-header-row-id"
+							id: "table-header-row-id"
 						},
 						children: []
 					}]
@@ -446,7 +443,7 @@ var e = {
 					tagName: "tbody",
 					attributes: {
 						"data-role": "table-body",
-						id: "table-simple-body-id"
+						id: "table-body-id"
 					},
 					children: []
 				}
@@ -454,65 +451,82 @@ var e = {
 		}]
 	},
 	tableWithFooter: {
+		tagName: "div",
+		attributes: {
+			"data-role": "table-parent",
+			id: "table-parent-id"
+		},
+		children: [{
+			tagName: "table",
+			attributes: {
+				class: "table table-hover table-striped align-middle border mb-0",
+				id: "table-tag-id"
+			},
+			children: [
+				{
+					tagName: "colgroup",
+					attributes: {
+						"data-role": "table-colgroup",
+						id: "table-colgroup-id"
+					},
+					children: []
+				},
+				{
+					tagName: "thead",
+					attributes: {
+						class: "table-dark",
+						"data-role": "table-header",
+						id: "table-header-id"
+					},
+					children: [{
+						tagName: "tr",
+						attributes: {
+							"data-role": "table-header-row",
+							id: "table-header-row-id"
+						},
+						children: []
+					}]
+				},
+				{
+					tagName: "tbody",
+					attributes: {
+						"data-role": "table-body",
+						id: "table-body-id"
+					},
+					children: []
+				},
+				{
+					tagName: "tfoot",
+					attributes: {
+						"data-role": "table-footer",
+						id: "table-footer-id"
+					},
+					children: [{
+						tagName: "tr",
+						attributes: {
+							"data-role": "table-footer-row",
+							id: "table-footer-row-id"
+						},
+						children: []
+					}]
+				}
+			]
+		}]
+	},
+	tableBodyOnly: {
 		tagName: "table",
 		attributes: {
 			class: "table table-hover table-striped align-middle border mb-0",
-			id: "table-with-footer-id"
+			id: "table-tag-id"
 		},
-		children: [
-			{
-				tagName: "colgroup",
-				attributes: {
-					"data-role": "table-colgroup",
-					id: "table-with-footer-colgroup-id"
-				},
-				children: []
+		children: [{
+			tagName: "tbody",
+			attributes: {
+				"data-role": "table-body",
+				id: "table-body-id"
 			},
-			{
-				tagName: "thead",
-				attributes: {
-					class: "table-dark",
-					"data-role": "table-header",
-					id: "table-with-footer-header-id"
-				},
-				children: [{
-					tagName: "tr",
-					attributes: {
-						"data-role": "table-header-row",
-						id: "table-with-footer-header-row-id"
-					},
-					children: []
-				}]
-			},
-			{
-				tagName: "tbody",
-				attributes: {
-					"data-role": "table-body",
-					id: "table-with-footer-body-id"
-				},
-				children: []
-			},
-			{
-				tagName: "tfoot",
-				attributes: {
-					"data-role": "table-footer",
-					id: "table-with-footer-footer-id"
-				},
-				children: [{
-					tagName: "tr",
-					attributes: {
-						"data-role": "table-footer-row",
-						id: "table-with-footer-footer-row-id"
-					},
-					children: []
-				}]
-			}
-		]
-	},
-	tableBodyOnly: {
-		tagName: "div",
-		attributes: { id: "ks-id" },
-		children: []
+			children: []
+		}]
 	},
 	tableBodyOnly1: {
 		tagName: "tbody",
@@ -541,63 +555,37 @@ var e = {
 		tagName: "div",
 		attributes: {
 			"data-role": "table-parent",
-			id: "table-simple-id"
+			id: "table-parent-id"
 		},
 		children: [{
 			tagName: "table",
 			attributes: {
 				class: "table table-hover table-striped align-middle border mb-0",
-				id: "table-simple-table-id"
+				id: "table-tag-id"
 			},
-			children: [
-				{
-					tagName: "colgroup",
+			children: [{
+				tagName: "colgroup",
+				attributes: {
+					"data-role": "table-colgroup",
+					id: "table-colgroup-id"
+				},
+				children: []
+			}, {
+				tagName: "thead",
+				attributes: {
+					class: "table-dark",
+					"data-role": "table-header",
+					id: "table-header-id"
+				},
+				children: [{
+					tagName: "tr",
 					attributes: {
-						"data-role": "table-colgroup",
-						id: "table-simple-colgroup-id"
+						"data-role": "table-header-row",
+						id: "table-header-row-id"
 					},
 					children: []
-				},
-				{
-					tagName: "thead",
-					attributes: {
-						class: "table-dark",
-						"data-role": "table-header",
-						id: "table-simple-header-id"
-					},
-					children: [{
-						tagName: "tr",
-						attributes: {
-							"data-role": "table-header-row",
-							id: "table-simple-header-row-id"
-						},
-						children: []
-					}]
-				},
-				{
-					tagName: "tbody",
-					attributes: {
-						"data-role": "table-body",
-						id: "table-simple-body-id"
-					},
-					children: []
-				},
-				{
-					tagName: "tfoot",
-					attributes: {
-						"data-role": "table-footer",
-						id: "table-simple-footer-id"
-					},
-					children: [{
-						tagName: "tr",
-						attributes: {
-							"data-role": "table-footer-row",
-							id: "table-simple-footer-row-id"
-						},
-						children: []
-					}]
-				}
-			]
+				}]
+			}]
 		}]
 	},
 	tableHeaderOnly1: {
