@@ -3,133 +3,213 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>spec-repo — Tag Specification Viewer & Monaco Playground</title>
-  <meta name="description" content="Interactive declarative tag specification explorer and playground for spec-repo, powered by Monaco Editor.">
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Monaco Editor CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/editor/editor.main.min.css">
-  
-  <!-- Application Stylesheet -->
-  <link rel="stylesheet" href="./css/style.css">
+  <title>spec-repo — Declarative JSON-to-DOM Tag Specification Catalog</title>
+  <meta name="description" content="Zero-dependency declarative JSON-to-DOM compiler specification catalog. Decouple tag design from compiler engines.">
+  <link rel="stylesheet" href="./css/docs.css">
 </head>
 <body>
 
-  <!-- Top Navigation Header -->
-  <header class="app-header">
-    <div class="brand-section">
-      <div class="brand-logo">{ }</div>
-      <div>
-        <span class="brand-title">spec-repo</span>
-      </div>
-      <span class="brand-badge">Tag Catalog</span>
-    </div>
-
-    <div class="header-links">
-      <a href="https://github.com/keshavsoft/spec-repo" target="_blank" rel="noopener" class="header-link">
-        <svg height="16" width="16" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-        </svg>
-        <span>GitHub</span>
-      </a>
-      <a href="https://keshavsoft.github.io/spec-repo/" target="_blank" class="header-link">
-        <span>Docs Hub</span>
-      </a>
-    </div>
+  <!-- Header -->
+  <header class="docs-header">
+    <a href="index.html" class="brand">
+      <div class="brand-icon">{ }</div>
+      <span class="brand-name">spec-repo</span>
+      <span class="brand-tag">v17.4</span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link active">Home</a>
+      <a href="story/index.html" class="nav-link">The Story</a>
+      <a href="usage/index.html" class="nav-link">How It Works</a>
+      <a href="table/index.html" class="nav-link">Table</a>
+      <a href="select/index.html" class="nav-link">Select</a>
+      <a href="datalist/index.html" class="nav-link">Datalist</a>
+      <a href="monaco.html" class="nav-link btn-playground">Monaco Explorer</a>
+    </nav>
   </header>
 
-  <!-- Action & Filter Toolbar -->
-  <section class="toolbar">
-    <div class="toolbar-left">
-      <div class="control-group">
-        <label for="versionSelect" class="control-label">Version:</label>
-        <select id="versionSelect" class="select-control">
-          <option value="v2" selected>v2 (Current)</option>
-          <option value="v1">v1</option>
-        </select>
-      </div>
+  <div class="docs-container">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-heading">Getting Started</div>
+      <ul class="sidebar-menu">
+        <li><a href="index.html" class="active">Overview & Hub</a></li>
+        <li><a href="story/index.html">The Story of spec-repo</a></li>
+        <li><a href="usage/index.html">Usage & Architecture</a></li>
+      </ul>
 
-      <div class="control-group">
-        <label for="tagSelect" class="control-label">Filter Tag:</label>
-        <select id="tagSelect" class="select-control" style="min-width: 220px;">
-          <option value="ALL">All Definitions (Full spec.json)</option>
-        </select>
-      </div>
+      <div class="sidebar-heading">Component Guides</div>
+      <ul class="sidebar-menu">
+        <li><a href="table/index.html">Building Tables</a></li>
+        <li><a href="select/index.html">Building Selects</a></li>
+        <li><a href="datalist/index.html">Building Datalists</a></li>
+      </ul>
 
-      <button id="resetBtn" class="btn" title="Reset editor content back to original spec definition">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-          <path d="M3 3v5h5"/>
-        </svg>
-        Reset
-      </button>
-
-      <button id="formatBtn" class="btn" title="Format JSON (Shift+Alt+F)">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <polyline points="4 7 4 4 20 4 20 7"/>
-          <line x1="9" y1="20" x2="15" y2="20"/>
-          <line x1="12" y1="4" x2="12" y2="20"/>
-        </svg>
-        Format
-      </button>
-
-      <button id="copyBtn" class="btn btn-primary" title="Copy current JSON content to clipboard">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-        </svg>
-        Copy JSON
-      </button>
-    </div>
-
-    <div class="toolbar-right">
-      <div id="tagCountBadge" class="tag-counter">Loading tags...</div>
-      <div class="status-pill">
-        <span class="status-dot"></span>
-        JSON Valid
-      </div>
-    </div>
-  </section>
-
-  <!-- Main Split Workspace -->
-  <main class="workspace">
-    <!-- Monaco Editor Panel -->
-    <section class="editor-pane">
-      <div id="editorLoading" class="editor-loading">
-        <div class="loading-spinner"></div>
-        <span>Initializing Monaco Editor...</span>
-      </div>
-      <div id="monacoContainer"></div>
-    </section>
-
-    <!-- Right Tag Inspector & Quick Jump Sidebar -->
-    <aside class="sidebar-pane" id="sidebarPane">
-      <div class="sidebar-header">
-        <div class="sidebar-title-row">
-          <span class="sidebar-title">Catalog Inspector</span>
-        </div>
-        <input type="text" id="searchInput" class="search-input" placeholder="Search tag name or element (e.g. col, tr, button)...">
-      </div>
-      <div class="sidebar-list" id="sidebarList">
-        <!-- Rendered dynamically by index.js -->
-      </div>
+      <div class="sidebar-heading">Tools</div>
+      <ul class="sidebar-menu">
+        <li><a href="monaco.html">Monaco Playground</a></li>
+        <li><a href="https://github.com/keshavsoft/spec-repo" target="_blank" rel="noopener">GitHub Repository &rarr;</a></li>
+      </ul>
     </aside>
-  </main>
 
-  <!-- Notification Toast Element -->
-  <div id="toastNotice" class="toast-notice"></div>
+    <!-- Main Content -->
+    <main class="docs-content">
+      <h1>spec-repo Documentation</h1>
+      <p class="lead">
+        <strong>Canonical, zero-dependency declarative JSON Tag Specification Catalog.</strong><br>
+        Pure serializable JSON representations of HTML tags, layout structures, and assembly instructions for declarative DOM compilers.
+      </p>
 
-  <!-- Monaco Editor AMD Loader via CDNJS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.2/min/vs/loader.min.js"></script>
+      <!-- Quick Action Cards -->
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">📖</div>
+          <div class="card-title">The Story</div>
+          <div class="card-desc">The history, motivation, and architecture behind decoupling HTML tag design from compiler engines.</div>
+          <a href="story/index.html" class="card-link">Read the Story &rarr;</a>
+        </div>
 
-  <!-- Bundled Fallback Spec Data -->
-  <script src="./js/specData.js"></script>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">How It Works</div>
+          <div class="card-desc">Repository usage, installation, 4-stage assembly pipeline, and the KeshavSoft naming convention.</div>
+          <a href="usage/index.html" class="card-link">Explore Architecture &rarr;</a>
+        </div>
 
-  <!-- Application Controller -->
-  <script src="./js/index.js"></script>
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <div class="card-title">Building Tables</div>
+          <div class="card-desc">How to construct full data tables with colgroups, headers, body matrix rows, footers, serials, and search.</div>
+          <a href="table/index.html" class="card-link">Table Guide &rarr;</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🔽</div>
+          <div class="card-title">Building Selects</div>
+          <div class="card-desc">How to assemble native HTML <code>&lt;select&gt;</code> and <code>&lt;option&gt;</code> tags from array data collections.</div>
+          <a href="select/index.html" class="card-link">Select Guide &rarr;</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <div class="card-title">Building Datalists</div>
+          <div class="card-desc">Harnessing native browser autocompletion with <code>&lt;datalist&gt;</code> linked to inputs without bloated libraries.</div>
+          <a href="datalist/index.html" class="card-link">Datalist Guide &rarr;</a>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">💻</div>
+          <div class="card-title">Monaco Playground</div>
+          <div class="card-desc">Interactive browser explorer to inspect, test, format, and copy all tag definitions live in Monaco Editor.</div>
+          <a href="monaco.html" class="card-link">Launch Playground &rarr;</a>
+        </div>
+      </div>
+
+      <h2>Quick Start</h2>
+
+      <h3>1. Install</h3>
+<pre><code>npm install spec-repo</code></pre>
+
+      <h3>2. Import in ES Module</h3>
+<pre><code>import spec, { tags, definitions, instructions } from "spec-repo";
+
+// Access any declarative tag blueprint
+console.log(spec.buildHeader);
+/*
+{
+  "tagName": "th",
+  "textContent": "${columnName}",
+  "attributes": {
+    "class": "py-3 px-3 fw-semibold text-uppercase small text-body-secondary border-bottom"
+  }
+}
+*/</code></pre>
+
+      <h2>Core Specifications at a Glance</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Spec Key</th>
+              <th>Target Tag</th>
+              <th>Interpolation Token</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>buildColGroup</code></td>
+              <td><code>&lt;col&gt;</code></td>
+              <td><code>${width}</code></td>
+              <td>Defines column width inside <code>&lt;colgroup&gt;</code></td>
+            </tr>
+            <tr>
+              <td><code>buildHeader</code></td>
+              <td><code>&lt;th&gt;</code></td>
+              <td><code>${columnName}</code></td>
+              <td>Styled uppercase column header cell</td>
+            </tr>
+            <tr>
+              <td><code>buildBodyTr</code></td>
+              <td><code>&lt;tr&gt;</code></td>
+              <td>&mdash;</td>
+              <td>Table body row with <code>align-middle</code> styling</td>
+            </tr>
+            <tr>
+              <td><code>buildBodyCell</code></td>
+              <td><code>&lt;td&gt;</code></td>
+              <td><code>${rowValue}</code></td>
+              <td>Table body data cell</td>
+            </tr>
+            <tr>
+              <td><code>buildFooter</code></td>
+              <td><code>&lt;td&gt;</code></td>
+              <td><code>${columnName}</code></td>
+              <td>Footer cell with datalist-bound input</td>
+            </tr>
+            <tr>
+              <td><code>buildSelect</code></td>
+              <td><code>&lt;select&gt;</code></td>
+              <td>&mdash;</td>
+              <td>Native select dropdown container</td>
+            </tr>
+            <tr>
+              <td><code>buildOption</code></td>
+              <td><code>&lt;option&gt;</code></td>
+              <td><code>${rowValue}</code></td>
+              <td>Option item for select or datalist</td>
+            </tr>
+            <tr>
+              <td><code>buildDataList</code></td>
+              <td><code>&lt;datalist&gt;</code></td>
+              <td><code>${columnName}</code></td>
+              <td>Native autocompletion provider container</td>
+            </tr>
+            <tr>
+              <td><code>headerSerialCell</code></td>
+              <td><code>&lt;th&gt;</code></td>
+              <td>&mdash;</td>
+              <td>Row sequence indicator header (<code>#</code>)</td>
+            </tr>
+            <tr>
+              <td><code>optionsButtonCell</code></td>
+              <td><code>&lt;td&gt;</code></td>
+              <td>&mdash;</td>
+              <td>Cell housing action button (<code>ks-btn-show</code>)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout callout-success">
+        <div class="callout-title">Where to next?</div>
+        <p>Read <a href="story/index.html"><strong>The Story of spec-repo</strong></a> to discover why declarative tag catalogs provide the ultimate decoupling for modern web apps.</p>
+      </div>
+    </main>
+  </div>
+
+  <footer class="docs-footer">
+    <p>spec-repo &bull; Zero-dependency declarative JSON tag specification catalog &bull; <a href="https://github.com/keshavsoft/spec-repo">GitHub Repository</a></p>
+  </footer>
+
 </body>
 </html>

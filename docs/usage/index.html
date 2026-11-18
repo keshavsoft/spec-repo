@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usage & How It Works — spec-repo Documentation</title>
+  <meta name="description" content="Technical guide on repository usage, imports, assembly pipelines, and architectural conventions in spec-repo.">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="docs-header">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon">{ }</div>
+      <span class="brand-name">spec-repo</span>
+      <span class="brand-tag">Docs</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="../story/index.html" class="nav-link">The Story</a>
+      <a href="index.html" class="nav-link active">How It Works</a>
+      <a href="../table/index.html" class="nav-link">Table</a>
+      <a href="../select/index.html" class="nav-link">Select</a>
+      <a href="../datalist/index.html" class="nav-link">Datalist</a>
+      <a href="../monaco.html" class="nav-link btn-playground">Monaco Explorer</a>
+    </nav>
+  </header>
+
+  <div class="docs-container">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-heading">Navigation</div>
+      <ul class="sidebar-menu">
+        <li><a href="../index.html">Overview & Hub</a></li>
+        <li><a href="../story/index.html">The Story of spec-repo</a></li>
+        <li><a href="index.html" class="active">Usage & Architecture</a></li>
+      </ul>
+
+      <div class="sidebar-heading">Component Guides</div>
+      <ul class="sidebar-menu">
+        <li><a href="../table/index.html">Building Tables</a></li>
+        <li><a href="../select/index.html">Building Selects</a></li>
+        <li><a href="../datalist/index.html">Building Datalists</a></li>
+      </ul>
+
+      <div class="sidebar-heading">Interactive</div>
+      <ul class="sidebar-menu">
+        <li><a href="../monaco.html">Monaco Playground</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-content">
+      <h1>Repository Usage & How It Works</h1>
+      <p class="lead">An end-to-end breakdown of how specifications, instructions, and compiler engines collaborate to generate native DOM elements.</p>
+
+      <h2>1. Installation</h2>
+      <p>Install <code>spec-repo</code> via npm or your preferred package manager:</p>
+
+<pre><code>npm install spec-repo</code></pre>
+
+      <h2>2. Module Imports</h2>
+      <p>By default, <code>spec-repo</code> exports the latest canonical version (<code>v17</code>), along with all tag blueprints, instructions, and definitions:</p>
+
+<pre><code>// Default export gives the full specification catalog
+import spec from "spec-repo";
+
+// Named exports provide modular access
+import { 
+  spec,          // Full specification tree (table, select, forms, datalist)
+  tags,          // Raw HTML tag blueprints
+  tagsSchema,    // JSON schema validation rules
+  instructions,  // JSONPath assembly directives
+  definitions    // High-level component recipes
+} from "spec-repo";
+
+console.log(spec.buildHeader);
+// Outputs: { tagName: "th", textContent: "${columnName}", attributes: { ... } }</code></pre>
+
+      <h3>Importing Specific Versions</h3>
+      <p>If your application targets a specific version, you can import directly from sub-paths:</p>
+
+<pre><code>// Version 17 (Current)
+import specV17 from "spec-repo/src/v17/spec.json" with { type: "json" };
+
+// Version 2 (Legacy Tag-Only)
+import specV2 from "spec-repo/archive/v2/spec.json" with { type: "json" };</code></pre>
+
+      <h2>3. How It Works: The 4-Stage Assembly Pipeline</h2>
+      <p>The compiler does not generate HTML imperatively. Instead, it follows a deterministic 4-stage pipeline orchestrated by <code>definitions.json</code> and <code>instructions.json</code>:</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">1️⃣</div>
+          <div class="card-title">Load Base AST</div>
+          <div class="card-desc">The definition selects an initial skeleton AST from <code>spec.json</code> (e.g., <code>tableSimple</code> with <code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;tbody&gt;</code>).</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">2️⃣</div>
+          <div class="card-title">Resolve Instruction</div>
+          <div class="card-desc">The compiler looks up the instruction by key (e.g. <code>buildHeader</code>), reading its source data path and destination target path.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">3️⃣</div>
+          <div class="card-title">JSONPath Query & Target</div>
+          <div class="card-desc">Locates target injection points dynamically in the base AST using data roles, such as <code>$..*[?@.attributes['data-role'] == 'table-header-row']</code>.</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">4️⃣</div>
+          <div class="card-title">Hydrate & Inject</div>
+          <div class="card-desc">Clones the template tag, substitutes token variables (<code>${columnName}</code>, <code>${rowValue}</code>), and attaches them into the destination.</div>
+        </div>
+      </div>
+
+      <h2>4. Instruction Anatomy Explained</h2>
+      <p>Here is what an instruction looks like under the hood (from <code>src/v17/instructions.json</code>):</p>
+
+<pre><code>{
+  "buildHeader": {
+    "type": "single",
+    "narration": "Build table header",
+    "destinationPath": {
+      "fileName": "base",
+      "filePath": ["children"],
+      "jsonPath": "$..*[?@.attributes['data-role'] == 'table-header-row']"
+    },
+    "sourcePath": {
+      "fileName": "data",
+      "jsonPath": "$.columns"
+    },
+    "templateKey": "buildHeader",
+    "func": "fromCollection"
+  }
+}</code></pre>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Property</th>
+              <th>Type</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>type</code></td>
+              <td><code>string</code></td>
+              <td>Execution mode: <code>single</code> (1-to-1 or list-to-container), <code>rowOnColumn</code> (matrix 2D table body), or <code>columnOnRow</code> (nested dropdowns/datalists).</td>
+            </tr>
+            <tr>
+              <td><code>destinationPath.jsonPath</code></td>
+              <td><code>string</code></td>
+              <td>JSONPath expression matching target nodes in the base template where newly created nodes must be appended or unshifted.</td>
+            </tr>
+            <tr>
+              <td><code>sourcePath.jsonPath</code></td>
+              <td><code>string</code></td>
+              <td>JSONPath expression querying the incoming user data (e.g., column array or row data array).</td>
+            </tr>
+            <tr>
+              <td><code>templateKey</code></td>
+              <td><code>string | object</code></td>
+              <td>The key in <code>spec.json</code> / <code>tags.json</code> used as the template blueprint.</td>
+            </tr>
+            <tr>
+              <td><code>func</code></td>
+              <td><code>string</code></td>
+              <td>Transformation strategy (e.g. <code>fromCollection</code> to iterate and clone for every data item).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2>5. Parameter Naming Standard (KeshavSoft Convention)</h2>
+      <p>All controller functions and compilers consuming <code>spec-repo</code> adhere strictly to the KeshavSoft single-object argument pattern:</p>
+
+      <ul>
+        <li><strong>Single Config Object</strong>: All functions receive one destructured parameter object.</li>
+        <li><strong><code>in</code> Prefix</strong>: Incoming parameters are prefixed with <code>in</code> (e.g. <code>inSpec</code>, <code>inData</code>, <code>inConfig</code>).</li>
+        <li><strong><code>local</code> Prefix</strong>: Variables inside the function body are assigned to <code>local</code>-prefixed identifiers before execution.</li>
+      </ul>
+
+<pre><code>function compileComponent({ inSpec, inData, inRecipe }) {
+  // 1. Map inputs to local variables
+  const localSpec = inSpec;
+  const localData = inData;
+  const localRecipe = inRecipe;
+
+  // 2. Perform compiler logic strictly using local variables
+  const baseAst = JSON.parse(JSON.stringify(localSpec[localRecipe.baseFromSpec]));
+  // ... execute instructions
+  return baseAst;
+}</code></pre>
+
+      <h2>6. Global Registration</h2>
+      <p>In browser environments or micro-frontends without bundlers, importing <code>src/v17/index.js</code> automatically registers the specification catalog onto the window global object under <code>window.specRepo</code>:</p>
+
+<pre><code>// Available in browser console or legacy scripts:
+console.log(window.specRepo.spec);
+console.log(window.specRepo.definitions);
+console.log(window.specRepo.instructions);</code></pre>
+
+      <div class="callout callout-success">
+        <div class="callout-title">Next: Deep Dive into Component Builders</div>
+        <p>Now that you understand the assembly engine, learn how to build:</p>
+        <p>&rarr; <a href="../table/index.html"><strong>Building Tables</strong> (Colgroup, Header, Body, Footer, Serial, Search, Options)</a></p>
+        <p>&rarr; <a href="../select/index.html"><strong>Building Selects</strong> (Simple and Options Array)</a></p>
+        <p>&rarr; <a href="../datalist/index.html"><strong>Building Datalists</strong> (Autocomplete and Input Linking)</a></p>
+      </div>
+    </main>
+  </div>
+
+  <footer class="docs-footer">
+    <p>spec-repo &bull; Zero-dependency declarative JSON tag specification catalog &bull; <a href="https://github.com/keshavsoft/spec-repo">GitHub Repository</a></p>
+  </footer>
+
+</body>
+</html>

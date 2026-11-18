@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Build Tables — spec-repo Documentation</title>
+  <meta name="description" content="Complete guide on constructing high-performance declarative tables with headers, footers, colgroups, serial numbers, search bars, and action buttons.">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="docs-header">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon">{ }</div>
+      <span class="brand-name">spec-repo</span>
+      <span class="brand-tag">Docs</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="../story/index.html" class="nav-link">The Story</a>
+      <a href="../usage/index.html" class="nav-link">How It Works</a>
+      <a href="index.html" class="nav-link active">Table</a>
+      <a href="../select/index.html" class="nav-link">Select</a>
+      <a href="../datalist/index.html" class="nav-link">Datalist</a>
+      <a href="../monaco.html" class="nav-link btn-playground">Monaco Explorer</a>
+    </nav>
+  </header>
+
+  <div class="docs-container">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-heading">Navigation</div>
+      <ul class="sidebar-menu">
+        <li><a href="../index.html">Overview & Hub</a></li>
+        <li><a href="../story/index.html">The Story of spec-repo</a></li>
+        <li><a href="../usage/index.html">Usage & Architecture</a></li>
+      </ul>
+
+      <div class="sidebar-heading">Component Guides</div>
+      <ul class="sidebar-menu">
+        <li><a href="index.html" class="active">Building Tables</a></li>
+        <li><a href="../select/index.html">Building Selects</a></li>
+        <li><a href="../datalist/index.html">Building Datalists</a></li>
+      </ul>
+
+      <div class="sidebar-heading">Interactive</div>
+      <ul class="sidebar-menu">
+        <li><a href="../monaco.html">Monaco Playground</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-content">
+      <h1>How to Build Tables</h1>
+      <p class="lead">Construct rich, responsive tables using declarative JSON templates, column mappings, 2D matrix row generators, and pluggable decorators.</p>
+
+      <h2>1. The Table Blueprint Architecture</h2>
+      <p>
+        In <code>spec-repo</code>, a table is not a monolithic block of HTML. It is assembled from distinct modular parts:
+      </p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">1. Colgroup (<code>buildColGroup</code>)</div>
+          <div class="card-desc">Defines column widths using <code>&lt;col style="width: ${width};"&gt;</code> for stable, glitch-free browser layout calculations.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">2. Header (<code>buildHeader</code>)</div>
+          <div class="card-desc">Generates uppercase column headers <code>&lt;th&gt;${columnName}&lt;/th&gt;</code> inside the <code>&lt;thead&gt;</code>.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">3. Body Rows (<code>buildBody</code>)</div>
+          <div class="card-desc">A <code>rowOnColumn</code> matrix execution combining row wrapper <code>buildBodyTr</code> with data cells <code>buildBodyCell</code>.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">4. Footer (<code>buildFooter</code>)</div>
+          <div class="card-desc">Generates filter/entry cells containing datalist-bound inputs inside <code>&lt;tfoot&gt;</code>.</div>
+        </div>
+      </div>
+
+      <h2>2. Step-by-Step Table Assembly</h2>
+
+      <h3>Step A: Prepare Your Input Data</h3>
+      <p>The compiler requires two data structures: column definitions and row data records:</p>
+
+<pre><code>const tableData = {
+  columns: [
+    { columnName: "ItemName", width: "200px" },
+    { columnName: "Category", width: "150px" },
+    { columnName: "Price", width: "100px" }
+  ],
+  data: [
+    { ItemName: "Mechanical Keyboard", Category: "Electronics", Price: "$120" },
+    { ItemName: "Standing Desk", Category: "Furniture", Price: "$450" }
+  ]
+};</code></pre>
+
+      <h3>Step B: Pick a Table Recipe from <code>definitions.json</code></h3>
+      <p><code>spec-repo</code> provides preset recipes for every table scenario:</p>
+
+<pre><code>import { definitions } from "spec-repo";
+
+// Inspect the "simple" table definition:
+console.log(definitions.table.simple);
+/*
+{
+  "baseFromSpec": "tableSimple",
+  "instructions": [
+    "buildColgroup",
+    "buildHeader",
+    "buildBody"
+  ],
+  "options": {
+    "serial": "serial",
+    "options": "options",
+    "search": "search"
+  }
+}
+*/</code></pre>
+
+      <h3>Step C: The Instructions in Action</h3>
+      <p>During compilation, three primary instructions are executed sequentially:</p>
+
+      <h4>1. <code>buildColgroup</code></h4>
+      <p>Queries <code>$.columns</code> and creates a <code>&lt;col&gt;</code> tag for each entry, injecting it into <code>[data-role="table-colgroup"]</code>:</p>
+<pre><code>// Blueprint from spec.buildColGroup:
+{
+  "tagName": "col",
+  "attributes": { "style": "width: ${width};" }
+}</code></pre>
+
+      <h4>2. <code>buildHeader</code></h4>
+      <p>Queries <code>$.columns</code> and generates <code>&lt;th&gt;</code> tags into <code>[data-role="table-header-row"]</code>:</p>
+<pre><code>// Blueprint from spec.buildHeader:
+{
+  "tagName": "th",
+  "textContent": "${columnName}",
+  "attributes": {
+    "class": "py-3 px-3 fw-semibold text-uppercase small text-body-secondary border-bottom"
+  }
+}</code></pre>
+
+      <h4>3. <code>buildBody</code> (2D Matrix Execution)</h4>
+      <p>The instruction type is <code>rowOnColumn</code>. For every object in <code>$.data</code>, it instantiates a <code>buildBodyTr</code>, and for each column, it injects a <code>buildBodyCell</code>:</p>
+<pre><code>// Body Row:
+{ "tagName": "tr", "attributes": { "class": "align-middle" } }
+
+// Body Cell:
+{
+  "tagName": "td",
+  "textContent": "${rowValue}",
+  "attributes": { "class": "py-2 px-3 text-secondary" }
+}</code></pre>
+
+      <h2>3. Pluggable Table Options (Decorators)</h2>
+      <p>Every table definition supports optional feature plugins that mutate the table structure cleanly:</p>
+
+      <h3>A. Serial Number Column (<code>serial</code>)</h3>
+      <p>Automatically prepends sequence numbers (1, 2, 3...) to the table:</p>
+      <ul>
+        <li>Unshifts <code>colGroupForSerial</code> (width: <code>50px</code>) into <code>&lt;colgroup&gt;</code>.</li>
+        <li>Unshifts <code>headerSerialCell</code> (<code>&lt;th&gt;#&lt;/th&gt;</code>) into the header row.</li>
+        <li>Unshifts an incrementing index cell into each body row.</li>
+        <li>Unshifts an empty spacing cell into the footer row.</li>
+      </ul>
+
+      <h3>B. Action Buttons Column (<code>options</code>)</h3>
+      <p>Appends row-level action buttons:</p>
+      <ul>
+        <li>Appends <code>colGroupForOption</code> (width: <code>100px</code>) into <code>&lt;colgroup&gt;</code>.</li>
+        <li>Appends <code>headerForOption</code> (<code>&lt;th&gt;Options&lt;/th&gt;</code>) into the header row.</li>
+        <li>Appends <code>optionsButtonCell</code> (a button with <code>ks-btn-show</code>) into each body row.</li>
+        <li>Appends <code>tdWithButtonSaveWarning</code> (a button with <code>ks-btn-save</code>) into the footer row.</li>
+      </ul>
+
+      <h3>C. Search Bar (<code>search</code>)</h3>
+      <p>Prepends an interactive search input bar (<code>tableSearch</code>) above the table in the parent container.</p>
+
+      <h2>4. Complete Compiler Demonstration</h2>
+      <p>Here is an illustration of how a compiler consumes the specifications to generate HTML:</p>
+
+<pre><code>import { spec, definitions, instructions } from "spec-repo";
+
+function buildTable({ inColumns, inRows, inWithFooter = false }) {
+  const localRecipe = inWithFooter ? definitions.table.withFooter : definitions.table.simple;
+  
+  // 1. Clone the base table skeleton from spec
+  const tableAst = JSON.parse(JSON.stringify(spec[localRecipe.baseFromSpec]));
+
+  // 2. Colgroup: Populate &lt;col&gt; tags
+  const colgroupNode = tableAst.children.find(n => n.attributes?.['data-role'] === 'table-colgroup');
+  inColumns.forEach(col => {
+    colgroupNode.children.push({
+      tagName: "col",
+      attributes: { style: `width: ${col.width || 'auto'};` }
+    });
+  });
+
+  // 3. Header: Populate &lt;th&gt; tags
+  const theadRow = tableAst.children.find(n => n.tagName === 'thead').children[0];
+  inColumns.forEach(col => {
+    theadRow.children.push({
+      tagName: "th",
+      textContent: col.columnName,
+      attributes: { class: "py-3 px-3 fw-semibold text-uppercase small" }
+    });
+  });
+
+  // 4. Body: Populate rows & cells
+  const tbodyNode = tableAst.children.find(n => n.tagName === 'tbody');
+  inRows.forEach(row => {
+    const tr = { tagName: "tr", attributes: { class: "align-middle" }, children: [] };
+    inColumns.forEach(col => {
+      tr.children.push({
+        tagName: "td",
+        textContent: String(row[col.columnName] ?? ""),
+        attributes: { class: "py-2 px-3 text-secondary" }
+      });
+    });
+    tbodyNode.children.push(tr);
+  });
+
+  return tableAst;
+}</code></pre>
+
+      <div class="callout callout-success">
+        <div class="callout-title">Next Up: Form Controls</div>
+        <p>Learn how dropdowns and native autocompletion are built:</p>
+        <p>&rarr; <a href="../select/index.html"><strong>Building Select Dropdowns</strong></a></p>
+        <p>&rarr; <a href="../datalist/index.html"><strong>Building Datalists</strong></a></p>
+      </div>
+    </main>
+  </div>
+
+  <footer class="docs-footer">
+    <p>spec-repo &bull; Zero-dependency declarative JSON tag specification catalog &bull; <a href="https://github.com/keshavsoft/spec-repo">GitHub Repository</a></p>
+  </footer>
+
+</body>
+</html>

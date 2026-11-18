@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How to Build Datalists — spec-repo Documentation</title>
+  <meta name="description" content="Guide to generating high-performance native datalist elements and autocompletion providers with spec-repo.">
+  <link rel="stylesheet" href="../css/docs.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="docs-header">
+    <a href="../index.html" class="brand">
+      <div class="brand-icon">{ }</div>
+      <span class="brand-name">spec-repo</span>
+      <span class="brand-tag">Docs</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html" class="nav-link">Home</a>
+      <a href="../story/index.html" class="nav-link">The Story</a>
+      <a href="../usage/index.html" class="nav-link">How It Works</a>
+      <a href="../table/index.html" class="nav-link">Table</a>
+      <a href="../select/index.html" class="nav-link">Select</a>
+      <a href="index.html" class="nav-link active">Datalist</a>
+      <a href="../monaco.html" class="nav-link btn-playground">Monaco Explorer</a>
+    </nav>
+  </header>
+
+  <div class="docs-container">
+    <!-- Sidebar -->
+    <aside class="docs-sidebar">
+      <div class="sidebar-heading">Navigation</div>
+      <ul class="sidebar-menu">
+        <li><a href="../index.html">Overview & Hub</a></li>
+        <li><a href="../story/index.html">The Story of spec-repo</a></li>
+        <li><a href="../usage/index.html">Usage & Architecture</a></li>
+      </ul>
+
+      <div class="sidebar-heading">Component Guides</div>
+      <ul class="sidebar-menu">
+        <li><a href="../table/index.html">Building Tables</a></li>
+        <li><a href="../select/index.html">Building Selects</a></li>
+        <li><a href="index.html" class="active">Building Datalists</a></li>
+      </ul>
+
+      <div class="sidebar-heading">Interactive</div>
+      <ul class="sidebar-menu">
+        <li><a href="../monaco.html">Monaco Playground</a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="docs-content">
+      <h1>How to Build Datalists</h1>
+      <p class="lead">Harness the native browser autocomplete engine with zero runtime overhead using declarative <code>&lt;datalist&gt;</code> specifications.</p>
+
+      <h2>1. Why Datalists?</h2>
+      <p>
+        Traditional searchable dropdowns often bundle hundreds of kilobytes of third-party JavaScript (such as Select2, Chosen, or React-Select). 
+        The HTML5 <code>&lt;datalist&gt;</code> element delivers instantaneous, accessible search and auto-complete right inside the browser engine natively.
+      </p>
+      <p>
+        <code>spec-repo</code> pairs table footers, search bars, and form inputs directly with declarative datalist providers.
+      </p>
+
+      <h2>2. The Datalist Specifications</h2>
+      <p>Two templates define the datalist ecosystem:</p>
+
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-title">1. Container (<code>buildDataList</code>)</div>
+          <div class="card-desc">Defines <code>&lt;datalist id="${columnName}"&gt;</code>. The <code>id</code> attribute acts as the lookup bridge for inputs.</div>
+        </div>
+        <div class="card">
+          <div class="card-title">2. Option Items (<code>buildOption</code>)</div>
+          <div class="card-desc">Defines <code>&lt;option value="${rowValue}"&gt;</code> nested inside the datalist container.</div>
+        </div>
+      </div>
+
+      <h3>Raw Template Blueprints</h3>
+<pre><code>// 1. spec.buildDataList
+{
+  "tagName": "datalist",
+  "attributes": {
+    "id": "${columnName}"
+  },
+  "children": []
+}
+
+// 2. spec.buildOption
+{
+  "tagName": "option",
+  "textContent": "${rowValue}",
+  "attributes": {
+    "value": "${rowValue}"
+  }
+}</code></pre>
+
+      <h2>3. Connecting Inputs to Datalists</h2>
+      <p>
+        Notice how <code>spec.buildFooter</code> in the table specification seamlessly couples with <code>buildDataList</code>:
+      </p>
+
+<pre><code>// spec.buildFooter
+{
+  "tagName": "td",
+  "attributes": { "class": "p-1" },
+  "children": [
+    {
+      "tagName": "input",
+      "attributes": {
+        "class": "form-control form-control-sm",
+        "placeholder": "${columnName}",
+        "list": "${columnName}" // &lt;-- References the datalist id!
+      }
+    }
+  ]
+}</code></pre>
+
+      <p>
+        When an input has <code>list="City"</code>, the browser automatically connects it to <code>&lt;datalist id="City"&gt;</code>, offering user filtering, arrow-key navigation, and instant selection out of the box.
+      </p>
+
+      <h2>4. Assembly Instruction (<code>buildDataListWithOptions</code>)</h2>
+      <p>In <code>src/v17/instructions.json</code>, datalists are compiled via the <code>columnOnRow</code> directive:</p>
+
+<pre><code>{
+  "buildDataListWithOptions": {
+    "type": "columnOnRow",
+    "narration": "Build datalists with options",
+    "destinationPath": {
+      "fileName": "base",
+      "filePath": ["children"]
+    },
+    "templateKey": {
+      "columnKey": "buildDataList",
+      "rowKey": "buildOption"
+    }
+  }
+}</code></pre>
+
+      <h2>5. Complete Code Example</h2>
+
+<pre><code>import { spec } from "spec-repo";
+
+function buildColumnDatalist({ inColumnName, inSuggestions }) {
+  // 1. Clone the datalist container
+  const datalistAst = {
+    tagName: "datalist",
+    attributes: {
+      id: inColumnName
+    },
+    children: []
+  };
+
+  // 2. Populate distinct suggestion options
+  const uniqueItems = Array.from(new Set(inSuggestions));
+  uniqueItems.forEach(item => {
+    datalistAst.children.push({
+      tagName: "option",
+      textContent: item,
+      attributes: {
+        value: item
+      }
+    });
+  });
+
+  return datalistAst;
+}
+
+// Usage:
+const cityDatalist = buildColumnDatalist({
+  inColumnName: "City",
+  inSuggestions: ["New York", "London", "Tokyo", "Paris", "Berlin"]
+});
+
+console.log(cityDatalist);</code></pre>
+
+      <h3>Resulting Output</h3>
+<pre><code>&lt;!-- Linked Input --&gt;
+&lt;input type="text" class="form-control" placeholder="Search City..." list="City"&gt;
+
+&lt;!-- Native Datalist Provider --&gt;
+&lt;datalist id="City"&gt;
+  &lt;option value="New York"&gt;New York&lt;/option&gt;
+  &lt;option value="London"&gt;London&lt;/option&gt;
+  &lt;option value="Tokyo"&gt;Tokyo&lt;/option&gt;
+  &lt;option value="Paris"&gt;Paris&lt;/option&gt;
+  &lt;option value="Berlin"&gt;Berlin&lt;/option&gt;
+&lt;/datalist&gt;</code></pre>
+
+      <div class="callout callout-success">
+        <div class="callout-title">Interactive Exploration</div>
+        <p>Inspect all live datalist and select specifications in the interactive <a href="../monaco.html"><strong>Monaco Playground</strong></a>.</p>
+      </div>
+    </main>
+  </div>
+
+  <footer class="docs-footer">
+    <p>spec-repo &bull; Zero-dependency declarative JSON tag specification catalog &bull; <a href="https://github.com/keshavsoft/spec-repo">GitHub Repository</a></p>
+  </footer>
+
+</body>
+</html>
