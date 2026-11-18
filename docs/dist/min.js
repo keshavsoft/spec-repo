@@ -7,33 +7,20 @@ var e = {
 				"buildHeader",
 				"buildBody"
 			],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
+			options: "table"
 		},
 		withFooter: {
-			baseFromSpec: "tableWithFooter",
+			baseFromSpec: "tableWithFooterParent",
 			instructions: [
 				"buildColgroup",
 				"buildHeader",
 				"buildFooter",
 				"buildBody"
-			],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
+			]
 		},
 		bodyOnly: {
 			baseFromSpec: "tableBodyOnly",
-			instructions: ["buildBody"],
-			options: {
-				serial: "serial",
-				options: "options"
-			}
+			instructions: ["buildBody"]
 		},
 		footerOnly: {
 			baseFromSpec: "tableFooterOnly",
@@ -41,21 +28,9 @@ var e = {
 		},
 		headerOnly: {
 			baseFromSpec: "tableHeaderOnly",
-			instructions: ["buildColgroup", "buildHeader"],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
+			instructions: ["buildColgroup", "buildHeader"]
 		},
-		options: {
-			instructions: [],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
-		},
+		options: { instructions: [] },
 		headerAndFooter: {
 			baseFromSpec: "tableHeaderAndFooter",
 			instructions: [
@@ -63,12 +38,7 @@ var e = {
 				"buildHeader",
 				"buildFooter",
 				"buildBody"
-			],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
+			]
 		},
 		withSearch: {
 			baseFromSpec: "tableWithSearch",
@@ -76,26 +46,16 @@ var e = {
 				"buildColgroup",
 				"buildHeader",
 				"buildBody"
-			],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
+			]
 		},
 		withSearchAndFooter: {
-			baseFromSpec: "tableWithSearch",
+			baseFromSpec: "tableWithSearchAndFooter",
 			instructions: [
 				"buildColgroup",
 				"buildHeader",
 				"buildFooter",
 				"buildBody"
-			],
-			options: {
-				serial: "serial",
-				options: "options",
-				search: "search"
-			}
+			]
 		}
 	},
 	select: {
@@ -354,56 +314,34 @@ var e = {
 		},
 		children: [{
 			tagName: "div",
-			attributes: { class: "row mb-3 align-items-center" },
+			attributes: {
+				class: "row mb-3 align-items-center",
+				"data-role": "search-toolbar"
+			},
 			children: [
 				{
 					tagName: "div",
-					attributes: { class: "col-md-4 d-flex align-items-center" },
-					children: [{
-						tagName: "h6",
-						attributes: {
-							class: "mb-0 fw-semibold text-secondary",
-							id: "table-title"
-						},
-						textContent: "Items"
-					}]
+					attributes: {
+						class: "col-md-4 d-flex align-items-center",
+						"data-role": "search-label-slot"
+					},
+					children: []
 				},
 				{
 					tagName: "div",
-					attributes: { class: "col-md-4 text-center d-flex align-items-center justify-content-center" },
-					children: [{
-						tagName: "span",
-						attributes: {
-							id: "search-feedback",
-							class: "badge bg-white text-secondary border px-3 py-2 small fw-normal shadow-sm"
-						},
-						textContent: "Showing all records"
-					}]
+					attributes: {
+						class: "col-md-4 text-center d-flex align-items-center justify-content-center",
+						"data-role": "search-helper-slot"
+					},
+					children: []
 				},
 				{
 					tagName: "div",
-					attributes: { class: "col-md-4" },
-					children: [{
-						tagName: "div",
-						attributes: { class: "input-group" },
-						children: [{
-							tagName: "span",
-							attributes: { class: "input-group-text bg-white" },
-							children: [{
-								tagName: "i",
-								attributes: { class: "bi bi-search" },
-								textContent: "🔍"
-							}]
-						}, {
-							tagName: "input",
-							attributes: {
-								type: "text",
-								id: "tableSearch",
-								class: "form-control",
-								placeholder: "Search table..."
-							}
-						}]
-					}]
+					attributes: {
+						class: "col-md-4",
+						"data-role": "search-input-slot"
+					},
+					children: []
 				}
 			]
 		}, {
@@ -925,6 +863,274 @@ var e = {
 				}]
 			}
 		]
+	},
+	searchToolbar: {
+		tagName: "div",
+		attributes: {
+			class: "row mb-3 align-items-center",
+			"data-role": "search-toolbar"
+		},
+		children: [
+			{
+				tagName: "div",
+				attributes: {
+					class: "col-md-4 d-flex align-items-center",
+					"data-role": "search-label-slot"
+				},
+				children: []
+			},
+			{
+				tagName: "div",
+				attributes: {
+					class: "col-md-4 text-center d-flex align-items-center justify-content-center",
+					"data-role": "search-helper-slot"
+				},
+				children: []
+			},
+			{
+				tagName: "div",
+				attributes: {
+					class: "col-md-4",
+					"data-role": "search-input-slot"
+				},
+				children: []
+			}
+		]
+	},
+	searchLabel: {
+		tagName: "h6",
+		textContent: "Items",
+		attributes: {
+			class: "mb-0 fw-semibold text-secondary",
+			id: "table-title"
+		}
+	},
+	searchHelper: {
+		tagName: "span",
+		textContent: "Showing all records",
+		attributes: {
+			id: "search-feedback",
+			class: "badge bg-white text-secondary border px-3 py-2 small fw-normal shadow-sm"
+		}
+	},
+	searchInput: {
+		tagName: "div",
+		attributes: { class: "input-group" },
+		children: [{
+			tagName: "span",
+			attributes: { class: "input-group-text bg-white" },
+			children: [{
+				tagName: "i",
+				attributes: { class: "bi bi-search" },
+				textContent: "🔍"
+			}]
+		}, {
+			tagName: "input",
+			attributes: {
+				type: "text",
+				id: "tableSearch",
+				class: "form-control",
+				placeholder: "Search table..."
+			}
+		}]
+	},
+	optionsEditButtonCell: {
+		tagName: "td",
+		attributes: { class: "py-2 px-3 text-center" },
+		children: [{
+			tagName: "button",
+			textContent: "edit",
+			attributes: { class: "btn btn-secondary btn-sm ks-btn-edit" }
+		}]
+	},
+	optionsDeleteButtonCell: {
+		tagName: "td",
+		attributes: { class: "py-2 px-3 text-center" },
+		children: [{
+			tagName: "button",
+			textContent: "delete",
+			attributes: { class: "btn btn-danger btn-sm ks-btn-delete" }
+		}]
+	},
+	headerForEditOption: {
+		tagName: "th",
+		textContent: "edit",
+		attributes: { class: "py-3 px-3 fw-semibold text-uppercase small" }
+	},
+	headerForDeleteOption: {
+		tagName: "th",
+		textContent: "delete",
+		attributes: { class: "py-3 px-3 fw-semibold text-uppercase small" }
+	},
+	colGroupForEditOption: {
+		tagName: "col",
+		attributes: { width: "80px" }
+	},
+	colGroupForDeleteOption: {
+		tagName: "col",
+		attributes: { width: "90px" }
+	},
+	tableWithFooterParent: {
+		tagName: "div",
+		attributes: {
+			"data-role": "table-parent",
+			id: "table-with-footer-parent-id"
+		},
+		children: [{
+			tagName: "table",
+			attributes: {
+				class: "table table-hover table-striped align-middle border mb-0",
+				id: "table-with-footer-id"
+			},
+			children: [
+				{
+					tagName: "colgroup",
+					attributes: {
+						"data-role": "table-colgroup",
+						id: "table-with-footer-colgroup-id"
+					},
+					children: []
+				},
+				{
+					tagName: "thead",
+					attributes: {
+						class: "table-dark",
+						"data-role": "table-header",
+						id: "table-with-footer-header-id"
+					},
+					children: [{
+						tagName: "tr",
+						attributes: {
+							"data-role": "table-header-row",
+							id: "table-with-footer-header-row-id"
+						},
+						children: []
+					}]
+				},
+				{
+					tagName: "tbody",
+					attributes: {
+						"data-role": "table-body",
+						id: "table-with-footer-body-id"
+					},
+					children: []
+				},
+				{
+					tagName: "tfoot",
+					attributes: {
+						"data-role": "table-footer",
+						id: "table-with-footer-footer-id"
+					},
+					children: [{
+						tagName: "tr",
+						attributes: {
+							"data-role": "table-footer-row",
+							id: "table-with-footer-footer-row-id"
+						},
+						children: []
+					}]
+				}
+			]
+		}]
+	},
+	tableWithSearchAndFooter: {
+		tagName: "div",
+		attributes: {
+			"data-role": "table-parent",
+			id: "table-with-search-footer-parent-id"
+		},
+		children: [{
+			tagName: "div",
+			attributes: {
+				class: "row mb-3 align-items-center",
+				"data-role": "search-toolbar"
+			},
+			children: [
+				{
+					tagName: "div",
+					attributes: {
+						class: "col-md-4 d-flex align-items-center",
+						"data-role": "search-label-slot"
+					},
+					children: []
+				},
+				{
+					tagName: "div",
+					attributes: {
+						class: "col-md-4 text-center d-flex align-items-center justify-content-center",
+						"data-role": "search-helper-slot"
+					},
+					children: []
+				},
+				{
+					tagName: "div",
+					attributes: {
+						class: "col-md-4",
+						"data-role": "search-input-slot"
+					},
+					children: []
+				}
+			]
+		}, {
+			tagName: "div",
+			attributes: { id: "table-content-container" },
+			children: [{
+				tagName: "table",
+				attributes: {
+					class: "table table-hover table-striped align-middle border mb-0",
+					id: "table-with-footer-id"
+				},
+				children: [
+					{
+						tagName: "colgroup",
+						attributes: {
+							"data-role": "table-colgroup",
+							id: "table-with-footer-colgroup-id"
+						},
+						children: []
+					},
+					{
+						tagName: "thead",
+						attributes: {
+							class: "table-dark",
+							"data-role": "table-header",
+							id: "table-with-footer-header-id"
+						},
+						children: [{
+							tagName: "tr",
+							attributes: {
+								"data-role": "table-header-row",
+								id: "table-with-footer-header-row-id"
+							},
+							children: []
+						}]
+					},
+					{
+						tagName: "tbody",
+						attributes: {
+							"data-role": "table-body",
+							id: "table-with-footer-body-id"
+						},
+						children: []
+					},
+					{
+						tagName: "tfoot",
+						attributes: {
+							"data-role": "table-footer",
+							id: "table-with-footer-footer-id"
+						},
+						children: [{
+							tagName: "tr",
+							attributes: {
+								"data-role": "table-footer-row",
+								id: "table-with-footer-footer-row-id"
+							},
+							children: []
+						}]
+					}
+				]
+			}]
+		}]
 	}
 }, n = {
 	$schema: "./tags.schema.json",
@@ -1316,56 +1522,23 @@ var e = {
 			func: null
 		}
 	],
-	options: [
-		{
-			narration: "Append the options column width to the table colgroup.",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"],
-				action: "push",
-				jsonPath: "$..*[?@.attributes['data-role'] == 'table-colgroup']"
-			},
-			sourcePath: null,
-			templateKey: "colGroupForOption",
-			func: null
+	options: { table: {
+		search: {
+			initialize: "searchFrame",
+			showLabel: "searchLabel",
+			showHelper: "searchHelper",
+			showInput: "searchInput"
 		},
-		{
-			narration: "Append the options header cell to the table header row.",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"],
-				action: "push",
-				jsonPath: "$..*[?@.attributes['data-role'] == 'table-header-row']"
-			},
-			sourcePath: null,
-			templateKey: "headerForOption",
-			func: null
+		serial: {
+			showRootSerial: "serialRoot",
+			showSubSerial: "serialChild"
 		},
-		{
-			narration: "Append the options button cell into each table body row.",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"],
-				action: "pushToRows",
-				jsonPath: "$..*[?@.attributes['data-role'] == 'table-body']"
-			},
-			sourcePath: null,
-			templateKey: "optionsButtonCell",
-			func: null
-		},
-		{
-			narration: "Append the options footer cell to the table footer row.",
-			destinationPath: {
-				fileName: "base",
-				filePath: ["children"],
-				action: "push",
-				jsonPath: "$..*[?@.attributes['data-role'] == 'table-footer-row']"
-			},
-			sourcePath: null,
-			templateKey: "tdWithButtonSaveWarning",
-			func: null
+		options: {
+			showButton: "optionsShowButton",
+			showEditButton: "optionsEditButton",
+			showDeleteButton: "optionsDeleteButton"
 		}
-	],
+	} },
 	search: [{
 		narration: "Prepend the search row to top of the table.",
 		destinationPath: {
@@ -1444,7 +1617,259 @@ var e = {
 			columnKey: "buildDataList",
 			rowKey: "buildOption"
 		}
-	}
+	},
+	searchFrame: [{
+		narration: "Insert the search toolbar frame before the table when a search feature is enabled.",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"],
+			action: "unshift",
+			jsonPath: "$"
+		},
+		sourcePath: null,
+		templateKey: "searchToolbar",
+		func: null,
+		skipIf: "$..*[?@.attributes['data-role'] == 'search-toolbar']"
+	}],
+	searchLabel: [{
+		narration: "Insert the search label into its configured slot.",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"],
+			action: "push",
+			jsonPath: "$..*[?@.attributes['data-role'] == 'search-label-slot']"
+		},
+		sourcePath: null,
+		templateKey: "searchLabel",
+		func: null,
+		skipIf: "$..*[?@.attributes.id == 'table-title']"
+	}],
+	searchHelper: [{
+		narration: "Insert the search helper text into its configured slot.",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"],
+			action: "push",
+			jsonPath: "$..*[?@.attributes['data-role'] == 'search-helper-slot']"
+		},
+		sourcePath: null,
+		templateKey: "searchHelper",
+		func: null,
+		skipIf: "$..*[?@.attributes.id == 'search-feedback']"
+	}],
+	searchInput: [{
+		narration: "Insert the search input into its configured slot.",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"],
+			action: "push",
+			jsonPath: "$..*[?@.attributes['data-role'] == 'search-input-slot']"
+		},
+		sourcePath: null,
+		templateKey: "searchInput",
+		func: null,
+		skipIf: "$..*[?@.attributes.id == 'tableSearch']"
+	}],
+	serialRoot: [
+		{
+			narration: "Prepend the serial column width to the table colgroup.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "unshift",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-colgroup']"
+			},
+			sourcePath: null,
+			templateKey: "colGroupForSerial",
+			func: null
+		},
+		{
+			narration: "Prepend the serial header cell to the table header row.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "unshift",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-header-row']"
+			},
+			sourcePath: null,
+			templateKey: "headerSerialCell",
+			func: null
+		},
+		{
+			narration: "Prepend the serial footer cell to the table footer row.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "unshift",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-footer-row']"
+			},
+			sourcePath: null,
+			templateKey: "headerSerialCell",
+			func: null
+		}
+	],
+	serialChild: [{
+		narration: "Prepend the serial number cell into each table body row.",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"],
+			action: "unshiftSerialToRows",
+			jsonPath: "$..*[?@.attributes['data-role'] == 'table-body']"
+		},
+		sourcePath: null,
+		templateKey: "buildBodyCell",
+		func: null
+	}],
+	optionsShowButton: [
+		{
+			narration: "Append the options column width to the table colgroup.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "push",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-colgroup']"
+			},
+			sourcePath: null,
+			templateKey: "colGroupForOption",
+			func: null
+		},
+		{
+			narration: "Append the options header cell to the table header row.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "push",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-header-row']"
+			},
+			sourcePath: null,
+			templateKey: "headerForOption",
+			func: null
+		},
+		{
+			narration: "Append the options button cell into each table body row.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "pushToRows",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-body']"
+			},
+			sourcePath: null,
+			templateKey: "optionsButtonCell",
+			func: null
+		},
+		{
+			narration: "Append the options footer cell to the table footer row.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "push",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-footer-row']"
+			},
+			sourcePath: null,
+			templateKey: "tdWithButtonSaveWarning",
+			func: null
+		}
+	],
+	optionsEditButton: [
+		{
+			narration: "Append edit column width.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "push",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-colgroup']"
+			},
+			sourcePath: null,
+			templateKey: "colGroupForEditOption",
+			func: null
+		},
+		{
+			narration: "Append edit header.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "push",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-header-row']"
+			},
+			sourcePath: null,
+			templateKey: "headerForEditOption",
+			func: null
+		},
+		{
+			narration: "Append edit button cells to table rows.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "pushToRows",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-body']"
+			},
+			sourcePath: null,
+			templateKey: "optionsEditButtonCell",
+			func: null
+		},
+		{
+			narration: "Append an empty footer cell for the edit action column.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "push",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-footer-row']"
+			},
+			sourcePath: null,
+			templateKey: "emptyCell",
+			func: null
+		}
+	],
+	optionsDeleteButton: [
+		{
+			narration: "Append delete column width.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "push",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-colgroup']"
+			},
+			sourcePath: null,
+			templateKey: "colGroupForDeleteOption",
+			func: null
+		},
+		{
+			narration: "Append delete header.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "push",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-header-row']"
+			},
+			sourcePath: null,
+			templateKey: "headerForDeleteOption",
+			func: null
+		},
+		{
+			narration: "Append delete button cells to table rows.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "pushToRows",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-body']"
+			},
+			sourcePath: null,
+			templateKey: "optionsDeleteButtonCell",
+			func: null
+		},
+		{
+			narration: "Append an empty footer cell for the delete action column.",
+			destinationPath: {
+				fileName: "base",
+				filePath: ["children"],
+				action: "push",
+				jsonPath: "$..*[?@.attributes['data-role'] == 'table-footer-row']"
+			},
+			sourcePath: null,
+			templateKey: "emptyCell",
+			func: null
+		}
+	]
 }, a = {
 	name: "spec-repo",
 	version: "1.17.1"

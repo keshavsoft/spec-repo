@@ -1,0 +1,16 @@
+{
+    "search": {
+        "showLabel": true,
+        "showHelper": true,
+        "showInput": true
+    },
+    "serial": {
+        "showRootSerial": true,
+        "showSubSerial": true
+    },
+    "options": {
+        "showButton": true,
+        "showEditButton": true,
+        "showDeleteButton": true
+    }
+}
