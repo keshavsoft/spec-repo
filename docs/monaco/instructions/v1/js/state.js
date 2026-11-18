@@ -2,7 +2,7 @@
  * Tab 1 (Supplier) — Centralized State & Channel Bus (V5 - Pure Output Mode)
  * Discipline: Single-Spec Direct Supplier with Instruction-Driven Bindings
  */
-const commonFileName = "instructions.json";
+const commonFileName = "instructions";
 
 export const CHANNEL_NAME = 'keshavsoft-render-v5';
 export const STORAGE_KEY_CONTENT = 'keshavsoft_render_v5_content';
@@ -72,14 +72,14 @@ export async function loadJSON(url) {
 export async function loadDefinitions() {
     try {
         const mod = await import(SPEC_REPO_URL);
-        if (!mod?.definitions) {
+        if (!mod?.[commonFileName]) {
             throw new Error(`Module loaded, but 'definitions' export was not found.`);
         }
         return {
             ok: true,
-            content: pretty(mod.definitions),
+            content: pretty(mod?.[commonFileName]),
             language: 'json',
-            filename: commonFileName
+            filename: `${commonFileName}.json`
         };
     } catch (err) {
         const notice = [
