@@ -70,37 +70,97 @@ var e = {
 			options: { serial: { showSerial: "serialChild" } }
 		}
 	},
-	select: {
-		simple: {
-			baseFromSpec: "selectBase",
-			instructions: ["buildSelectWithOptions"]
-		},
+	select: { simple: {
 		baseFromSpec: "selectBase",
-		instructions: ["buildSelectWithOptions"]
-	},
-	dataList: {
-		simple: {
-			baseFromSpec: "dataListSimple",
-			instructions: ["buildDataListWithOptions"]
-		},
-		baseFromSpec: "dataListBase",
-		instructions: ["buildDataListWithOptions"]
-	},
-	selectOptionsOnly: {
+		instructions: ["buildSelectWithOptions"],
+		options: {}
+	} },
+	dataList: { simple: {
+		baseFromSpec: "dataListSimple",
+		instructions: ["buildDataListWithOptions"],
+		options: {}
+	} },
+	selectOptionsOnly: { simple: {
 		baseFromSpec: "selectOptionsOnlyBase",
-		instructions: ["buildOptionsArray"]
-	},
-	searchInput: {
+		instructions: ["buildOptionsArray"],
+		options: {}
+	} },
+	searchInput: { simple: {
 		baseFromSpec: "searchInputBase",
-		instructions: []
-	},
-	form: {
+		instructions: [],
+		options: {}
+	} },
+	form: { simple: {
+		baseFromSpec: "formSimple",
+		instructions: ["buildFormField"],
+		options: {}
+	} },
+	accordion: {
 		simple: {
-			baseFromSpec: "formSimple",
-			instructions: ["buildFormField"]
+			baseFromSpec: "accordionSimple",
+			instructions: ["buildAccordionItems"],
+			options: {}
 		},
-		baseFromSpec: "formBase",
-		instructions: ["buildFormField"]
+		flush: {
+			baseFromSpec: "accordionFlush",
+			instructions: ["buildAccordionItems"],
+			options: {}
+		}
+	},
+	card: {
+		simple: {
+			baseFromSpec: "cardSimple",
+			instructions: ["buildCardBody"],
+			options: {}
+		},
+		withHeader: {
+			baseFromSpec: "cardWithHeader",
+			instructions: ["buildCardHeader", "buildCardBody"],
+			options: {}
+		},
+		withFooter: {
+			baseFromSpec: "cardWithFooter",
+			instructions: [
+				"buildCardHeader",
+				"buildCardBody",
+				"buildCardFooter"
+			],
+			options: {}
+		},
+		imageTop: {
+			baseFromSpec: "cardImageTop",
+			instructions: ["buildCardBody"],
+			options: {}
+		}
+	},
+	list: {
+		simple: {
+			baseFromSpec: "listSimple",
+			instructions: ["buildListItems"],
+			options: {}
+		},
+		group: {
+			baseFromSpec: "listGroup",
+			instructions: ["buildListGroupItems"],
+			options: {}
+		},
+		ordered: {
+			baseFromSpec: "listOrdered",
+			instructions: ["buildListGroupItems"],
+			options: {}
+		}
+	},
+	menu: {
+		simple: {
+			baseFromSpec: "menuSimple",
+			instructions: ["buildMenuItems"],
+			options: {}
+		},
+		cards: {
+			baseFromSpec: "menuCardsBase",
+			instructions: ["buildMenuCards"],
+			options: {}
+		}
 	}
 }, t = {
 	tableSearchBar: {
@@ -1134,6 +1194,302 @@ var e = {
 				]
 			}]
 		}]
+	},
+	accordionSimple: {
+		tagName: "div",
+		attributes: {
+			class: "accordion shadow-sm rounded-3 border",
+			id: "accordion-parent-id",
+			"data-role": "accordion-parent"
+		},
+		children: []
+	},
+	accordionFlush: {
+		tagName: "div",
+		attributes: {
+			class: "accordion accordion-flush shadow-sm rounded-3 border",
+			id: "accordion-parent-id",
+			"data-role": "accordion-parent"
+		},
+		children: []
+	},
+	buildAccordionItem: {
+		tagName: "div",
+		attributes: {
+			class: "accordion-item",
+			"data-role": "accordion-item"
+		},
+		children: [{
+			tagName: "h2",
+			attributes: {
+				class: "accordion-header",
+				id: "heading-${id}"
+			},
+			children: [{
+				tagName: "button",
+				attributes: {
+					class: "accordion-button collapsed",
+					type: "button",
+					"data-bs-toggle": "collapse",
+					"data-bs-target": "#collapse-${id}",
+					"aria-expanded": "false",
+					"aria-controls": "collapse-${id}"
+				},
+				textContent: "${title}"
+			}]
+		}, {
+			tagName: "div",
+			attributes: {
+				id: "collapse-${id}",
+				class: "accordion-collapse collapse",
+				"aria-labelledby": "heading-${id}",
+				"data-bs-parent": "#accordion-parent-id",
+				"data-role": "accordion-collapse"
+			},
+			children: [{
+				tagName: "div",
+				attributes: { class: "accordion-body text-secondary" },
+				textContent: "${content}"
+			}]
+		}]
+	},
+	cardSimple: {
+		tagName: "div",
+		attributes: {
+			class: "card shadow-sm border rounded-3",
+			id: "card-parent-id",
+			"data-role": "card-parent"
+		},
+		children: [{
+			tagName: "div",
+			attributes: {
+				class: "card-body p-4",
+				"data-role": "card-body"
+			},
+			children: []
+		}]
+	},
+	cardWithHeader: {
+		tagName: "div",
+		attributes: {
+			class: "card shadow-sm border rounded-3",
+			id: "card-parent-id",
+			"data-role": "card-parent"
+		},
+		children: [{
+			tagName: "div",
+			attributes: {
+				class: "card-header bg-white py-3 fw-bold border-bottom",
+				"data-role": "card-header"
+			},
+			children: []
+		}, {
+			tagName: "div",
+			attributes: {
+				class: "card-body p-4",
+				"data-role": "card-body"
+			},
+			children: []
+		}]
+	},
+	cardWithFooter: {
+		tagName: "div",
+		attributes: {
+			class: "card shadow-sm border rounded-3",
+			id: "card-parent-id",
+			"data-role": "card-parent"
+		},
+		children: [
+			{
+				tagName: "div",
+				attributes: {
+					class: "card-header bg-white py-3 fw-bold border-bottom",
+					"data-role": "card-header"
+				},
+				children: []
+			},
+			{
+				tagName: "div",
+				attributes: {
+					class: "card-body p-4",
+					"data-role": "card-body"
+				},
+				children: []
+			},
+			{
+				tagName: "div",
+				attributes: {
+					class: "card-footer bg-light py-3 border-top",
+					"data-role": "card-footer"
+				},
+				children: []
+			}
+		]
+	},
+	cardImageTop: {
+		tagName: "div",
+		attributes: {
+			class: "card shadow-sm border rounded-3 overflow-hidden",
+			id: "card-parent-id",
+			"data-role": "card-parent"
+		},
+		children: [{
+			tagName: "img",
+			attributes: {
+				class: "card-img-top",
+				src: "${imageSrc}",
+				alt: "${imageAlt}",
+				"data-role": "card-img"
+			}
+		}, {
+			tagName: "div",
+			attributes: {
+				class: "card-body p-4",
+				"data-role": "card-body"
+			},
+			children: []
+		}]
+	},
+	buildCardBodyTemplate: {
+		tagName: "div",
+		attributes: { class: "card-content" },
+		children: [{
+			tagName: "h5",
+			attributes: { class: "card-title fw-bold text-dark mb-2" },
+			textContent: "${title}"
+		}, {
+			tagName: "p",
+			attributes: { class: "card-text text-secondary mb-3" },
+			textContent: "${text}"
+		}]
+	},
+	buildCardHeaderTemplate: {
+		tagName: "span",
+		attributes: { class: "card-header-title text-dark" },
+		textContent: "${headerTitle}"
+	},
+	buildCardFooterTemplate: {
+		tagName: "small",
+		attributes: { class: "text-muted" },
+		textContent: "${footerText}"
+	},
+	listSimple: {
+		tagName: "ul",
+		attributes: {
+			class: "list-unstyled mb-0",
+			id: "list-parent-id",
+			"data-role": "list-parent"
+		},
+		children: []
+	},
+	listGroup: {
+		tagName: "ul",
+		attributes: {
+			class: "list-group shadow-sm",
+			id: "list-group-parent-id",
+			"data-role": "list-group-parent"
+		},
+		children: []
+	},
+	listOrdered: {
+		tagName: "ol",
+		attributes: {
+			class: "list-group list-group-numbered shadow-sm",
+			id: "list-ordered-parent-id",
+			"data-role": "list-group-parent"
+		},
+		children: []
+	},
+	menuSimple: {
+		tagName: "ul",
+		attributes: {
+			class: "nav nav-pills flex-column bg-white p-3 rounded-3 shadow-sm border",
+			id: "menu-parent-id",
+			"data-role": "menu-parent"
+		},
+		children: []
+	},
+	menuCardsBase: {
+		tagName: "div",
+		attributes: {
+			class: "row g-4",
+			id: "menu-cards-parent-id",
+			"data-role": "menu-cards-parent"
+		},
+		children: []
+	},
+	buildListItemTemplate: {
+		tagName: "li",
+		attributes: {
+			class: "py-2 px-3 border-bottom d-flex align-items-center text-secondary",
+			"data-role": "list-item"
+		},
+		textContent: "${text}"
+	},
+	buildListGroupItemTemplate: {
+		tagName: "li",
+		attributes: {
+			class: "list-group-item d-flex justify-content-between align-items-center py-3",
+			"data-role": "list-group-item"
+		},
+		children: [{
+			tagName: "span",
+			textContent: "${text}"
+		}, {
+			tagName: "span",
+			attributes: { class: "badge bg-primary rounded-pill px-3 py-2" },
+			textContent: "${badge}"
+		}]
+	},
+	buildMenuItemTemplate: {
+		tagName: "li",
+		attributes: {
+			class: "nav-item mb-1",
+			"data-role": "menu-item"
+		},
+		children: [{
+			tagName: "a",
+			attributes: {
+				class: "nav-link text-dark fw-medium",
+				href: "${href}"
+			},
+			textContent: "${text}"
+		}]
+	},
+	buildMenuCardItemTemplate: {
+		tagName: "div",
+		attributes: {
+			class: "col-md-4 col-sm-6",
+			"data-role": "menu-card-col"
+		},
+		children: [{
+			tagName: "div",
+			attributes: { class: "card h-100 shadow-sm border rounded-3" },
+			children: [{
+				tagName: "div",
+				attributes: { class: "card-body p-4 d-flex flex-column" },
+				children: [
+					{
+						tagName: "h5",
+						attributes: { class: "card-title fw-bold text-primary mb-2" },
+						textContent: "${title}"
+					},
+					{
+						tagName: "p",
+						attributes: { class: "card-text text-muted small flex-grow-1" },
+						textContent: "${description}"
+					},
+					{
+						tagName: "a",
+						attributes: {
+							class: "btn btn-outline-primary btn-sm mt-3",
+							href: "${href}"
+						},
+						textContent: "${actionText}"
+					}
+				]
+			}]
+		}]
 	}
 }, n = {
 	$schema: "./tags.schema.json",
@@ -1855,7 +2211,116 @@ var e = {
 			templateKey: "emptyCell",
 			func: null
 		}
-	]
+	],
+	buildAccordionItems: {
+		type: "single",
+		narration: "Build accordion items from array",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"]
+		},
+		sourcePath: {
+			fileName: "data",
+			jsonPath: "$.items"
+		},
+		templateKey: "buildAccordionItem",
+		func: "fromCollection"
+	},
+	buildCardBody: {
+		type: "single",
+		narration: "Build card body content",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"],
+			action: "push",
+			jsonPath: "$..*[?@.attributes['data-role'] == 'card-body']"
+		},
+		sourcePath: { fileName: "data" },
+		templateKey: "buildCardBodyTemplate",
+		func: "applyTemplate"
+	},
+	buildCardHeader: {
+		type: "single",
+		narration: "Build card header content",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"],
+			action: "push",
+			jsonPath: "$..*[?@.attributes['data-role'] == 'card-header']"
+		},
+		sourcePath: { fileName: "data" },
+		templateKey: "buildCardHeaderTemplate",
+		func: "applyTemplate"
+	},
+	buildCardFooter: {
+		type: "single",
+		narration: "Build card footer content",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"],
+			action: "push",
+			jsonPath: "$..*[?@.attributes['data-role'] == 'card-footer']"
+		},
+		sourcePath: { fileName: "data" },
+		templateKey: "buildCardFooterTemplate",
+		func: "applyTemplate"
+	},
+	buildListItems: {
+		type: "single",
+		narration: "Build simple list items",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"]
+		},
+		sourcePath: {
+			fileName: "data",
+			jsonPath: "$.items"
+		},
+		templateKey: "buildListItemTemplate",
+		func: "fromCollection"
+	},
+	buildListGroupItems: {
+		type: "single",
+		narration: "Build list-group items",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"]
+		},
+		sourcePath: {
+			fileName: "data",
+			jsonPath: "$.items"
+		},
+		templateKey: "buildListGroupItemTemplate",
+		func: "fromCollection"
+	},
+	buildMenuItems: {
+		type: "single",
+		narration: "Build navigation menu items",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"]
+		},
+		sourcePath: {
+			fileName: "data",
+			jsonPath: "$.items"
+		},
+		templateKey: "buildMenuItemTemplate",
+		func: "fromCollection"
+	},
+	buildMenuCards: {
+		type: "single",
+		narration: "Build menu cards grid",
+		destinationPath: {
+			fileName: "base",
+			filePath: ["children"]
+		},
+		sourcePath: {
+			fileName: "data",
+			jsonPath: "$.items"
+		},
+		templateKey: "buildMenuCardItemTemplate",
+		func: "fromCollection"
+	}
 }, a = {
 	name: "spec-repo",
 	version: "1.17.1"
