@@ -7,7 +7,23 @@ var e = {
 				"buildHeader",
 				"buildBody"
 			],
-			options: "table"
+			options: {
+				search: {
+					initialize: "searchFrame",
+					showLabel: "searchLabel",
+					showHelper: "searchHelper",
+					showInput: "searchInput"
+				},
+				serial: {
+					showRootSerial: "serialRoot",
+					showSubSerial: "serialChild"
+				},
+				options: {
+					showButton: "optionsShowButton",
+					showEditButton: "optionsEditButton",
+					showDeleteButton: "optionsDeleteButton"
+				}
+			}
 		},
 		withFooter: {
 			baseFromSpec: "tableWithFooterParent",
@@ -30,7 +46,6 @@ var e = {
 			baseFromSpec: "tableHeaderOnly",
 			instructions: ["buildColgroup", "buildHeader"]
 		},
-		options: { instructions: [] },
 		headerAndFooter: {
 			baseFromSpec: "tableHeaderAndFooter",
 			instructions: [
@@ -1522,23 +1537,6 @@ var e = {
 			func: null
 		}
 	],
-	options: { table: {
-		search: {
-			initialize: "searchFrame",
-			showLabel: "searchLabel",
-			showHelper: "searchHelper",
-			showInput: "searchInput"
-		},
-		serial: {
-			showRootSerial: "serialRoot",
-			showSubSerial: "serialChild"
-		},
-		options: {
-			showButton: "optionsShowButton",
-			showEditButton: "optionsEditButton",
-			showDeleteButton: "optionsDeleteButton"
-		}
-	} },
 	search: [{
 		narration: "Prepend the search row to top of the table.",
 		destinationPath: {
