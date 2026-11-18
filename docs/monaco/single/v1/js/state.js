@@ -7,7 +7,7 @@ export const CHANNEL_NAME = 'keshavsoft-render-v5';
 export const STORAGE_KEY_CONTENT = 'keshavsoft_render_v5_content';
 export const STORAGE_KEY_META = 'keshavsoft_render_v5_meta';
 
-export const OUTPUT_FILE = './data/output.json';
+export const SPEC_REPO_URL = 'https://keshavsoft.github.io/spec-repo/dist/v19/min.js';
 
 export const models = {
     output: ''
@@ -65,6 +65,52 @@ export async function loadJSON(url) {
 }
 
 /**
+ * Fetches definitions directly from public spec-repo URL.
+ * If the URL fails, returns a declarative diagnostic text notice.
+ */
+export async function loadDefinitions() {
+    try {
+        const mod = await import(SPEC_REPO_URL);
+        if (!mod?.definitions) {
+            throw new Error(`Module loaded, but 'definitions' export was not found.`);
+        }
+        return {
+            ok: true,
+            content: pretty(mod.definitions),
+            language: 'json',
+            filename: 'definitions.json'
+        };
+    } catch (err) {
+        const notice = [
+            `// ====================================================================`,
+            `// ⚠ URL MISSED: UNABLE TO FETCH DEFINITIONS`,
+            `// ====================================================================`,
+            `//`,
+            `// Targeted URL : ${SPEC_REPO_URL}`,
+            `// Error Reason  : ${err.message}`,
+            `//`,
+            `// The URL above is missed, offline, or unreachable.`,
+            `//`,
+            `// --------------------------------------------------------------------`,
+            `// WHAT YOU CAN DO:`,
+            `// 1. Verify the URL path or network connection.`,
+            `// 2. You can paste your own JSON schema directly into this editor.`,
+            `// 3. Or click 'File' above (or press Ctrl+O) to open a local JSON file.`,
+            `// ====================================================================`,
+            ``
+        ].join('\n');
+
+        return {
+            ok: false,
+            content: notice,
+            language: 'javascript',
+            filename: 'url-missed.txt',
+            error: err.message
+        };
+    }
+}
+
+/**
  * Beams the output spec across the BroadcastChannel to Tab 2
  */
 export function sendPayload() {
@@ -74,7 +120,7 @@ export function sendPayload() {
     }
 
     if (!models.output) {
-        setStatus('Output JSON is empty', true);
+        setStatus('Definitions JSON is empty', true);
         return;
     }
 
@@ -82,7 +128,7 @@ export function sendPayload() {
     try {
         spec = JSON.parse(models.output);
     } catch (e) {
-        setStatus(`Syntax error in output.json: ${e.message}`, true);
+        setStatus(`Syntax error in definitions.json: ${e.message}`, true);
         return;
     }
 
@@ -90,7 +136,7 @@ export function sendPayload() {
 
     localStorage.setItem(STORAGE_KEY_CONTENT, formatted);
     localStorage.setItem(STORAGE_KEY_META, JSON.stringify({
-        filename: 'output.json',
+        filename: 'definitions.json',
         timestamp: Date.now()
     }));
 
@@ -98,7 +144,7 @@ export function sendPayload() {
         type: 'RENDER_SPEC',
         spec: spec,
         content: formatted,
-        filename: 'output.json'
+        filename: 'definitions.json'
     });
 
     setStatus('Beamed to Tab 2: Playing Live HTML ✓');

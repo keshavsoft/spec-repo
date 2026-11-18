@@ -1,9 +1,8 @@
 import {
     $,
-    OUTPUT_FILE,
     models,
     pretty,
-    loadJSON,
+    loadDefinitions,
     setStatus,
     channel,
     setEditor,
@@ -20,15 +19,15 @@ async function start() {
             require(['vs/editor/editor.main'], () => resolve(window.monaco), reject);
         });
 
-        // 2. Load Single Output JSON Spec
-        const outputData = await loadJSON(OUTPUT_FILE);
-        models.output = pretty(outputData);
+        // 2. Load Definitions Spec from spec-repo v19 min.js (with fail-safe)
+        const result = await loadDefinitions();
+        models.output = result.content;
 
         // 3. Create Monaco Editor Instance
         const container = $('jsonEditor');
         const editorInstance = monaco.editor.create(container, {
             value: models.output,
-            language: 'json',
+            language: result.language,
             theme: 'vs-dark',
             automaticLayout: true,
             tabSize: 2,
@@ -99,8 +98,16 @@ async function start() {
         channel.postMessage({ type: 'TAB_PING' });
 
         const fn = $('fileName');
-        if (fn) fn.textContent = 'output.json';
-        setStatus('Output studio ready · output.json loaded');
+        if (fn) fn.textContent = result.filename;
+
+        const langBadge = $('statusLanguage');
+        if (langBadge) langBadge.textContent = result.language === 'json' ? 'JSON' : 'TEXT';
+
+        if (result.ok) {
+            setStatus('spec-repo v19 definitions.json loaded ✓');
+        } else {
+            setStatus(`URL Missed: ${result.error}`, true);
+        }
     } catch (err) {
         console.error('[Render V5 Tab 1 Init Error]', err);
         const ed = $('jsonEditor');
